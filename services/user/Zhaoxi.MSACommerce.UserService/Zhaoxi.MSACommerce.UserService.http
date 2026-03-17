@@ -1,0 +1,6 @@
+@Zhaoxi.MSACommerce.UserService_HostAddress = http://localhost:5234
+
+GET {{Zhaoxi.MSACommerce.UserService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
