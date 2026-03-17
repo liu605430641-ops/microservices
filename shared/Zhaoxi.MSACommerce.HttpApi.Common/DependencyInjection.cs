@@ -10,6 +10,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddHttpApiCommon(this IServiceCollection services)
     {
+        services.AddHealthChecks();
+        
         services.AddScoped<IUser, CurrentUser>();
 
         services.AddHttpContextAccessor();
@@ -17,8 +19,6 @@ public static class DependencyInjection
         services.AddExceptionHandler<UseCaseExceptionHandler>();
 
         services.AddProblemDetails();
-        
-        services.AddHealthChecks();
         
         ConfigureCors(services);
 

@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Zhaoxi.MSACommerce.Authentication.JwtBearer;
 using Zhaoxi.MSACommerce.HttpApi.Common;
 using Zhaoxi.MSACommerce.UserService.HttpApi;
@@ -16,10 +15,9 @@ builder.Services.AddHttpApi();
 
 builder.Services.AddControllers();
 
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddJwtBearer(builder.Configuration);
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,7 +27,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//通用中间件
 app.UseHttpCommon();
 
 app.MapControllers();
