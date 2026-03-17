@@ -9,9 +9,14 @@
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
-    
+
     <ItemGroup>
-      <ProjectReference Include="..\Zhaoxi.MSACommerce.SharedKernel\Zhaoxi.MSACommerce.SharedKernel.csproj" />
-      <ProjectReference Include="..\Zhaoxi.MSACommerce.UseCases.Common\Zhaoxi.MSACommerce.UseCases.Common.csproj" />
+
+        <ProjectReference Include="..\Zhaoxi.MSACommerce.SharedKernel\Zhaoxi.MSACommerce.SharedKernel.csproj" />
+        <ProjectReference Include="..\Zhaoxi.MSACommerce.UseCases.Common\Zhaoxi.MSACommerce.UseCases.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
     </ItemGroup>
 </Project>
