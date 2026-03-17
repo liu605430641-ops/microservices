@@ -13,6 +13,7 @@ public static class ConsulServiceRegistrationExtensions
         var serviceConfiguration = new ServiceConfiguration();
         serviceConfigure.Invoke(serviceConfiguration);
 
+        // 如果没有提供健康检查配置，则使用默认值
         serviceCheckConfiguration ??= new ServiceCheckConfiguration();
 
         var healthCheckUri = new UriBuilder(serviceConfiguration.ServiceAddress)

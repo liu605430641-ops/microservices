@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\pakages\Zhaoxi.MSACommerce.Consul\Zhaoxi.MSACommerce.Consul.csproj" />
       <ProjectReference Include="..\..\shared\Zhaoxi.MSACommerce.SharedKernel\Zhaoxi.MSACommerce.SharedKernel.csproj" />
     </ItemGroup>
 
