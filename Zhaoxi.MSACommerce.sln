@@ -1,6 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{7E1D7C19-E3AB-4FA1-B8DF-203652ABE194}"
+	ProjectSection(SolutionItems) = preProject
+		services\项目架构redme.txt = services\项目架构redme.txt
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{EE72B78F-2CE7-4303-87BB-7222A67FBCE2}"
 EndProject

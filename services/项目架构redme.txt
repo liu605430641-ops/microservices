@@ -1,0 +1,36 @@
+﻿apps
+ └─ AuthServer        -> 认证授权服务
+
+gateways
+ └─ （网关层）
+
+services
+ └─ user
+     └─ UserService.Core       -> 核心领域层
+     └─ UserService.HttpApi    -> API 层 / 表现层
+     └─ UserService.Infrastructure -> 基础设施层（数据库、外部服务）
+     └─ UserService.UseCases  -> 应用层（业务用例）
+ 
+shared
+ └─ HttpApi.Common
+ └─ Infrastructure.EntityFramework -> 公共基础设施
+ └─ SharedKernel
+ └─ UseCases.Common
+
+Core → 领域层（Domain）
+
+核心业务逻辑、实体、值对象、聚合根、领域服务。
+
+UseCases → 应用层（Application）
+
+用例协调业务流程，通常调用领域层。
+
+Infrastructure → 基础设施层（Infrastructure）
+
+数据库访问、缓存、消息队列、外部接口等。
+
+HttpApi → 表现层 / API 层
+
+RESTful API 接口。
+
+这就是典型的 DDD 四层架构 + ABP 实践，并且严格按照 分层 + 聚合边界 设计。

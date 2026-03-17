@@ -9,6 +9,12 @@ namespace Zhaoxi.MSACommerce.AuthServer.Services;
 
 public class IdentityService(IUserService userService, IOptions<JwtSettings> jwtSettings) : IIdentityService
 {
+    /// <summary>
+    /// 为通过用户名和密码验证的用户生成 JWT 访问令牌
+    /// </summary>
+    /// <param name="username"></param>
+    /// <param name="password"></param>
+    /// <returns></returns>
     public async Task<Result<string>> GetAccessTokenAsync(string username, string password)
     {
         // 验证用户名和密码
@@ -21,8 +27,8 @@ public class IdentityService(IUserService userService, IOptions<JwtSettings> jwt
 
         // 创建 JWT
         var jwt = new JwtSecurityToken(
-            jwtSettings.Value.Issuer,
-            jwtSettings.Value.Audience,
+            jwtSettings.Value.Issuer, // 发行者
+            jwtSettings.Value.Audience,        // 受众
             new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
