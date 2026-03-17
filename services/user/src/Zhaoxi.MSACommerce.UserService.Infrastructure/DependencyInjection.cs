@@ -13,7 +13,8 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddInfrastructureCommon(configuration);
-
+        services.AddInfrastructureEfCore();
+        
         ConfigureEfCore(services, configuration);
 
         return services;
