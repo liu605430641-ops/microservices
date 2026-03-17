@@ -18,7 +18,7 @@ builder.Services.AddConsul();builder.Services.AddConsulService(serviceConfigurat
 //添加consul服务发现
 builder.Services.AddConsulDiscovery();
 //添加健康检查
-builder.Services.AddHealthChecks() ;
+builder.Services.AddHealthChecks();
 
 
 

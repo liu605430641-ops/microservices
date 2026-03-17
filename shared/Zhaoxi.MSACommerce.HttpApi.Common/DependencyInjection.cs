@@ -17,7 +17,9 @@ public static class DependencyInjection
         services.AddExceptionHandler<UseCaseExceptionHandler>();
 
         services.AddProblemDetails();
-
+        
+        services.AddHealthChecks();
+        
         ConfigureCors(services);
 
         ConfigureSwagger(services);

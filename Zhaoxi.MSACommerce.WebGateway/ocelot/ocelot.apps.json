@@ -1,29 +1,14 @@
 ﻿{
-  "_comment": "鉴权中心配置",
   "Routes": [
     {
-      "Key": "AuthServer",
-      "_comment": "路由唯一标识符",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "127.0.0.1",
-          "Port": 5000
-        }
-      ],
-      "_comment1": "鉴权服务地址 就是Zhaoxi.MSACommerce.AuthServer项目的地址 launchSettings.json中 applicationUrl 的地址",
-      "DownstreamPathTemplate": "/api/token/{path}", 
-      "_comment2": "鉴权服务的路由地址 就是Zhaoxi.MSACommerce.AuthServer项目中 controller 的路由地址",
+      "ServiceName": "Zhaoxi.MSACommerce.AuthServer",
+      "DownstreamPathTemplate": "/api/token/{path}",
       "DownstreamScheme": "http",
       "LoadBalancerOptions": {
         "Type": "RoundRobin"
-      },          
-      "UpstreamHttpMethod": [
-        "Get",
-        "Post",
-        "Put",
-        "Delete"
-      ],
-      "UpstreamPathTemplate": "/api/token/{path}"
+      },
+      "UpstreamPathTemplate": "/api/token/{path}",
+      "UpstreamHttpMethod": [ "Get", "Post" ]
     }
   ]
 }

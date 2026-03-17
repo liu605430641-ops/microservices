@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Zhaoxi.MSACommerce.Authentication.JwtBearer;
+using Zhaoxi.MSACommerce.HttpApi.Common;
 using Zhaoxi.MSACommerce.UserService.HttpApi;
 using Zhaoxi.MSACommerce.UserService.Infrastructure;
 using Zhaoxi.MSACommerce.UserService.UseCases;
@@ -28,11 +29,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseAuthentication();
-
-app.UseAuthorization();
-
-app.UseExceptionHandler(_ => { });
+//通用中间件
+app.UseHttpCommon();
 
 app.MapControllers();
 

@@ -1,13 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "127.0.0.1",
-          "Port": 5000
-        }
-      ],
-      
+      "ServiceName": "Zhaoxi.MSACommerce.AuthServer",
       "DownstreamPathTemplate": "/swagger/v1/swagger.json",
       "DownstreamScheme": "http",
       "LoadBalancerOptions": {
@@ -17,13 +11,8 @@
       "UpstreamHttpMethod": [ "Get" ]
     },
     {
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "127.0.0.1",
-          "Port": 5001
-        }
-      ],
-
+      "Key": "UserServiceSwagger",
+      "ServiceName": "Zhaoxi.MSACommerce.UserService.HttpApi",
       "DownstreamPathTemplate": "/swagger/v1/swagger.json",
       "DownstreamScheme": "http",
       "LoadBalancerOptions": {
