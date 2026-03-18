@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.Consul",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.Infrastructure.Common", "shared\Zhaoxi.MSACommerce.Infrastructure.Common\Zhaoxi.MSACommerce.Infrastructure.Common.csproj", "{E480DC39-F82E-467D-826A-562614595438}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.Portal", "apps\Zhaoxi.MSACommerce.Portal\Zhaoxi.MSACommerce.Portal.csproj", "{5476B25F-F6CE-4E33-918C-955EEF8E2646}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,10 @@ Global
 		{E480DC39-F82E-467D-826A-562614595438}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E480DC39-F82E-467D-826A-562614595438}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E480DC39-F82E-467D-826A-562614595438}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5476B25F-F6CE-4E33-918C-955EEF8E2646}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5476B25F-F6CE-4E33-918C-955EEF8E2646}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5476B25F-F6CE-4E33-918C-955EEF8E2646}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5476B25F-F6CE-4E33-918C-955EEF8E2646}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{96EA0A21-C710-4F2A-B338-62D9549F9226} = {7E1D7C19-E3AB-4FA1-B8DF-203652ABE194}
@@ -128,5 +134,6 @@ Global
 		{81F147AD-415E-41B7-AE0B-1F4C189E117E} = {D999BEFB-3DE0-444F-8001-0E34571E656D}
 		{46D43B3A-07C0-4193-B1B1-314633C5A032} = {D999BEFB-3DE0-444F-8001-0E34571E656D}
 		{E480DC39-F82E-467D-826A-562614595438} = {EE72B78F-2CE7-4303-87BB-7222A67FBCE2}
+		{5476B25F-F6CE-4E33-918C-955EEF8E2646} = {1CF35FBD-45B2-43DC-804D-3F36BBCE3EC8}
 	EndGlobalSection
 EndGlobal
