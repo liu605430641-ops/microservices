@@ -8,7 +8,7 @@
         "Type": "RoundRobin"
       },
       "UpstreamPathTemplate": "/api/token/{path}",
-      "UpstreamHttpMethod": [ "Get", "Post" ]
+      "UpstreamHttpMethod": [ "Get", "Post" ,"Options"]
     }
   ]
 }

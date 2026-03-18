@@ -52,9 +52,7 @@
 
       "UpstreamHttpMethod": [ "Get","Options" ],
       "_UpstreamHttpMethod": "允许的 HTTP 方法"
-    },
-
-   
+    }
 
   ]
 }
