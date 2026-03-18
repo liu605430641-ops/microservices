@@ -8,7 +8,9 @@
         "Type": "RoundRobin"
       },
       "UpstreamPathTemplate": "/auth/swagger.json",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
     },
     {
       "Key": "UserServiceSwagger",
@@ -19,7 +21,17 @@
         "Type": "RoundRobin"
       },
       "UpstreamPathTemplate": "/user/swagger.json",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.VerificationServer",
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      }
     }
   ]
 }

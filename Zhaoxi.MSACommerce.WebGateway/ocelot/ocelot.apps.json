@@ -9,6 +9,17 @@
       },
       "UpstreamPathTemplate": "/api/token/{path}",
       "UpstreamHttpMethod": [ "Get", "Post" ,"Options"]
+    } ,
+
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.VerificationServer",
+      "DownstreamPathTemplate": "/api/verification/{path}",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/api/verification/{path}",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT", "OPTIONS" ]
     }
   ]
 }
