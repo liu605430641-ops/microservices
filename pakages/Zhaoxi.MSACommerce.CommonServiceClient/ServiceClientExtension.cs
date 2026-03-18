@@ -6,20 +6,20 @@ namespace Zhaoxi.MSACommerce.LoadBalancer;
 
 public static class ServiceClientExtension
 {
-    public static void AddServiceClient<TServiceClient>(this IServiceCollection services,
-        Action<ServiceClientOption> configureServiceClient,
-        Action<HttpClient> configureHttpClient)
-        where TServiceClient : class, ISeviceClient
+    public static void AddServiceClient<TServiceApi>(this IServiceCollection     services,
+                                                     Action<ServiceClientOption> configureServiceClient,
+                                                     Action<HttpClient>          configureHttpClient)
+        where TServiceApi : class
     {
         var serviceClientOption = new ServiceClientOption();
         configureServiceClient.Invoke(serviceClientOption);
 
         services.AddConsulDiscovery();
 
-        services.AddLoadBalancer<TServiceClient>(serviceClientOption.LoadBalancingStrategy);
+        services.AddLoadBalancer<TServiceApi>(serviceClientOption);
 
-        services.AddHttpClient<TServiceClient>(configureHttpClient);
+        services.AddHttpClient<TServiceApi>(configureHttpClient);
 
-        services.AddScoped<TServiceClient>();
+        services.AddScoped<IServiceClient<TServiceApi>, ServiceClient<TServiceApi>>();
     }
 }

@@ -6,7 +6,7 @@ using Zhaoxi.MSACommerce.Consul.ServiceRegistration;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddHttpApi(builder.Configuration);
+builder.Services.ConfigureServices(builder.Configuration);
 
 //添加consul
 var serviceCheck = builder.Configuration.GetSection("ServiceCheck").Get<ServiceCheckConfiguration>();

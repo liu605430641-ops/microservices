@@ -1,33 +1,23 @@
-﻿using Zhaoxi.MSACommerce.Consul.ServiceDiscovery;
+﻿using Refit;
+using Zhaoxi.MSACommerce.Consul.ServiceDiscovery;
+using Zhaoxi.MSACommerce.LoadBalancer.AspNetCore;
 
 namespace Zhaoxi.MSACommerce.LoadBalancer;
 
-/// <summary>
-/// 一句话总结
-///ServiceClient 把“节点列表”交给 ILoadBalancer.GetNode，而 LoadBalancer.GetNode 再交给不同策略的 Resolve 去“选实例”，这整条链路就是负载均衡能力的体现。
-/// </summary>
-public abstract class ServiceClient : ISeviceClient
+public class ServiceClient<TServiceApi> : IServiceClient<TServiceApi> where TServiceApi : class
 {
-    public virtual string ServiceName { get; set; }
+    public string      ServiceName { get; set; }
+    public TServiceApi ServiceApi  { get; set; }
 
-    /// <summary>
-    /// 一句话总结
-    ///  ServiceClient 把“节点列表”交给 ILoadBalancer.GetNode，而 LoadBalancer.GetNode 再交给不同策略的 Resolve 去“选实例”，这整条链路就是负载均衡能力的体现。
-    /// </summary>
-    /// <param name="serviceDiscovery"></param>
-    /// <param name="loadBalancer"></param>
-    /// <param name="httpClient"></param>
-    protected ServiceClient(IServiceDiscovery serviceDiscovery,
-        ILoadBalancer loadBalancer,
-        HttpClient httpClient)
+    public ServiceClient(IServiceDiscovery          serviceDiscovery,
+                         ILoadBalancer<TServiceApi> loadBalancer,
+                         HttpClient                 httpClient)
     {
-        //从 Consul 获取服务实例列表
-        var serviceList = serviceDiscovery.GetServicesAsync(ServiceName).Result;
-        //这里把 Consul 返回的实例列表交给负载均衡器挑一个节点，并把 HttpClient.BaseAddress 指向该节点，这一步就是“负载均衡真正影响请求落到哪个实例”的地方。
+        ServiceName = loadBalancer.ServiceName;
+        var serviceList    = serviceDiscovery.GetServicesAsync(ServiceName).Result;
         var serviceAddress = loadBalancer.GetNode(serviceList);
 
         httpClient.BaseAddress = new Uri($"http://{serviceAddress}");
+        ServiceApi             = RestService.For<TServiceApi>(httpClient);
     }
-
-
 }

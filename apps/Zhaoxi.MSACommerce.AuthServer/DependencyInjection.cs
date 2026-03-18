@@ -1,80 +1,99 @@
-﻿using Refit; // Refit（类型安全的Http客户端库，通过接口生成HTTP调用代理）
-using Zhaoxi.MSACommerce.AuthServer.Clients;
+﻿using Microsoft.OpenApi.Models;
+using StackExchange.Redis;
+using Zhaoxi.MSACommerce.AuthServer.Apis;
 using Zhaoxi.MSACommerce.AuthServer.Services;
 using Zhaoxi.MSACommerce.LoadBalancer;
 
 namespace Zhaoxi.MSACommerce.AuthServer;
 
-/// <summary>
-/// 依赖注入统一入口（Composition Root（组合根））
-/// 所有当前服务的依赖都在这里注册
-/// </summary>
 public static class DependencyInjection
 {
-    /// <summary>
-    /// 对外暴露的扩展方法（用于 Program.cs 调用）
-    /// </summary>
-    public static IServiceCollection AddHttpApi(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureServices(this IServiceCollection services, IConfiguration configuration)
     {
-        // 注册用户服务客户端（远程调用）
+        ConfigureSwagger(services);
+        
+        ConfigureRedis(services, configuration);
+        
         ConfigureUserService(services, configuration);
 
-        // 注册认证相关服务（JWT）
         ConfigureIdentity(services, configuration);
-        
-        //注册跨越服务
-        configureCors(services);
+
+        ConfigureCors(services);
 
         return services;
     }
-
-    /// <summary>
-    /// 配置用户服务（UserService）的远程调用客户端
-    /// </summary>
-    private static void ConfigureUserService(IServiceCollection services,IConfiguration configuration)
+    
+    private static void ConfigureSwagger(IServiceCollection services)
     {
-        services.AddServiceClient<UserServiceClient>(
-            // ① 负载均衡策略配置
-            options => 
-            { 
-                options.LoadBalancingStrategy = LoadBalancingStrategy.RoundRobin; // 轮询（RoundRobin（轮询））
-            },
-            // ② HttpClient配置
-            Client => 
-            { 
-                Client.Timeout = TimeSpan.FromSeconds(1); // 超时时间1秒
-            }
-        );
+        services.AddEndpointsApiExplorer();
+
+        services.AddSwaggerGen(options =>
+        {
+            options.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "鉴权中心",
+                Version = "v1",
+                Description = "一个微服务架构的电商平台实战项目"
+            });
+
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Name = "JWT Bearer 认证",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Scheme = "Bearer",
+                BearerFormat = "JWT"
+            });
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Id = "Bearer",
+                            Type = ReferenceType.SecurityScheme
+                        }
+                    },
+                    new string[] { }
+                }
+            });
+        });
     }
 
-    /// <summary>
-    /// 配置身份认证（JWT）
-    /// </summary>
+    private static void ConfigureRedis(IServiceCollection services, IConfiguration configuration)
+    {
+        var redisConn = configuration.GetConnectionString("RedisConnection");
+        if (redisConn != null)
+            services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConn));
+        
+    }
+
+    private static void ConfigureUserService(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddServiceClient<IUserServiceApi>(option =>
+        {
+            option.ServiceName = "Zhaoxi.MSACommerce.UserService.HttpApi";
+            option.LoadBalancingStrategy = LoadBalancingStrategy.RoundRobin;
+        }, client =>
+        {
+            client.Timeout = TimeSpan.FromSeconds(1);
+        });
+    }
+
     private static void ConfigureIdentity(IServiceCollection services, IConfiguration configuration)
     {
-        // ① 注册身份服务（单例）
-        services.AddScoped<IIdentityService, IdentityService>();
 
-        // ② 读取配置文件中的 JwtSettings
+        services.AddScoped<ITokenService, TokenService>();
+
+        // 从配置文件中读取JwtSettings，并注入到容器中
         var configurationSection = configuration.GetSection(nameof(JwtSettings));
-
-        // 绑定配置到对象（Configuration Binding（配置绑定））
         var jwtSettings = configurationSection.Get<JwtSettings>();
-
-        // 防御性编程（避免配置缺失）
-        if (jwtSettings is null) 
-            throw new NullReferenceException(nameof(jwtSettings));
-
-        // ③ 注册配置到 IOptions（选项模式）
+        if (jwtSettings is null) throw new NullReferenceException(nameof(jwtSettings));
         services.Configure<JwtSettings>(configurationSection);
     }
-    
-    /// <summary>
-    /// 配置通用跨域的的方法
-    /// 也可以在里面配置其他全局的跨域策略，比如只允许特定的域名访问等
-    /// </summary>
-    /// <param name="services"></param>
-    private static void configureCors(IServiceCollection services)
+
+    private static void ConfigureCors(IServiceCollection services)
     {
         services.AddCors(options =>
         {

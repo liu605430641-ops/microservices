@@ -9,10 +9,12 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
         <PackageReference Include="Refit.HttpClientFactory" Version="7.2.1" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0"/>
+        <PackageReference Include="StackExchange.Redis" Version="2.8.16" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\pakages\Zhaoxi.MSACommerce.Authentication.JwtBearer\Zhaoxi.MSACommerce.Authentication.JwtBearer.csproj" />
       <ProjectReference Include="..\..\pakages\Zhaoxi.MSACommerce.CommonServiceClient\Zhaoxi.MSACommerce.CommonServiceClient.csproj" />
       <ProjectReference Include="..\..\pakages\Zhaoxi.MSACommerce.Consul\Zhaoxi.MSACommerce.Consul.csproj" />
       <ProjectReference Include="..\..\shared\Zhaoxi.MSACommerce.SharedKernel\Zhaoxi.MSACommerce.SharedKernel.csproj" />
