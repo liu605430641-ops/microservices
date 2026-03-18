@@ -36,6 +36,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//中间件 AllowAny策略名称
+app.UseCors("AllowAny"); //对应 configureCors方法里面的.AddPolicy("AllowAny", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 // 添加consul服务注册中间件
 app.UseHealthChecks(serviceCheck.Path);
 

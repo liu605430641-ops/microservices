@@ -1,31 +1,6 @@
 ﻿{
   "_comment": "用户服务网关路由配置（Ocelot + Consul）",
   "Routes": [
-
-    {
-      "_comment": "用户服务通用路由（转发所有 /api/user/* 请求）",
-
-      "ServiceName": "Zhaoxi.MSACommerce.UserService.HttpApi",
-      "_ServiceName": "Consul 中注册的服务名称（用于服务发现）",
-
-      "DownstreamPathTemplate": "/api/user/{path}",
-      "_DownstreamPathTemplate": "下游服务真实路径（{path} 表示通配符匹配）",
-
-      "DownstreamScheme": "http",
-      "_DownstreamScheme": "请求协议",
-
-      "LoadBalancerOptions": {
-        "Type": "RoundRobin",
-        "_Type": "负载均衡策略：轮询"
-      },
-
-      "UpstreamPathTemplate": "/api/user/{path}",
-      "_UpstreamPathTemplate": "网关对外暴露路径（与下游一致）",
-
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
-      "_UpstreamHttpMethod": "允许的 HTTP 方法"
-    },
-
     {
       "_comment": "用户服务 test 接口（带认证）",
 
@@ -44,7 +19,7 @@
       "UpstreamPathTemplate": "/api/user/test",
       "_UpstreamPathTemplate": "对外访问路径",
 
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ],
+      "UpstreamHttpMethod": [ "Get" ,"Options"],
 
       "AuthenticationOptions": {
         "AuthenticationProviderKeys": [ "Bearer" ],
@@ -53,7 +28,33 @@
         "AllowedScopes": [],
         "_AllowedScopes": "允许的作用域（scope），为空表示只验证 Token 不校验权限"
       }
-    }
+    },
+    
+    {
+      "_comment": "用户服务通用路由（转发所有 /api/user/* 请求）",
+
+      "ServiceName": "Zhaoxi.MSACommerce.UserService.HttpApi",
+      "_ServiceName": "Consul 中注册的服务名称（用于服务发现）",
+
+      "DownstreamPathTemplate": "/api/user/test",
+      "_DownstreamPathTemplate": "下游服务真实路径（{path} 表示通配符匹配）",
+
+      "DownstreamScheme": "http",
+      "_DownstreamScheme": "请求协议",
+
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin",
+        "_Type": "负载均衡策略：轮询"
+      },
+
+      "UpstreamPathTemplate": "/api/user/{path}",
+      "_UpstreamPathTemplate": "网关对外暴露路径（与下游一致）",
+
+      "UpstreamHttpMethod": [ "Get","Options" ],
+      "_UpstreamHttpMethod": "允许的 HTTP 方法"
+    },
+
+   
 
   ]
 }

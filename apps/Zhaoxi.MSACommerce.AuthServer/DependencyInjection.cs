@@ -21,6 +21,9 @@ public static class DependencyInjection
 
         // 注册认证相关服务（JWT）
         ConfigureIdentity(services, configuration);
+        
+        //注册跨越服务
+        configureCors(services);
 
         return services;
     }
@@ -64,5 +67,23 @@ public static class DependencyInjection
 
         // ③ 注册配置到 IOptions（选项模式）
         services.Configure<JwtSettings>(configurationSection);
+    }
+    
+    /// <summary>
+    /// 配置通用跨域的的方法
+    /// 也可以在里面配置其他全局的跨域策略，比如只允许特定的域名访问等
+    /// </summary>
+    /// <param name="services"></param>
+    private static void configureCors(IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAny", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
     }
 }
