@@ -31,7 +31,10 @@
       "DownstreamScheme": "http",
       "LoadBalancerOptions": {
         "Type": "RoundRobin"
-      }
-    }
+      },
+      "UpstreamPathTemplate": "/verification/swagger.json",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+   
   ]
 }
