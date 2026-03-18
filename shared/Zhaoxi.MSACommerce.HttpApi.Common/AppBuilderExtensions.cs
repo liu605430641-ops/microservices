@@ -30,6 +30,10 @@ public static class AppBuilderExtensions
     /// </summary>
     public static IApplicationBuilder UseHttpCommon(this IApplicationBuilder app)
     {
+        
+        //注册 CORS 中间件（跨域资源共享）
+        app.UseCors("AllowAny");
+        
         // =============================
         // 1. 获取健康检查配置
         // =============================
@@ -38,7 +42,6 @@ public static class AppBuilderExtensions
         var serviceCheck = app.ApplicationServices
                               .GetRequiredService<IOptions<ServiceCheckConfiguration>>()
                               .Value;
-
         // =============================
         // 2. 注册健康检查中间件
         // =============================
