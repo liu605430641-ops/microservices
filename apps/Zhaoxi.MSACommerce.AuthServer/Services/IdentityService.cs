@@ -3,11 +3,12 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Zhaoxi.MSACommerce.AuthServer.Clients;
 using Zhaoxi.MSACommerce.SharedKernel.Result;
 
 namespace Zhaoxi.MSACommerce.AuthServer.Services;
 
-public class IdentityService(IUserService userService, IOptions<JwtSettings> jwtSettings) : IIdentityService
+public class IdentityService(UserServiceClient userServiceClient, IOptions<JwtSettings> jwtSettings) : IIdentityService
 {
     /// <summary>
     /// 为通过用户名和密码验证的用户生成 JWT 访问令牌
@@ -18,7 +19,7 @@ public class IdentityService(IUserService userService, IOptions<JwtSettings> jwt
     public async Task<Result<string>> GetAccessTokenAsync(string username, string password)
     {
         // 验证用户名和密码
-        var response = await userService.GetUserAsync(username, password);
+        var response = await userServiceClient.UserServiceApi.GetUserAsync(username, password);
         if (!response.IsSuccessStatusCode)
         {
             return Result.Failure("用户名或密码不正确");
