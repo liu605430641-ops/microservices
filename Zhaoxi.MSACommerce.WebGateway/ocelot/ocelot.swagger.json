@@ -8,22 +8,7 @@
         "Type": "RoundRobin"
       },
       "UpstreamPathTemplate": "/auth/swagger.json",
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
-    },
-    {
-      "Key": "UserServiceSwagger",
-      "ServiceName": "Zhaoxi.MSACommerce.UserService.HttpApi",
-      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
-      "DownstreamScheme": "http",
-      "LoadBalancerOptions": {
-        "Type": "RoundRobin"
-      },
-      "UpstreamPathTemplate": "/user/swagger.json",
-      "UpstreamHttpMethod": [
-        "Get"
-      ]
+      "UpstreamHttpMethod": [ "Get" ]
     },
     {
       "ServiceName": "Zhaoxi.MSACommerce.VerificationServer",
@@ -35,6 +20,25 @@
       "UpstreamPathTemplate": "/verification/swagger.json",
       "UpstreamHttpMethod": [ "Get" ]
     },
-   
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.UserService.HttpApi",
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/user/swagger.json",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.CategoryService.HttpApi",
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/category/swagger.json",
+      "UpstreamHttpMethod": [ "Get" ]
+    }
   ]
 }

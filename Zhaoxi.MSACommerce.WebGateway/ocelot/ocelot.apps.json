@@ -8,8 +8,8 @@
         "Type": "RoundRobin"
       },
       "UpstreamPathTemplate": "/api/token/{path}",
-      "UpstreamHttpMethod": [ "Get", "Post" ,"Options"]
-    } ,
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT", "OPTIONS" ]
+    },
 
     {
       "ServiceName": "Zhaoxi.MSACommerce.VerificationServer",
