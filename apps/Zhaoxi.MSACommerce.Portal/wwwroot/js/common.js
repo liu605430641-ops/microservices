@@ -522,8 +522,7 @@ axios.defaults.withCredentials = false;
 
 axios.interceptors.request.use((config) => {
     // // 模拟登录用户的token
-    // localStorage["token"] = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkVsZXZlbiIsImlkIjoiNSIsImV4cCI6MTYxMjg4MTk1MCwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo3MjAwIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo3MjAwIn0.faQZlBXEVkzv65qGjD926EjvCJhNCuCYsJFEB9gWWMI";
-
+   
     if (localStorage["token"] != null) {
         config.headers.common['Authorization'] = "Bearer " + localStorage["token"];
     }
