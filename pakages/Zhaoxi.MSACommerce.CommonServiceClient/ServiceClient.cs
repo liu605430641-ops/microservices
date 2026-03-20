@@ -15,6 +15,12 @@ public class ServiceClient<TServiceApi> : IServiceClient<TServiceApi> where TSer
     {
         ServiceName = loadBalancer.ServiceName;
         var serviceList    = serviceDiscovery.GetServicesAsync(ServiceName).Result;
+
+        if (serviceList.Count()<=0)
+        {
+            throw new InvalidOperationException($"consul找不到节点{ServiceName}");
+            
+        }
         var serviceAddress = loadBalancer.GetNode(serviceList);
 
         httpClient.BaseAddress = new Uri($"http://{serviceAddress}");
