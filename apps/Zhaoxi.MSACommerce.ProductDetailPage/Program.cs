@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddScoped<IDetailPageService, DetailPageService>();
+builder.Services.AddScoped<IStaticPageService, StaticPageService>();
 
 builder.Services.ConfigureServices(builder.Configuration);
 
@@ -31,7 +32,9 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-app.UseStaticPageMiddleware(@"d:\staticfiles\");
+app.UseHealthChecks(serviceCheck.Path);
+
+app.UseStaticPageMiddleware(builder.Configuration["StaticPagePath"] ?? "wwwroot");
 
 app.UseRouting();
 
@@ -40,5 +43,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
                        name: "default",
                        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllers();
 
 app.Run();
