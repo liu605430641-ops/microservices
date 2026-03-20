@@ -13,7 +13,7 @@ public class Startup
         {
             configurator.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host("rabbitmq://rabbitmq:rabbitmq@34.96.203.128:5672");
+                cfg.Host("rabbitmq://rabbitmq:123123@34.96.203.128:5672");
 
                 cfg.ConfigureEndpoints(context);
             });

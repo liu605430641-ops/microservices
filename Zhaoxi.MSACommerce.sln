@@ -99,6 +99,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.AppTest"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.SharedEvent", "shared\Zhaoxi.MSACommerce.SharedEvent\Zhaoxi.MSACommerce.SharedEvent.csproj", "{43338A56-D6DF-4190-86FD-BB0AF396A466}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backgrounds", "backgrounds", "{135ED8B8-4079-4D3D-A2F9-C0B1B8FAF79C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.ElasticSyncWorker", "backgrounds\Zhaoxi.MSACommerce.ElasticSyncWorker\Zhaoxi.MSACommerce.ElasticSyncWorker.csproj", "{21083FBF-6122-437C-AA28-F1808D9D13A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.StaticPageWorker", "backgrounds\Zhaoxi.MSACommerce.StaticPageWorker\Zhaoxi.MSACommerce.StaticPageWorker.csproj", "{EF049BE0-FA16-4150-B1EA-F11722BC8FD3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -229,6 +235,14 @@ Global
 		{43338A56-D6DF-4190-86FD-BB0AF396A466}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43338A56-D6DF-4190-86FD-BB0AF396A466}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43338A56-D6DF-4190-86FD-BB0AF396A466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21083FBF-6122-437C-AA28-F1808D9D13A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21083FBF-6122-437C-AA28-F1808D9D13A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21083FBF-6122-437C-AA28-F1808D9D13A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21083FBF-6122-437C-AA28-F1808D9D13A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF049BE0-FA16-4150-B1EA-F11722BC8FD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF049BE0-FA16-4150-B1EA-F11722BC8FD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF049BE0-FA16-4150-B1EA-F11722BC8FD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF049BE0-FA16-4150-B1EA-F11722BC8FD3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{96EA0A21-C710-4F2A-B338-62D9549F9226} = {7E1D7C19-E3AB-4FA1-B8DF-203652ABE194}
@@ -273,5 +287,7 @@ Global
 		{FEE6EEAA-420C-43D2-85A6-CA2D06106F56} = {1CF35FBD-45B2-43DC-804D-3F36BBCE3EC8}
 		{71CAE356-4C21-4B7E-8661-AAD9AD3C58EA} = {679F1011-B586-45EC-8DB4-E947C3A915D6}
 		{43338A56-D6DF-4190-86FD-BB0AF396A466} = {EE72B78F-2CE7-4303-87BB-7222A67FBCE2}
+		{21083FBF-6122-437C-AA28-F1808D9D13A6} = {135ED8B8-4079-4D3D-A2F9-C0B1B8FAF79C}
+		{EF049BE0-FA16-4150-B1EA-F11722BC8FD3} = {135ED8B8-4079-4D3D-A2F9-C0B1B8FAF79C}
 	EndGlobalSection
 EndGlobal
