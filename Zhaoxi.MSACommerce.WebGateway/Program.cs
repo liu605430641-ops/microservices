@@ -38,6 +38,7 @@ if (app.Environment.IsDevelopment())
                          options.SwaggerEndpoint("/user/swagger.json",        "UserService V1");
                          options.SwaggerEndpoint("/verification/swagger.json","验证码服务器 V1");
                          options.SwaggerEndpoint("/category/swagger.json",    "品类服务 V1");
+                         options.SwaggerEndpoint("/brand/swagger.json",       "品牌服务 V1");
                      });
 }
 

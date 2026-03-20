@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 using Zhaoxi.MSACommerce.BrandService.Infrastructure.Data;
 
-namespace Zhaoxi.MSACommerce.CategoryService.Infrastructure.Data;
+namespace Zhaoxi.MSACommerce.BrandService.Infrastructure.Data;
 
 
 public sealed class BrandDesignTimeDbContextFactory : IDesignTimeDbContextFactory<BrandDbContext>

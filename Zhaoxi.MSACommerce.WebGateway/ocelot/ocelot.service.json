@@ -35,6 +35,17 @@
       },
       "UpstreamPathTemplate": "/api/category/{path}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "DELETE", "OPTIONS" ]
+    }   ,
+
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.BrandService.HttpApi",
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/brand/swagger.json",
+      "UpstreamHttpMethod": [ "Get" ]
     }
   ]
 }
