@@ -17,14 +17,13 @@ serviceCheck ??= new ServiceCheckConfiguration();
 
 builder.Services.AddConsul();
 builder.Services.AddConsulService(serviceConfiguration =>
-{
-    serviceConfiguration.ServiceAddress = new Uri(builder.Configuration["urls"] ?? builder.Configuration["applicationUrl"]);
-}, serviceCheck);
+                                  {
+                                      serviceConfiguration.ServiceAddress = new Uri(builder.Configuration["urls"] ?? builder.Configuration["applicationUrl"]);
+                                  }, serviceCheck);
 
 builder.Services.AddConsulDiscovery();
 
 builder.Services.AddHealthChecks();
-
 
 builder.Services.AddControllersWithViews();
 
@@ -32,14 +31,14 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 
-app.UseStaticFiles();
+app.UseStaticPageMiddleware(@"d:\staticfiles\");
 
 app.UseRouting();
 
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+                       name: "default",
+                       pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

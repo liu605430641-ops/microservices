@@ -8,11 +8,11 @@ builder.Services.AddReverseProxy()
 var app = builder.Build();
 app.UseDefaultFiles();
 app.UseStaticFiles();
-// app.UseStaticFiles(new StaticFileOptions
-//                    {
-//                        FileProvider = new PhysicalFileProvider(@"d:\staticfiles"),
-//                        RequestPath  = "/item"
-//                    });
+app.UseStaticFiles(new StaticFileOptions
+                   {
+                       FileProvider = new PhysicalFileProvider(@"d:\staticfiles"),
+                       RequestPath  = "/item"
+                   });
 
 app.UseRouting();
 
