@@ -36,8 +36,11 @@ public class GetCategoryAndParentsQueryHandler(CategoryDbContext dbContext, IFus
 
         if (category is null) return Result.NotFound();
         
-        // 递归查找所有父类
+        
         var categoryDtos = new List<CategoryDto>();
+        // 添加目标类别
+        categoryDtos.Add(new CategoryDto(category.Id, category.Name));
+        // 递归查找所有父类
         var categoryLookup = allCategories.ToDictionary(c => c.Id, c => c);
         var currentCategoryId = request.Id;
         while (categoryLookup.TryGetValue(currentCategoryId, out var currentCategory))
@@ -45,7 +48,7 @@ public class GetCategoryAndParentsQueryHandler(CategoryDbContext dbContext, IFus
             var parentCategoryId = currentCategory.ParentId;
             if (categoryLookup.TryGetValue(parentCategoryId, out var parentCategory))
             {
-                categoryDtos.Add(new CategoryDto(parentCategory.Id, parentCategory.Name));
+                categoryDtos.Insert(0, new CategoryDto(parentCategory.Id, parentCategory.Name));
                 currentCategoryId = parentCategoryId;
             }
             else
@@ -53,9 +56,6 @@ public class GetCategoryAndParentsQueryHandler(CategoryDbContext dbContext, IFus
                 break;
             }
         }
-        
-        // 添加目标类别
-        categoryDtos.Add(new CategoryDto(category.Id, category.Name));
         
         return Result.Success(categoryDtos);
     }

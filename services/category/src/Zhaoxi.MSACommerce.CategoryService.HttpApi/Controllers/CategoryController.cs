@@ -21,4 +21,18 @@ public class CategoryController() : ApiControllerBase
         var result = await Sender.Send(new GetCategoryAndChildrenQuery(id));
         return ReturnResult(result);
     }
+    
+    [HttpGet("specs")]
+    public async Task<IActionResult> GetSpecs(long id)
+    {
+        var result = await Sender.Send(new GetSpecsByCategoryQuery(id));
+        return ReturnResult(result);
+    }
+    
+    [HttpGet("parameters")]
+    public async Task<IActionResult> GetParameters(long id)
+    {
+        var result = await Sender.Send(new GetParemetersByCategoryQuery(id));
+        return ReturnResult(result);
+    }
 }

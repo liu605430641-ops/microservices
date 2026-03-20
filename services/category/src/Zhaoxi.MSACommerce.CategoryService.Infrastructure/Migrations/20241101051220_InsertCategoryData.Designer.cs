@@ -12,8 +12,8 @@ using Zhaoxi.MSACommerce.CategoryService.Infrastructure.Data;
 namespace Zhaoxi.MSACommerce.CategoryService.Infrastructure.Migrations
 {
     [DbContext(typeof(CategoryDbContext))]
-    [Migration("20241101051220_InsertCategoryData")]
-    partial class InsertCategoryData
+    [Migration("20241103054557_InsertData")]
+    partial class InsertData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,7 +67,7 @@ namespace Zhaoxi.MSACommerce.CategoryService.Infrastructure.Migrations
                     b.ToTable("tb_category", (string)null);
                 });
 
-            modelBuilder.Entity("Zhaoxi.MSACommerce.CategoryService.Core.Entities.CategoryBrands", b =>
+            modelBuilder.Entity("Zhaoxi.MSACommerce.CategoryService.Core.Entities.CategoryBrand", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,23 +97,145 @@ namespace Zhaoxi.MSACommerce.CategoryService.Infrastructure.Migrations
                     b.HasIndex("CategoryId", "BrandId")
                         .IsUnique();
 
-                    b.ToTable("tb_category_brands", (string)null);
+                    b.ToTable("tb_category_brand", (string)null);
                 });
 
-            modelBuilder.Entity("Zhaoxi.MSACommerce.CategoryService.Core.Entities.CategoryBrands", b =>
+            modelBuilder.Entity("Zhaoxi.MSACommerce.CategoryService.Core.Entities.ParameterGroup", b =>
                 {
-                    b.HasOne("Zhaoxi.MSACommerce.CategoryService.Core.Entities.Category", "Category")
-                        .WithMany("Brands")
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint(20)")
+                        .HasColumnName("id");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint(20)")
+                        .HasColumnName("category_id")
+                        .HasComment("所属品类");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTimeOffset?>("LastModifiedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(32)")
+                        .HasColumnName("name")
+                        .HasComment("参数组名");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("tb_param_group", (string)null);
+                });
+
+            modelBuilder.Entity("Zhaoxi.MSACommerce.CategoryService.Core.Entities.ParameterKey", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint(20)")
+                        .HasColumnName("id")
+                        .HasComment("参数Id");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint(20)")
+                        .HasColumnName("category_Id")
+                        .HasComment("所属分类");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTimeOffset?>("LastModifiedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(256)")
+                        .HasColumnName("name")
+                        .HasComment("参数名称");
+
+                    b.Property<long>("ParameterGroupId")
+                        .HasColumnType("bigint(20)")
+                        .HasColumnName("param_group_id")
+                        .HasComment("所属分组");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("ParameterGroupId");
+
+                    b.ToTable("tb_param_key", (string)null);
+                });
+
+            modelBuilder.Entity("Zhaoxi.MSACommerce.CategoryService.Core.Entities.SpecKey", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint(20)")
+                        .HasColumnName("id")
+                        .HasComment("规格Id");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint(20)")
+                        .HasColumnName("category_Id")
+                        .HasComment("所属分类");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTimeOffset?>("LastModifiedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("varchar(256)")
+                        .HasColumnName("name")
+                        .HasComment("规格名称");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("tb_spec_key", (string)null);
+                });
+
+            modelBuilder.Entity("Zhaoxi.MSACommerce.CategoryService.Core.Entities.CategoryBrand", b =>
+                {
+                    b.HasOne("Zhaoxi.MSACommerce.CategoryService.Core.Entities.Category", null)
+                        .WithMany("CategoryBrands")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.Navigation("Category");
+            modelBuilder.Entity("Zhaoxi.MSACommerce.CategoryService.Core.Entities.ParameterKey", b =>
+                {
+                    b.HasOne("Zhaoxi.MSACommerce.CategoryService.Core.Entities.ParameterGroup", "ParameterGroup")
+                        .WithMany("ParameterKeys")
+                        .HasForeignKey("ParameterGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ParameterGroup");
                 });
 
             modelBuilder.Entity("Zhaoxi.MSACommerce.CategoryService.Core.Entities.Category", b =>
                 {
-                    b.Navigation("Brands");
+                    b.Navigation("CategoryBrands");
+                });
+
+            modelBuilder.Entity("Zhaoxi.MSACommerce.CategoryService.Core.Entities.ParameterGroup", b =>
+                {
+                    b.Navigation("ParameterKeys");
                 });
 #pragma warning restore 612, 618
         }

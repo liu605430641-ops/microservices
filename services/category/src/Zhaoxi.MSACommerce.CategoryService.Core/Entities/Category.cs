@@ -8,5 +8,5 @@ public class Category : BaseAuditEntity, IAggregateRoot
     public long ParentId { get; set; }
     public bool IsParent { get; set; }
     public int Sort { get; set; }
-    public ICollection<CategoryBrands> Brands { get; set; }
+    public ICollection<CategoryBrand> CategoryBrands { get; set; }
 }

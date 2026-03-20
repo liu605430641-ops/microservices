@@ -6,21 +6,21 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Zhaoxi.MSACommerce.CategoryService.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InsertCategoryData : Migration
+    public partial class InsertData : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            var assemblyDirectory= Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var sqlFilePath = Path.Combine(assemblyDirectory, "Migrations", "Scripts", "tb_category.sql");
-            var sql = File.ReadAllText(sqlFilePath);
+            var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var sqlFilePath       = Path.Combine(assemblyDirectory, "Migrations", "Scripts", "tb_category.sql");
+            var sql               = File.ReadAllText(sqlFilePath);
             migrationBuilder.Sql(sql);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("truncate table tb_category");
+
         }
     }
 }
