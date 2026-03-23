@@ -5,6 +5,11 @@ using Zhaoxi.MSACommerce.StaticPageWorker.Apis;
 
 namespace Zhaoxi.MSACommerce.StaticPageWorker.Consumers;
 
+/// <summary>
+/// 消费者
+/// 生产者是:Zhaoxi.MSACommerce.AppTest.ProductTest
+/// </summary>
+/// <param name="client"></param>
 public class ProductUpdatedConsumer(IServiceClient<IProductDetailPage> client) : IConsumer<ProductUpdatedEvent>
 {
     public async Task Consume(ConsumeContext<ProductUpdatedEvent> context)

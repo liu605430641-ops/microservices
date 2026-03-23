@@ -3,6 +3,11 @@ using Zhaoxi.MSACommerce.SharedEvent.Products;
 
 namespace Zhaoxi.MSACommerce.AppTest;
 
+/// <summary>
+/// 生产者
+/// 消费者是:Zhaoxi.MSACommerce.StaticPageWorker.Consumers.ProductUpdatedConsumer
+/// </summary>
+/// <param name="publishEndpoint"></param>
 public class ProductTest(IPublishEndpoint publishEndpoint)
 {
     [Theory]
