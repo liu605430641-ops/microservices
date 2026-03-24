@@ -70,6 +70,7 @@ public class ProductFullSyncConsumer(
             pageNumber++;
             
             
+            //使用es客户端 自带的批量插入方法，将products集合中的数据批量插入到es中，indexName是索引库名称
             var response = await esClient.IndexManyAsync(products, indexName);
             Console.WriteLine(response.DebugInformation);
             

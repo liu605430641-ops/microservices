@@ -440,57 +440,26 @@
             },
             methods: {
                 loadData() {
-                    yt.http.post("/search/page", this.search).then((resp) => {
-                        if (resp.data.result) {
+                    yt.http.get(`/api/search?keyword=${this.search.keyword}&pageNumber=${this.search.pageNumber}`).then(resp => {
+                        if (resp.status === 200) {
                             console.log("请求成功");
                         }
                         else {
-                            alert(resp.data.message);
+                            console.log(resp.error);
                             return;
                         }
-                        resp.data.value.rows.forEach(goods => {
-                            let max = 0;
-                            let min = 0;
+                        resp.data.products.forEach(goods => {
                             //转换skus:把字符串转变为对象
                             goods.skus = JSON.parse(goods.skus);
-                            //添加默认选中项,如果按价格排序则选出skus中价格最低的或者最高的，否则选skus中的第一个
-                            if (this.search.sortBy === "price") {
-                                if (this.search.descending === true) {
-                                    //降序，则skus中价格选最高的
-                                    goods.skus.forEach(sku => {
-                                        if (sku.price > max) {
-                                            max = sku.price;
-                                        }
-                                    });
-                                    goods.skusstr.forEach(sku => {
-                                        if (sku.price === max) {
-                                            goods.selected = sku;
-                                        }
-                                    });
-                                } else {
-                                    //升序，则skus中价格选最低的
-                                    min = goods.skus[0].price;
-                                    goods.skus.forEach(sku => {
-                                        if (sku.price < min) {
-                                            min = sku.price;
-                                        }
-                                    });
-                                    goods.skus.forEach(sku => {
-                                        if (sku.price === min) {
-                                            goods.selected = sku;
-                                        }
-                                    });
-                                }
-                            } else {
-                                goods.selected = goods.skus[0];
-                            }
+                            goods.selected = goods.skus[0];
                         });
-                        this.goodsList = resp.data.value.rows;
-                        this.total = resp.data.value.total;
-                        this.totalPage = resp.data.value.totalPages;
+                        this.goodsList = resp.data.products;
+                        console.log(resp.data);
+                        this.total = resp.data.page.totalCount;
+                        this.totalPage = resp.data.page.totalPages;
                         //初始化商品分类过滤参数
-                        if (resp.data.value.categories.length === 1) {
-                            yt.http.get("/category/all/level/" + resp.data.value.categories[0].id).then(
+                        if (resp.data.categories.length === 1) {
+                            yt.http.get("/api/category/all/level/" + resp.data.categories[0].id).then(
                                 resp => {
                                     if (resp.data.result) {
                                         this.breads = resp.data.value;
@@ -504,20 +473,20 @@
                         //初始化分类过滤
                         this.filters.push({
                             k: "cid3",
-                            options: resp.data.value.categories
+                            options: resp.data.categories
                         });
                         //初始化品牌过滤
                         this.filters.push({
                             k: "brandId",
-                            options: resp.data.value.brands
+                            options: resp.data.brands
                         });
                         //初始化其他参数
-                        resp.data.value.specs.forEach(spec => {
-                            spec.options = spec.options.map(o => {
-                                return { name: o };
-                            });
-                            this.filters.push(spec);
-                        });
+                        // resp.data.specs.forEach(spec => {
+                        //     spec.options = spec.options.map(o => {
+                        //         return { name: o };
+                        //     });
+                        //     this.filters.push(spec);
+                        // });
                     });
                 },
                 navPage() {
@@ -619,7 +588,7 @@
                 //2.将请求参数转为对象
                 const search = yt.parse(location.search.substring(1));
                 //3.对page对象进行初始化，防止第一次访问时page为空
-                search.page = search.page ? parseInt(search.page) : 1;
+                search.pageNumber = search.page ? parseInt(search.pageNumber) : 1;
                 //4.对排序进行初始化，默认为""，代表不排序
                 search.sortBy = search.sortBy || "";
                 //5.对排序方式进行初始化，转为布尔值

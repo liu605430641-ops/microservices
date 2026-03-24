@@ -2,7 +2,7 @@
 
 public class PagedList<T> : List<T>
 {
-    public PagedList(IEnumerable<T> items, int count, Pagination pagination)
+    public PagedList(IEnumerable<T> items, long count, Pagination pagination)
     {
         MetaData = new PagedMetaData
         {

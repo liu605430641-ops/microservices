@@ -14,4 +14,11 @@ public class BrandController() : ApiControllerBase
         var result = await Sender.Send(new GetBrandByIdQuery(id));
         return ReturnResult(result);
     }
+    
+    [HttpGet("list")]
+    public async Task<IActionResult> GetByIds(long[] ids)
+    {
+        var result = await Sender.Send(new GetBrandsByIdsQuery(ids));
+        return ReturnResult(result);
+    }
 }

@@ -36,12 +36,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(options =>
                      {
-                         options.SwaggerEndpoint("/swagger/v1/swagger.json",  "Gateway V1");
-                         options.SwaggerEndpoint("/auth/swagger.json",        "AuthServer V1");
-                         options.SwaggerEndpoint("/user/swagger.json",        "UserService V1");
+                         options.SwaggerEndpoint("/swagger/v1/swagger.json",  "网关 V1");
+                         options.SwaggerEndpoint("/auth/swagger.json",        "授权中心 V1");
                          options.SwaggerEndpoint("/verification/swagger.json","验证码服务器 V1");
+                         options.SwaggerEndpoint("/user/swagger.json",        "用户服务 V1");
                          options.SwaggerEndpoint("/category/swagger.json",    "品类服务 V1");
                          options.SwaggerEndpoint("/brand/swagger.json",       "品牌服务 V1");
+                         options.SwaggerEndpoint("/search/swagger.json",      "搜索服务 V1");
                      });
 }
 

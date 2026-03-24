@@ -35,6 +35,28 @@
       },
       "UpstreamPathTemplate": "/api/category/{path}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "DELETE", "OPTIONS" ]
-    } 
+    },
+
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.BrandService.HttpApi",
+      "DownstreamPathTemplate": "/api/brand/{path}",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/api/brand/{path}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "DELETE", "OPTIONS" ]
+    },
+
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.SearchService.HttpApi",
+      "DownstreamPathTemplate": "/api/search/{path}",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/api/search/{path}",
+      "UpstreamHttpMethod": [ "Get", "OPTIONS" ]
+    }
   ]
 }
