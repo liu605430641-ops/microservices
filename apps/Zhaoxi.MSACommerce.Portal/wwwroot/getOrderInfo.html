@@ -135,21 +135,21 @@
                                     <div class="sendGoods">
                                         <ul class="yui3-g">
                                             <li class="yui3-u-1-6">
-                                                <span><img width="70px" height="70px" :src="good.image" /></span>
+                                                <span><img width="70px" height="70px" :src="good.images" /></span>
                                             </li>
                                             <li class="yui3-u-7-12">
-                                                <div class="desc">{{good.title}}</div>
+                                                <div class="desc">{{good.name}}</div>
                                                 <div class="seven">
-                                                    <span v-for="(v,k) in good.ownSpec" :key="k">
+                                                    <span v-for="(v,k) in good.Spec" :key="k">
                                                         {{v}}
                                                     </span>
                                                 </div>
                                             </li>
                                             <li class="yui3-u-1-12">
-                                                <div class="price">￥{{yt.formatPrice(good.price * good.num)}}</div>
+                                                <div class="price">￥{{yt.formatPrice(good.price * good.quantity)}}</div>
                                             </li>
                                             <li class="yui3-u-1-12">
-                                                <div class="num">X{{good.num}}</div>
+                                                <div class="num">X{{good.quantity}}</div>
                                             </li>
                                             <li class="yui3-u-1-12">
                                                 <div class="exit">有货</div>
@@ -220,7 +220,7 @@
                 addresses: [// 可选地址列表,假数据，需要从后台查询
                     {
                         id: 1,
-                        name: "Gerry",// 收件人姓名
+                        name: "Zilor",// 收件人姓名
                         phone: "15855500000",// 电话
                         state: "武汉",// 省份
                         city: "武汉",// 城市
@@ -259,10 +259,10 @@
             },
             computed: {
                 totalNum() {
-                    return this.carts.reduce((c1, c2) => c1 + c2.num, 0);
+                    return this.carts.reduce((c1, c2) => c1 + c2.quantity, 0);
                 },
                 totalPay() {
-                    return this.carts.reduce((c1, c2) => c1 + c2.price * c2.num, 0);
+                    return this.carts.reduce((c1, c2) => c1 + c2.price * c2.quantity, 0);
                 },
                 actualPay() {
                     return this.totalPay + this.order.postFee - this.order.discount;
@@ -271,17 +271,12 @@
             methods: {
                 loadData() {
                     yt.verifyUser().then(res => {
-                        if (res.data.result) {
-                            //1.已经登录，获取购物车中要下单的信息
-                            this.carts = yt.store.get("selectedCarts") || [];
-                            //2.获取用户的地址信息(自行完成)
-                        }
-                        else {
-                            //3.未登录，重定向到登录页面
-                            window.location = "/login.html?returnUrl=" + window.location.href;
-                        }
+                        //1.已经登录，获取购物车中要下单的信息
+                        this.carts = yt.store.get("selectedCarts") || [];
+                        //2.获取用户的地址信息(自行完成)
                     }).catch(() => {
-                        alert("数据读取异常");
+                        //3.未登录，重定向到登录页面
+                        window.location = "/login.html?returnUrl=" + window.location.href;
                     })
                 },
                 submit() {
@@ -294,21 +289,13 @@
                         isCommitted = true;//改成已提交
                     }
                     yt.verifyUser().then(res => {
-                        if (!res.data.result) {
-                            alert("登陆验证失败");
-                            //未登录，重定向到登录页面
-                            window.location = "/login.html?returnUrl=" + window.location.href;
-                            isCommitted = false;//改成未提交，
-                            return;
-                        }
                         //已登录，进行订单提交
                         //1.把购物车数据处理成订单对象
                         const orderDetails = [];
-                        //1.1将ownSpec字段转换成json
                         this.carts.forEach(s => {
                             orderDetails.push({
                                 skuId: s.skuId,
-                                num: s.num
+                                quantity: s.quantity
                             });
 
                         });
@@ -320,28 +307,25 @@
                         //3.复制到订单对象
                         Object.assign(this.order, obj, { carts: orderDetails });
                         //4.提交订单
-                        yt.http.post("/order/create", this.order).then((resp) => {
-                            if (!resp.data.result) {
-                                alert(resp.data.message);
-                                event.target.disabled = false;
-                                isCommitted = false;//改成未提交，异常后允许重复提交
-                            }
-                            else {
-                                //4.1在线支付，需要到付款页
-                                window.location = "pay.html";
-                                //4.2 添加总金额和订单号到本地数据
-                                yt.store.set("totalPay", this.actualPay);
-                                yt.store.set("orderId", resp.data.value.orderId);
-                            }
+                        yt.http.post("/api/order", this.order).then((resp) => {
+                            //4.1在线支付，需要到付款页
+                            window.location = "pay.html";
+                            //4.2 添加总金额和订单号到本地数据
+                            yt.store.set("totalPay", this.actualPay);
+                            yt.store.set("orderId", resp.data.value.orderId);
                         }).catch(({ data }) => {
                             event.target.disabled = false;
-                            isCommitted = false;//改成未提交 异常后允许重复提交
+                            isCommitted = false;//改成未提交，异常后允许重复提交
                             console.log(data);
                         })
                     }).catch(() => {
-                        event.target.disabled = false;
-                        isCommitted = false;//异常后允许重复提交
-                        alert("数据读取异常");
+                        if (!res.data.result) {
+                            alert("登陆验证失败");
+                            //未登录，重定向到登录页面
+                            window.location = "/login.html?returnUrl=" + window.location.href;
+                            isCommitted = false;//改成未提交，
+                            return;
+                        }
                     })
                 }
             }

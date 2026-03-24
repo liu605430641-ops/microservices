@@ -79,7 +79,7 @@ const ytTop = {
     },
     methods: {
         search() {
-            window.location = '/search.html?key=' + this.key;
+            window.location = '/search.html?keyword=' + this.key;
         },
         getUrlParam: function (name) {
             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");

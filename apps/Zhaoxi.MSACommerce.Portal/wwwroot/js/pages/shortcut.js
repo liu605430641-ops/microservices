@@ -50,8 +50,8 @@ const shortcut = {
                 "Authorization": "Bearer " + localStorage["token"]
             }
         }).then(resp => {
-            this.user = resp.data;
-        }).catch(err => console.log(err));
+            this.user = resp.data
+        })
     },
     methods: {
         gotoLogin() {

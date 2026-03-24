@@ -247,12 +247,12 @@
                                 <div class="list-wrap">
                                     <div class="p-img">
                                         <!--<a :href=" 'item/' + goods.id +'.html'" target="_blank"><img :src="goods.selected.image" height="200"/></a>-->
-                                        <a :href=" 'item/' + goods.id+'.html'" target="_blank"><img :src="goods.selected.image" height="200" /></a>
+                                        <a :href=" 'item/' + goods.id+'.html'" target="_blank"><img :src="goods.selected.Images" height="200" /></a>
                                         <!--多sku图片列表-->
                                         <ul class="skus">
                                             <li :class="{selected: sku.id == goods.selected.id}" v-for="sku in goods.skus" :key="sku.id"
                                                 @mouseEnter="goods.selected=sku">
-                                                <img :src="sku.image" />
+                                                <img :src="sku.Images" />
                                             </li>
                                         </ul>
                                     </div>
@@ -260,14 +260,11 @@
                                     <div class="price">
                                         <strong>
                                             <em>¥</em>
-                                            <i>{{yt.formatPrice(goods.selected.price)}}</i>
+                                            <i>{{yt.formatPrice(goods.selected.Price)}}</i>
                                         </strong>
                                     </div>
                                     <div class="attr">
-                                        <em>{{goods.selected.title}}</em>
-                                    </div>
-                                    <div class="cu">
-                                        <em><span>促</span>{{goods.subTitle}}</em>
+                                        <em>{{goods.selected.Name}}</em>
                                     </div>
                                     <div class="commit">
                                         <i class="command">已有2000人评价</i>
@@ -408,8 +405,8 @@
             data: {
                 yt,
                 search: {
-                    key: "",  //搜索页面的关键字
-                    page: 1,
+                    keyword: "",  //搜索页面的关键字
+                    pageNumber: 1,
                     filter: {} //发送到后台的过滤项
                 },
                 goodsList: [], //接收搜索到的结果
@@ -440,7 +437,7 @@
             },
             methods: {
                 loadData() {
-                    yt.http.get(`/api/search?keyword=${this.search.keyword}&pageNumber=${this.search.pageNumber}`).then(resp => {
+                    yt.http.get(`/api/search?keyword='小米'&pageNumber=${this.search.pageNumber}`).then(resp => {
                         if (resp.status === 200) {
                             console.log("请求成功");
                         }

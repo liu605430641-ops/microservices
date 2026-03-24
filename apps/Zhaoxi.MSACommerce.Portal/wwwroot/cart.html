@@ -51,7 +51,7 @@
                                             <div class="item-img"><img :src="cart.image" width="80px" height="80px" /></div>
                                             <div class="item-msg">
                                                 <span style="line-height:23px">
-                                                    {{cart.title | ellipsis}}<br />
+                                                    {{cart.name | ellipsis}}<br />
                                                     <span v-for="(v,k) in cart.ownSpec" :key="k">
                                                         {{k}}:<span style="color: #c81623;">
                                                             {{v}}<span>
@@ -65,10 +65,10 @@
                                     <li class="yui3-u-1-8"><span style="line-height:70px " class="price">{{yt.formatPrice(cart.price)}}</span></li>
                                     <li class="yui3-u-1-8" style="padding-top: 20px">
                                         <a href="javascript:void(0)" class="increment mins" @click="decrement(cart)">-</a>
-                                        <input autocomplete="off" type="text" v-model="cart.num" minnum="1" class="itxt" />
+                                        <input autocomplete="off" type="text" v-model="cart.quantity" minnum="1" class="itxt" />
                                         <a href="javascript:void(0)" class="increment plus" @click="increment(cart)">+</a>
                                     </li>
-                                    <li class="yui3-u-1-8"><span style="line-height:70px " class="sum">{{yt.formatPrice(cart.price*cart.num)}}</span></li>
+                                    <li class="yui3-u-1-8"><span style="line-height:70px " class="sum">{{yt.formatPrice(cart.price*cart.quantity)}}</span></li>
                                     <li class="yui3-u-1-8">
                                         <a href="#none" @click="deleteCart(i)">删除</a><br />
                                         <a href="#none">移到我的关注</a>
@@ -297,62 +297,37 @@ var cartVm = new Vue({
             },
             computed: {
                 totalPrice() {
-                    return yt.formatPrice(this.selected.reduce((c1, c2) => c1 + c2.num * c2.price, 0))
+                    return yt.formatPrice(this.selected.reduce((c1, c2) => c1 + c2.quantity * c2.price, 0))
                 },
 
                 totalNum() {
-                    return this.selected.reduce((c1, c2) => c1 + c2.num, 0);
+                    return this.selected.reduce((c1, c2) => c1 + c2.quantity, 0);
                 }
             },
             methods: {
                 loadCarts() {
                     yt.verifyUser().then(res => {  //1.先判断登录状态
-                        if (res.data.result) {//1 登陆后同步
-                            this.carts = yt.store.get("carts") || []; // 获取本地购物数据
-                            if (this.carts.length > 0) {
-                                yt.http.post("/cart/batch", this.carts)// 添加到添加到购物车
-                                    .then(resp => {
-                                        if (resp.data.result) {// 清空本地购物车数据
-                                            yt.store.del("carts");
-                                        }
-                                        else {
-                                            alert("本地购物车同步失败" + resp.data.message);
-                                        }
-                                    });
-                            }
-                            //2.登录后获取
-                            yt.http.get("/cart/list").then(respList => {
-                                this.carts = respList.data.value;
-                                this.carts.forEach(s => {
-                                    s.ownSpec = eval("(" + s.ownSpec + ")");
-                                });
-                                this.selected = this.carts;
-                                this.$refs.selectAllTop.checked = true;
-                                this.$refs.selectAllBottom.checked = true;
-                            }).catch(() => {
-                                console.log("查询失败")
-                            })
-                        }
-                        else {
-                            //3.未登陆
-                            this.carts = yt.store.get("carts") || [];
+                        yt.http.get("/api/cart").then(respList => {
+                            this.carts = respList.data.items;
                             this.carts.forEach(s => {
                                 s.ownSpec = eval("(" + s.ownSpec + ")");
                             });
                             this.selected = this.carts;
                             this.$refs.selectAllTop.checked = true;
                             this.$refs.selectAllBottom.checked = true;
-                        }
+                        }).catch(() => {
+                            console.log("查询失败")
+                        })
                     }).catch(() => {
-                        alert("请求异常");
+                        alert("未登录");
                     })
                 },
                 increment(c) {
-                    c.num++;
+                    c.quantity++;
                     yt.verifyUser().then(res => {
                         if (res.data.result) {
                             //已经登录，向后台发起请求
-                            yt.http.put("/cart/update", yt.stringify({ id: c.skuId, num: c.num })).then(resUpdate => {
+                            yt.http.put("/cart/update", yt.stringify({ id: c.skuId, quantity: c.quantity })).then(resUpdate => {
                                 if (resUpdate.data.result) {
                                     console.log("increment succeed");
                                 }
@@ -370,14 +345,14 @@ var cartVm = new Vue({
                     })
                 },
                 decrement(c) {
-                    if (c.num <= 1) {
+                    if (c.quantity <= 1) {
                         return;
                     }
-                    c.num--;
+                    c.quantity--;
                     yt.verifyUser().then(res => {
                         if (res.data.result) {
                             //已经登录，向后台发起请求
-                            yt.http.put("/cart/update", yt.stringify({ id: c.skuId, num: c.num })).then(resUpdate => {
+                            yt.http.put("/cart/update", yt.stringify({ id: c.skuId, quantity: c.quantity })).then(resUpdate => {
                                 if (resUpdate.data.result) {
                                     console.log("decrement succeed");
                                 }
@@ -391,7 +366,7 @@ var cartVm = new Vue({
                             yt.store.set("carts", this.carts);
                         }
                     }).catch(() => {
-                        alert("请求异常");
+                        window.location.href = "/login.html";
                     })
                 },
                 deleteCart(i) {
@@ -436,19 +411,14 @@ var cartVm = new Vue({
                 toOrderInfo() {
                     //1.判断是否登录
                     yt.verifyUser().then(res => {
-                        if (res.data.result) {
-                            //2.已登录
-                            //2.1 保存已经选购的购物车记录到localStorage
-                            yt.store.set("selectedCarts", this.selected);
-                            //2.2 跳转到订单页面
-                            window.location.href = "/getOrderInfo.html";
-                        }
-                        else {
-                            //3.未登录
-                            window.location.href = "/login.html?returnUrl=" + window.location.href;
-                        }
+                        //2.已登录
+                        //2.1 保存已经选购的购物车记录到localStorage
+                        yt.store.set("selectedCarts", this.selected);
+                        //2.2 跳转到订单页面
+                        window.location.href = "/getOrderInfo.html";
                     }).catch(() => {
-                        alert("请求异常");
+                        //3.未登录
+                        window.location.href = "/login.html?returnUrl=" + window.location.href;
                     })
                 }
 

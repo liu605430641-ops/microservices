@@ -56,7 +56,7 @@
         "Type": "RoundRobin"
       },
       "UpstreamPathTemplate": "/api/search/{path}",
-      "UpstreamHttpMethod": [ "Get", "OPTIONS" ]
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "DELETE", "OPTIONS" ]
     }
   ]
 }
