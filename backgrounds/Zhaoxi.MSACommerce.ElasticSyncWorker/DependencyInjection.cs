@@ -20,6 +20,11 @@ public static class DependencyInjection
         return services;
     }
     
+    /// <summary>
+    /// 注册依赖的服务客户端
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
     private static void ConfigureServiceClient(IServiceCollection services, IConfiguration configuration)
     {
         services.AddServiceClient<IProductServiceApi>(option =>
@@ -50,6 +55,11 @@ public static class DependencyInjection
         });
     }
 
+    /// <summary>
+    /// 自注册消费者和MassTransit
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
     private static void ConfigureMassTransit(IServiceCollection services, IConfiguration configuration)
     {
         services.AddMassTransit(configurator =>
@@ -64,15 +74,22 @@ public static class DependencyInjection
         });
     }
 
+    /// <summary>
+    /// 链接es，并注册ElasticsearchClient
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="configuration"></param>
+    /// <exception cref="ArgumentNullException"></exception>
     private static void ConfigureElasticSearch(IServiceCollection services, IConfiguration configuration)
     {
         var esConn = configuration.GetConnectionString("ElasticSearchConnection");
         if (string.IsNullOrEmpty(esConn)) throw new ArgumentNullException("ElasticSearchConnection");
 
-        var settings = new ElasticsearchClientSettings(new Uri(esConn));
+        var settings = new ElasticsearchClientSettings(new Uri(esConn)) 
+           .Authentication(new BasicAuthentication("elastic", "123123"));;
 
         var client = new ElasticsearchClient(settings);
-
+       
         services.AddSingleton(client);
     }
 }
