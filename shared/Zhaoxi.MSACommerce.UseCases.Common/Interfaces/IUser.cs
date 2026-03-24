@@ -2,6 +2,6 @@
 
 public interface IUser
 {
-    int? Id { get; }
+    long Id { get; }
     string? Username { get; }
 }

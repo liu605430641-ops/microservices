@@ -47,7 +47,7 @@ public class AuditEntityInterceptor(IUser currentUser) : SaveChangesInterceptor
         {
             if (entry.State is not (EntityState.Added or EntityState.Modified)) continue;
 
-            if (currentUser.Id is null) continue;
+            if (currentUser.Id  == 0) continue;
 
             if (entry.State == EntityState.Added)
                 entry.Entity.CreatedBy = currentUser.Id;

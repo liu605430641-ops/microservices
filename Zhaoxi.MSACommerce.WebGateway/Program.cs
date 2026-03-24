@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Consul;
@@ -14,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddOcelot(
                                 folder: "./ocelot",
                                 env: builder.Environment,
-                                mergeTo: MergeOcelotJson.ToMemory, //选择将ocelot.json文件合并到内存中， 不能选直接合并物理文件，否则会导致无法热更新
+                                mergeTo: MergeOcelotJson.ToMemory,
                                 optional: false, reloadOnChange: true);
 
 builder.Services
@@ -43,6 +40,7 @@ if (app.Environment.IsDevelopment())
                          options.SwaggerEndpoint("/category/swagger.json",    "品类服务 V1");
                          options.SwaggerEndpoint("/brand/swagger.json",       "品牌服务 V1");
                          options.SwaggerEndpoint("/search/swagger.json",      "搜索服务 V1");
+                         options.SwaggerEndpoint("/search/Cart.json",         "购物车服务 V1");
                      });
 }
 

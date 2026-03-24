@@ -2,21 +2,6 @@
   "Routes": [
     {
       "ServiceName": "Zhaoxi.MSACommerce.UserService.HttpApi",
-      "DownstreamPathTemplate": "/api/user/test",
-      "DownstreamScheme": "http",
-      "LoadBalancerOptions": {
-        "Type": "RoundRobin"
-      },
-      "UpstreamPathTemplate": "/api/user/test",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "DELETE", "OPTIONS" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKeys": [ "Bearer" ],
-        "AllowedScopes": []
-      }
-    },
-
-    {
-      "ServiceName": "Zhaoxi.MSACommerce.UserService.HttpApi",
       "DownstreamPathTemplate": "/api/user/{path}",
       "DownstreamScheme": "http",
       "LoadBalancerOptions": {
@@ -56,6 +41,17 @@
         "Type": "RoundRobin"
       },
       "UpstreamPathTemplate": "/api/search/{path}",
+      "UpstreamHttpMethod": [ "Get", "OPTIONS" ]
+    },
+
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.CartService.HttpApi",
+      "DownstreamPathTemplate": "/api/cart/{path}",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/api/cart/{path}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "DELETE", "OPTIONS" ]
     }
   ]

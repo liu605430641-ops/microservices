@@ -61,6 +61,17 @@
       },
       "UpstreamPathTemplate": "/search/swagger.json",
       "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.CartService.HttpApi",
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/cart/swagger.json",
+      "UpstreamHttpMethod": [ "Get" ]
     }
   ]
 }

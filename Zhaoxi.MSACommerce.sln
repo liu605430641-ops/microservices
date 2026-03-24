@@ -115,6 +115,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.SearchSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.Infrastructure.ElasticSearch", "shared\Zhaoxi.MSACommerce.Infrastructure.ElasticSearch\Zhaoxi.MSACommerce.Infrastructure.ElasticSearch.csproj", "{959425F6-2FF1-4345-816C-FAB5725AB69A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cart", "cart", "{DDC3456A-004A-48B8-AA82-962AFF77C7D8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6A651B3C-ECCF-4586-8786-0CD6799B6F3B}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.CartService.HttpApi", "services\cart\src\Zhaoxi.MSACommerce.CartService.HttpApi\Zhaoxi.MSACommerce.CartService.HttpApi.csproj", "{746DE6D7-847D-420E-B18C-81C3E0BE9D96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.CartService.Core", "services\cart\src\Zhaoxi.MSACommerce.CartService.Core\Zhaoxi.MSACommerce.CartService.Core.csproj", "{E6C3C936-FBAB-49D8-AAE7-08E290BD7A97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.CartService.Infrastructure", "services\cart\src\Zhaoxi.MSACommerce.CartService.Infrastructure\Zhaoxi.MSACommerce.CartService.Infrastructure.csproj", "{4FDD5A61-CEA9-4876-932F-EC009E645865}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.CartService.UseCases", "services\cart\src\Zhaoxi.MSACommerce.CartService.UseCases\Zhaoxi.MSACommerce.CartService.UseCases.csproj", "{22CAA096-D371-41E9-87A5-017DBF4251C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.Infrastructure.Redis", "shared\Zhaoxi.MSACommerce.Infrastructure.Redis\Zhaoxi.MSACommerce.Infrastructure.Redis.csproj", "{62949DB4-5669-4DBD-B57A-3307C7CE6F0A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -273,6 +290,26 @@ Global
 		{959425F6-2FF1-4345-816C-FAB5725AB69A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{959425F6-2FF1-4345-816C-FAB5725AB69A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{959425F6-2FF1-4345-816C-FAB5725AB69A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{746DE6D7-847D-420E-B18C-81C3E0BE9D96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{746DE6D7-847D-420E-B18C-81C3E0BE9D96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{746DE6D7-847D-420E-B18C-81C3E0BE9D96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{746DE6D7-847D-420E-B18C-81C3E0BE9D96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E6C3C936-FBAB-49D8-AAE7-08E290BD7A97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E6C3C936-FBAB-49D8-AAE7-08E290BD7A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E6C3C936-FBAB-49D8-AAE7-08E290BD7A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E6C3C936-FBAB-49D8-AAE7-08E290BD7A97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FDD5A61-CEA9-4876-932F-EC009E645865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FDD5A61-CEA9-4876-932F-EC009E645865}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FDD5A61-CEA9-4876-932F-EC009E645865}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FDD5A61-CEA9-4876-932F-EC009E645865}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22CAA096-D371-41E9-87A5-017DBF4251C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22CAA096-D371-41E9-87A5-017DBF4251C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22CAA096-D371-41E9-87A5-017DBF4251C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22CAA096-D371-41E9-87A5-017DBF4251C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62949DB4-5669-4DBD-B57A-3307C7CE6F0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62949DB4-5669-4DBD-B57A-3307C7CE6F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62949DB4-5669-4DBD-B57A-3307C7CE6F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62949DB4-5669-4DBD-B57A-3307C7CE6F0A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{96EA0A21-C710-4F2A-B338-62D9549F9226} = {7E1D7C19-E3AB-4FA1-B8DF-203652ABE194}
@@ -324,5 +361,12 @@ Global
 		{79BFD517-9E58-4140-9B50-B8D10EFEC944} = {F86206A0-BFC1-4344-9FC8-1AB109961B53}
 		{0E36E69B-6DA6-4E86-8CF3-79E7930BCE8B} = {F86206A0-BFC1-4344-9FC8-1AB109961B53}
 		{959425F6-2FF1-4345-816C-FAB5725AB69A} = {EE72B78F-2CE7-4303-87BB-7222A67FBCE2}
+		{DDC3456A-004A-48B8-AA82-962AFF77C7D8} = {7E1D7C19-E3AB-4FA1-B8DF-203652ABE194}
+		{6A651B3C-ECCF-4586-8786-0CD6799B6F3B} = {DDC3456A-004A-48B8-AA82-962AFF77C7D8}
+		{746DE6D7-847D-420E-B18C-81C3E0BE9D96} = {6A651B3C-ECCF-4586-8786-0CD6799B6F3B}
+		{E6C3C936-FBAB-49D8-AAE7-08E290BD7A97} = {6A651B3C-ECCF-4586-8786-0CD6799B6F3B}
+		{4FDD5A61-CEA9-4876-932F-EC009E645865} = {6A651B3C-ECCF-4586-8786-0CD6799B6F3B}
+		{22CAA096-D371-41E9-87A5-017DBF4251C2} = {6A651B3C-ECCF-4586-8786-0CD6799B6F3B}
+		{62949DB4-5669-4DBD-B57A-3307C7CE6F0A} = {EE72B78F-2CE7-4303-87BB-7222A67FBCE2}
 	EndGlobalSection
 EndGlobal

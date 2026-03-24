@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\..\pakages\Zhaoxi.MSACommerce.Authentication.JwtBearer\Zhaoxi.MSACommerce.Authentication.JwtBearer.csproj" />
+        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.HttpApi.Common\Zhaoxi.MSACommerce.HttpApi.Common.csproj" />
+        <ProjectReference Include="..\Zhaoxi.MSACommerce.CartService.Infrastructure\Zhaoxi.MSACommerce.CartService.Infrastructure.csproj" />
+        <ProjectReference Include="..\Zhaoxi.MSACommerce.CartService.UseCases\Zhaoxi.MSACommerce.CartService.UseCases.csproj" />
+    </ItemGroup>
+
+</Project>
