@@ -16,6 +16,7 @@ public class ProductFullSyncConsumer(
     IServiceClient<IBrandServiceApi> brandClient,
     ElasticsearchClient esClient) : IConsumer<ProductFullSyncEvent>
 {
+    //作用查询的是mssql的数据，查询到的数据会被转换成Product对象，存入es中
     private readonly Dictionary<long, List<SpecKeyDto>> _specKeyDict = new ();
     private readonly Dictionary<long, List<CategoryDto>> _categoryDict = new ();
     private readonly Dictionary<long, BrandDto> _brandDict = new ();
@@ -24,9 +25,10 @@ public class ProductFullSyncConsumer(
     {
         var pageNumber = 1;
         const int pageSize = 100;
-        bool hasNext;
-        var indexName = "product";
+        bool hasNext; //是否有下一页
+        var indexName = "product";//索引库名称
         
+        //全量更新cosmetics:先删除索引库，再创建索引库，保证数据的完整性
         await esClient.Indices.DeleteAsync(indexName);
         await esClient.Indices.CreateAsync(indexName);
         
@@ -36,6 +38,8 @@ public class ProductFullSyncConsumer(
             
             var spuListResponse = await productClient.ServiceApi.GetSpuListAsync(pageNumber, pageSize);
 
+            //为什么从响应头中获取分页信息？因为分页信息是由服务端返回的，服务端在处理请求时会根据查询条件和数据总量计算出分页信息，并将其放在响应头中返回给客户端。客户端可以通过读取响应头中的分页信息来了解当前页码、每页条数、总页数等信息，从而实现分页功能。
+          
             var paginationHeader = spuListResponse.Headers.First(pair => pair.Key == "Pagination").Value.First();
 
             if (spuListResponse.Content is null) return;
@@ -110,7 +114,7 @@ public class ProductFullSyncConsumer(
             dict.Add("id", sku.Id);
             dict.Add("name", sku.Name);
             //sku中有多个图片，只展示第一张
-            dict.Add("image", sku.Images.Split(",")[0]);
+            dict.Add("image", sku.Images?.Split(",")[0]);
             dict.Add("price", sku.Price);
             // 添加到字典中
             skus.Add(dict);
