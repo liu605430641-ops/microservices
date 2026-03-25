@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>Zhaoxi.MSACommerce.CategoryService.Core</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.SharedKernel\Zhaoxi.MSACommerce.SharedKernel.csproj"/>
+    </ItemGroup>
+
+</Project>
