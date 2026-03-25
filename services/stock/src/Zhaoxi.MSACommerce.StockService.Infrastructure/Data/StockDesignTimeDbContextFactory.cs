@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using Zhaoxi.MSACommerce.StockService.Infrastructure.Data;
 
-namespace Zhaoxi.MSACommerce.UserService.Infrastructure.Data;
+namespace Zhaoxi.MSACommerce.StockService.Infrastructure.Data;
 
 public sealed class StockDesignTimeDbContextFactory : IDesignTimeDbContextFactory<StockDbContext>
 {

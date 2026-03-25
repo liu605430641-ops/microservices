@@ -4,15 +4,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.EnvironmentVariables;
 using Zhaoxi.MSACommerce.OrderService.Infrastructure.Data;
 
-namespace Zhaoxi.MSACommerce.UserService.Infrastructure.Data;
+namespace Zhaoxi.MSACommerce.OrderService.Infrastructure.Data;
 
 public sealed class OrderDesignTimeDbContextFactory : IDesignTimeDbContextFactory<OrderDbContext>
 {
     /// <summary>
-    /// 设计时创建 <see cref="OrderDbConnection"/>（供 EF 迁移/更新数据库使用，避免依赖启动项目的 Host/DI）。
+    /// 设计时创建 <see cref="OrderDbContext"/>（供 EF 迁移/更新数据库使用，避免依赖启动项目的 Host/DI）。
     /// </summary>
     /// <param name="args">命令行参数</param>
-    /// <returns><see cref="OrderDbConnection"/> 实例</returns>
+    /// <returns><see cref="OrderDbContext"/> 实例</returns>
     public OrderDbContext CreateDbContext(string[] args)
     {
         IConfigurationRoot configuration = new ConfigurationBuilder()
