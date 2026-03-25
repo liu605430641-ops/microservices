@@ -521,8 +521,12 @@ axios.defaults.timeout = 5000000;
 axios.defaults.withCredentials = false;
 
 axios.interceptors.request.use((config) => {
+    console.log(config);
     if (localStorage["token"] != null) {
         config.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    }
+    if (localStorage["requestId"] != null) {
+        config.headers.common['X-Request-Id'] = localStorage["requestId"];
     }
     return config;
 });

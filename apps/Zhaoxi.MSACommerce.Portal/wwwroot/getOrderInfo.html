@@ -247,7 +247,8 @@
                     postFee: 0, //邮费
                     discount: 0 //优惠
                 },
-                carts: []
+                carts: [],
+                requestId: ""//请求id
 
             },
             components: {
@@ -274,6 +275,13 @@
                         //1.已经登录，获取购物车中要下单的信息
                         this.carts = yt.store.get("selectedCarts") || [];
                         //2.获取用户的地址信息(自行完成)
+                        //3.生成请求ID
+                        let requestId = "";
+                        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                        for (let i = 0; i < 10; i++) {
+                            requestId += chars.charAt(Math.floor(Math.random() * chars.length));
+                        }
+                        localStorage.setItem("requestId", requestId);
                     }).catch(() => {
                         //3.未登录，重定向到登录页面
                         window.location = "/login.html?returnUrl=" + window.location.href;
@@ -306,6 +314,7 @@
                         };
                         //3.复制到订单对象
                         Object.assign(this.order, obj, { carts: orderDetails });
+                        console.log(this.order);
                         //4.提交订单
                         yt.http.post("/api/order", this.order).then((resp) => {
                             //4.1在线支付，需要到付款页
@@ -317,15 +326,13 @@
                             event.target.disabled = false;
                             isCommitted = false;//改成未提交，异常后允许重复提交
                             console.log(data);
-                        })
-                    }).catch(() => {
-                        if (!res.data.result) {
-                            alert("登陆验证失败");
-                            //未登录，重定向到登录页面
-                            window.location = "/login.html?returnUrl=" + window.location.href;
-                            isCommitted = false;//改成未提交，
-                            return;
-                        }
+                        });
+                    }).catch(e => {
+                        console.log(e);
+                        alert("登陆验证失败");
+                        //未登录，重定向到登录页面
+                        window.location = "/login.html?returnUrl=" + window.location.href;
+                        isCommitted = false;//改成未提交，
                     })
                 }
             }

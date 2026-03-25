@@ -21,5 +21,6 @@
       "UpstreamPathTemplate": "/api/verification/{path}",
       "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT", "OPTIONS" ]
     }
+    
   ]
 }

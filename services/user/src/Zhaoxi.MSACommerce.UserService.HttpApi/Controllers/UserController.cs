@@ -31,7 +31,6 @@ public class UserController(IServiceClient<IVerificationApi> client) : ApiContro
     }
     
     [HttpGet("test")]
-    [Authorize]
     public async Task<IActionResult> ayth([FromServices] IUser user)
     {
         return Ok(user);

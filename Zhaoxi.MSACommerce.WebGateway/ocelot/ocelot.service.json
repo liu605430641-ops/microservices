@@ -9,6 +9,7 @@
       },
       "UpstreamPathTemplate": "/api/user/{path}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "DELETE", "OPTIONS" ]
+      
     },
 
     {

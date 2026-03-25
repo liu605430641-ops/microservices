@@ -18,9 +18,8 @@
       <_ContentIncludedByDefault Remove="Pages\_ViewStart.cshtml" />
     </ItemGroup>
 
-
     <ItemGroup>
-        <PackageReference Include="Yarp.ReverseProxy" Version="2.2.0" />
+      <PackageReference Include="Yarp.ReverseProxy" Version="2.2.0" />
     </ItemGroup>
 
 </Project>
