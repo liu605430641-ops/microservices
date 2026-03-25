@@ -11,5 +11,11 @@
         <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.Infrastructure.Redis\Zhaoxi.MSACommerce.Infrastructure.Redis.csproj" />
         <ProjectReference Include="..\Zhaoxi.MSACommerce.CartService.Core\Zhaoxi.MSACommerce.CartService.Core.csproj" />
     </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="DotNetCore.CAP" Version="8.3.1" />
+        <PackageReference Include="DotNetCore.CAP.Dashboard" Version="8.3.1" />
+        <PackageReference Include="DotNetCore.CAP.InMemoryStorage" Version="8.3.1" />
+        <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="8.3.1" />
+    </ItemGroup>
 
 </Project>

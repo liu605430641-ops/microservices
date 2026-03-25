@@ -21,6 +21,8 @@ public static class DependencyInjection
 
         ConfigureCap(services, configuration);
         
+        //注册雪花id生成器，参数0表示workerId，单机部署时可设置为0，分布式部署时每个实例需设置不同的workerId（范围0-1023），以保证生成的ID全局唯一。
+        //后续通过主机id分布式的时候动态获取
         services.AddIdGen(0);
         
         return services;

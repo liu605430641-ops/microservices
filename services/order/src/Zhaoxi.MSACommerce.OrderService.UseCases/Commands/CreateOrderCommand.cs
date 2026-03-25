@@ -27,6 +27,7 @@ public class CreateOrderCommandHandler(OrderDbContext dbContext, IIdGenerator<lo
 {
     public async Task<Result> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
     {
+        //使用雪花id
         var order = new Order(idGen.CreateId())
         {
             UserId = user.Id,
