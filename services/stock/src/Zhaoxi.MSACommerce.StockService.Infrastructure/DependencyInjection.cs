@@ -16,6 +16,8 @@ public static class DependencyInjection
         services.AddInfrastructureEfCore();
 
         ConfigureEfCore(services, configuration);
+
+        ConfigureCap(services, configuration);
         
         return services;
     }
@@ -28,5 +30,22 @@ public static class DependencyInjection
         {
             options.UseMySql(dbConnection, ServerVersion.AutoDetect(dbConnection));
         });
+    }
+    
+    private static void ConfigureCap(IServiceCollection services,  IConfiguration configuration)
+    {
+        var dbConn = configuration.GetConnectionString("StockDbConnection");
+        if (dbConn is null) throw new ArgumentNullException(nameof(dbConn));
+        
+        services.AddCap(x =>
+        {   
+            x.UseEntityFramework<StockDbContext>();
+            x.UseMySql(dbConn);
+            x.UseRabbitMQ(options =>
+            {
+                configuration.GetSection("RabbitMQ").Bind(options);
+            });
+            x.UseDashboard();
+        }); 
     }
 }

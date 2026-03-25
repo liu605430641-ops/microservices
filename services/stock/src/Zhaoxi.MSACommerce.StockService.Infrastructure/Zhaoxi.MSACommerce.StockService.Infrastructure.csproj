@@ -12,4 +12,10 @@
         <ProjectReference Include="..\Zhaoxi.MSACommerce.StockService.Core\Zhaoxi.MSACommerce.StockService.Core.csproj" />
     </ItemGroup>
     
+    <ItemGroup>
+      <PackageReference Include="DotNetCore.CAP" Version="8.3.1" />
+      <PackageReference Include="DotNetCore.CAP.Dashboard" Version="8.3.1" />
+      <PackageReference Include="DotNetCore.CAP.MySql" Version="8.3.1" />
+      <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="8.3.1" />
+    </ItemGroup>
 </Project>

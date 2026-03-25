@@ -19,5 +19,5 @@ public class OrderInfo : BaseEntity<long>
     // 交易关闭时间
     public DateTime? CloseTime { get; set; }
 
-    public Order Order { get; set; } = new();
+    public Order Order { get; set; } = null!;
 }

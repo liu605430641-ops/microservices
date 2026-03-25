@@ -7,6 +7,7 @@
     </PropertyGroup>
     
     <ItemGroup>
+        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.SharedEvent\Zhaoxi.MSACommerce.SharedEvent.csproj" />
         <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.SharedKernel\Zhaoxi.MSACommerce.SharedKernel.csproj" />
         <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.UseCases.Common\Zhaoxi.MSACommerce.UseCases.Common.csproj" />
         <ProjectReference Include="..\Zhaoxi.MSACommerce.StockService.Core\Zhaoxi.MSACommerce.StockService.Core.csproj" />

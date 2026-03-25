@@ -38,7 +38,12 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
             .HasColumnName("total_pay")
             .HasColumnType("bigint(20)")
             .HasComment("总金额，单位为分");
-
+        
+        builder.Property(e => e.PaymentType)
+            .HasColumnName("payment_type")
+            .HasColumnType("int(1)")
+            .HasComment("1、支付宝；2、微信支付");
+        
         builder.Property(e => e.UserId)
             .IsRequired()
             .HasColumnName("user_id")

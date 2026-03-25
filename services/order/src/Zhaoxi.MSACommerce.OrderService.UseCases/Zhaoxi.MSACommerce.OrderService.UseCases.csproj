@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\..\..\pakages\Zhaoxi.MSACommerce.CommonServiceClient\Zhaoxi.MSACommerce.CommonServiceClient.csproj" />
+        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.SharedEvent\Zhaoxi.MSACommerce.SharedEvent.csproj" />
         <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.SharedKernel\Zhaoxi.MSACommerce.SharedKernel.csproj" />
         <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.UseCases.Common\Zhaoxi.MSACommerce.UseCases.Common.csproj" />
         <ProjectReference Include="..\Zhaoxi.MSACommerce.OrderService.Core\Zhaoxi.MSACommerce.OrderService.Core.csproj" />

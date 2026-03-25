@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.10" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\..\pakages\Zhaoxi.MSACommerce.Authentication.JwtBearer\Zhaoxi.MSACommerce.Authentication.JwtBearer.csproj" />
+        <ProjectReference Include="..\..\..\..\pakages\Zhaoxi.MSACommerce.CommonServiceClient\Zhaoxi.MSACommerce.CommonServiceClient.csproj" />
+        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.HttpApi.Common\Zhaoxi.MSACommerce.HttpApi.Common.csproj" />
+        <ProjectReference Include="..\Zhaoxi.MSACommerce.OrderService.Infrastructure\Zhaoxi.MSACommerce.OrderService.Infrastructure.csproj" />
+        <ProjectReference Include="..\Zhaoxi.MSACommerce.OrderService.UseCases\Zhaoxi.MSACommerce.OrderService.UseCases.csproj" />
+    </ItemGroup>
+
+</Project>

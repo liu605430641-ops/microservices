@@ -17,7 +17,7 @@ public class OrderDetail : BaseEntity<long>
     // 价格
     public long Price { get; set; }
     // 图片
-    public string Image { get; set; }
+    public string? Image { get; set; }
         
     // 订单
     public Order Order { get; set; }

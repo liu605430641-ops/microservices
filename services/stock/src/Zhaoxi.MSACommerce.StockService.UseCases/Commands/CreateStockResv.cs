@@ -2,7 +2,7 @@
 
 namespace Zhaoxi.MSACommerce.StockService.UseCases.Commands;
 
-public record CreateStockResvCommand(long SkuId, long OrderId, int Quantity) : ICommand<Result>;
+public record CreateStockResvCommand(long SkuId, long OrderId, long Quantity) : ICommand<Result>;
 
 public class CreateStockResvCommandValidator : AbstractValidator<CreateStockResvCommand>
 {
@@ -20,13 +20,11 @@ public class CreateStockResvCommandHandler(StockDbContext dbContext) : ICommandH
         var stock = await dbContext.SkuStocks.FirstOrDefaultAsync(s => s.Id == request.SkuId, cancellationToken: cancellationToken);
 
         if (stock is null) return Result.NotFound();
-
-        if (stock.AvailQty < request.Quantity)  return Result.Failure("库存不足");
         
         stock.AddResvQty(request.OrderId, request.Quantity, 30);
         
         await dbContext.SaveChangesAsync(cancellationToken);
-        
-        return Result.Success();
+
+        return stock.AvailQty < request.Quantity ? Result.Failure("库存不足") : Result.Success();
     }
 }

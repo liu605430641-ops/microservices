@@ -1,4 +1,5 @@
-﻿using Zhaoxi.MSACommerce.SharedKernel.Domain;
+﻿using Zhaoxi.MSACommerce.OrderService.Core.Enums;
+using Zhaoxi.MSACommerce.SharedKernel.Domain;
 
 namespace Zhaoxi.MSACommerce.OrderService.Core.Entities;
 
@@ -10,6 +11,9 @@ public class Order : BaseAuditEntity
     // 实付金额
     public long ActualPay { get; set; }
     
+    // 付款方式
+    public PaymentType PaymentType { get; set; }
+    
     // 用户ID
     public long UserId { get; set; }
     
@@ -19,8 +23,30 @@ public class Order : BaseAuditEntity
     // 收货人
     public string Receiver { get; set; } = null!;
 
-    public OrderInfo OrderInfo { get; set; } = new();
+    public OrderInfo OrderInfo { get; set; }
 
-    public ICollection<OrderDetail> OrderDetails = new List<OrderDetail>();
+    public ICollection<OrderDetail> OrderDetails;
     
+    protected Order()
+    {
+        
+    }
+
+    public Order(long orderId)
+    {
+        Id = orderId;
+        OrderInfo = new OrderInfo
+        {
+            Status = OrderStatus.UnPayed,
+            CreateTime = DateTime.Now
+        };
+        
+        OrderDetails = new List<OrderDetail>();
+    }
+
+    public void AddOrderDetail(OrderDetail orderDetail)
+    {
+        OrderDetails.Add(orderDetail);
+        TotalPay += orderDetail.Price * orderDetail.Quantity;
+    }
 }
