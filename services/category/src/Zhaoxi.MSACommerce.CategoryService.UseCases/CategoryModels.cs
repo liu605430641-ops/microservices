@@ -8,7 +8,7 @@ public record ParameterKeyDto(long Id, string Name);
 
 public record ParameterGroupDto
 {
-    public long                         Id               { get; init; }
-    public string                       Name             { get; init; } = null!;
-    public IEnumerable<ParameterKeyDto> ParameterKeysDto { get; init; }
+    public long Id { get; init; }
+    public string Name { get; init; } = null!;
+    public IEnumerable<ParameterKeyDto> ParameterKeys { get; init; }
 }

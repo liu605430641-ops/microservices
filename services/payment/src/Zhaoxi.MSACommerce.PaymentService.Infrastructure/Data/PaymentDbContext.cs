@@ -4,7 +4,7 @@ using Zhaoxi.MSACommerce.CategoryService.Core.Entities;
 
 namespace Zhaoxi.MSACommerce.PaymentService.Infrastructure.Data;
 
-public class PaymentDbContext(DbContextOptions<PaymentDbContext> options) : DbContext(options)
+public class PaymentDbContext(DbContextOptions<PaymentDbContext> options) :  DbContext(options)
 {
     public DbSet<PayLog> PayLogs => Set<PayLog>();
 

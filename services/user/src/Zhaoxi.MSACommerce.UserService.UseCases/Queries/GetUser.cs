@@ -6,9 +6,9 @@ public record UserDto(long Id, string Username, string? Phone);
 
 public record GetUserQuery(string Username, string Password) : IQuery<Result<UserDto>>;
 
-public class GetQuestionQueryValidator : AbstractValidator<GetUserQuery>
+public class GetUserQueryValidator : AbstractValidator<GetUserQuery>
 {
-    public GetQuestionQueryValidator()
+    public GetUserQueryValidator()
     {
         RuleFor(query => query.Username)
             .NotEmpty();

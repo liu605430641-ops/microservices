@@ -15,10 +15,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\..\pakages\Zhaoxi.MSACommerce.Authentication.JwtBearer\Zhaoxi.MSACommerce.Authentication.JwtBearer.csproj"/>
-        <ProjectReference Include="..\..\..\..\pakages\Zhaoxi.MSACommerce.CommonServiceClient\Zhaoxi.MSACommerce.CommonServiceClient.csproj"/>
-        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.HttpApi.Common\Zhaoxi.MSACommerce.HttpApi.Common.csproj"/>
-        <ProjectReference Include="..\Zhaoxi.MSACommerce.PaymentService.Infrastructure\Zhaoxi.MSACommerce.PaymentService.Infrastructure.csproj"/>
-        <ProjectReference Include="..\Zhaoxi.MSACommerce.PaymentService.UseCases\Zhaoxi.MSACommerce.PaymentService.UseCases.csproj"/>
+        <ProjectReference Include="..\..\..\..\pakages\Zhaoxi.MSACommerce.Authentication.JwtBearer\Zhaoxi.MSACommerce.Authentication.JwtBearer.csproj" />
+        <ProjectReference Include="..\..\..\..\pakages\Zhaoxi.MSACommerce.CommonServiceClient\Zhaoxi.MSACommerce.CommonServiceClient.csproj" />
+        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.HttpApi.Common\Zhaoxi.MSACommerce.HttpApi.Common.csproj" />
+        <ProjectReference Include="..\Zhaoxi.MSACommerce.PaymentService.Infrastructure\Zhaoxi.MSACommerce.PaymentService.Infrastructure.csproj" />
+        <ProjectReference Include="..\Zhaoxi.MSACommerce.PaymentService.UseCases\Zhaoxi.MSACommerce.PaymentService.UseCases.csproj" />
     </ItemGroup>
 </Project>

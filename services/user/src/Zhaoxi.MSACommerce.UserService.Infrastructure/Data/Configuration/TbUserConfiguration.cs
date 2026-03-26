@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Zhaoxi.MSACommerce.UserService.Core;
-using Zhaoxi.MSACommerce.UserService.Core.Entites;
+using Zhaoxi.MSACommerce.UserService.Core.Entities;
 
 namespace Zhaoxi.MSACommerce.UserService.Infrastructure.Data.Configuration;
 

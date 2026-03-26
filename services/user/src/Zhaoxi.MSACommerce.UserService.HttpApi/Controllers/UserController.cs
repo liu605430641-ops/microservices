@@ -12,32 +12,18 @@ namespace Zhaoxi.MSACommerce.UserService.HttpApi.Controllers;
 
 [Route("api/user")]
 [ApiController]
-public class UserController(IServiceClient<IVerificationApi> client) : ApiControllerBase
+public class UserController : ApiControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> Get([FromQuery]GetUserQuery request)
     {
         var result = await Sender.Send(request);
-
+        
         return ReturnResult(result);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create(CreateUserCommand request)
-    {
-        var result = await Sender.Send(request);
-
-        return ReturnResult(result);
-    }
-    
-    [HttpGet("test")]
-    public async Task<IActionResult> ayth([FromServices] IUser user)
-    {
-        return Ok(user);
-    }
-    
     [HttpPost("register")]
-    public async Task<IActionResult> Register(CreateUserDto userDto)
+    public async Task<IActionResult> Register([FromServices]IServiceClient<IVerificationApi> client, CreateUserDto userDto)
     {
         var response = await client.ServiceApi.VerifySmsCodeAsync(userDto.Phone, userDto.Code);
         if (!response.IsSuccessStatusCode) return BadRequest(response.Error.Content);
@@ -47,4 +33,17 @@ public class UserController(IServiceClient<IVerificationApi> client) : ApiContro
         return ReturnResult(result);
     }
 
+    [HttpGet("test")]
+    [Authorize]
+    public IActionResult Test([FromServices] IUser user)
+    {
+        return Ok(user);
+    }
+    
+    [HttpGet("{username}")]
+    public async Task<IActionResult> Get(string username)
+    {
+        var result = await Sender.Send(new GetUserByUsernameQuery(username));
+        return ReturnResult(result);
+    }
 }

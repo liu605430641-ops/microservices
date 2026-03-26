@@ -1426,7 +1426,6 @@ INSERT INTO zhaoxi_category.tb_param_group (id, name, category_id, CreatedAt, La
 INSERT INTO zhaoxi_category.tb_param_group (id, name, category_id, CreatedAt, LastModifiedAt) VALUES (2, '基本信息', 76, '2024-11-02 13:35:20.000000', '2024-11-02 13:35:02.000000');
 INSERT INTO zhaoxi_category.tb_param_group (id, name, category_id, CreatedAt, LastModifiedAt) VALUES (3, '操作系统', 76, '2024-11-02 13:35:20.000000', '2024-11-02 13:35:02.000000');
 INSERT INTO zhaoxi_category.tb_param_group (id, name, category_id, CreatedAt, LastModifiedAt) VALUES (4, '主芯片', 76, '2024-11-02 13:35:20.000000', '2024-11-02 13:35:02.000000');
-INSERT INTO zhaoxi_category.tb_param_group (id, name, category_id, CreatedAt, LastModifiedAt) VALUES (5, '存储', 76, '2024-11-02 13:35:20.000000', '2024-11-02 13:35:02.000000');
 INSERT INTO zhaoxi_category.tb_param_group (id, name, category_id, CreatedAt, LastModifiedAt) VALUES (6, '摄像头', 76, '2024-11-02 13:35:20.000000', '2024-11-02 13:35:02.000000');
 INSERT INTO zhaoxi_category.tb_param_group (id, name, category_id, CreatedAt, LastModifiedAt) VALUES (7, '电池信息', 76, '2024-11-02 13:35:20.000000', '2024-11-02 13:35:02.000000');
 INSERT INTO zhaoxi_category.tb_param_group (id, name, category_id, CreatedAt, LastModifiedAt) VALUES (11, '屏幕', 76, '2024-11-02 13:35:20.000000', '2024-11-02 13:35:02.000000');
@@ -1457,8 +1456,6 @@ INSERT INTO zhaoxi_category.tb_param_key (id, name, param_group_id, category_Id,
 INSERT INTO zhaoxi_category.tb_param_key (id, name, param_group_id, category_Id, CreatedAt, LastModifiedAt) VALUES (9, 'CPU型号', 4, 76, '2024-11-02 13:46:45.000000', '2024-11-02 13:46:48.000000');
 INSERT INTO zhaoxi_category.tb_param_key (id, name, param_group_id, category_Id, CreatedAt, LastModifiedAt) VALUES (10, 'CPU核数', 4, 76, '2024-11-02 13:46:45.000000', '2024-11-02 13:46:48.000000');
 INSERT INTO zhaoxi_category.tb_param_key (id, name, param_group_id, category_Id, CreatedAt, LastModifiedAt) VALUES (11, 'CPU频率', 4, 76, '2024-11-02 13:46:45.000000', '2024-11-02 13:46:48.000000');
-INSERT INTO zhaoxi_category.tb_param_key (id, name, param_group_id, category_Id, CreatedAt, LastModifiedAt) VALUES (12, '内存', 5, 76, '2024-11-02 13:46:45.000000', '2024-11-02 13:46:48.000000');
-INSERT INTO zhaoxi_category.tb_param_key (id, name, param_group_id, category_Id, CreatedAt, LastModifiedAt) VALUES (13, '机身存储', 5, 76, '2024-11-02 13:46:45.000000', '2024-11-02 13:46:48.000000');
 INSERT INTO zhaoxi_category.tb_param_key (id, name, param_group_id, category_Id, CreatedAt, LastModifiedAt) VALUES (14, '主屏幕尺寸（英寸）', 11, 76, '2024-11-02 13:46:45.000000', '2024-11-02 13:46:48.000000');
 INSERT INTO zhaoxi_category.tb_param_key (id, name, param_group_id, category_Id, CreatedAt, LastModifiedAt) VALUES (15, '分辨率', 11, 76, '2024-11-02 13:46:45.000000', '2024-11-02 13:46:48.000000');
 INSERT INTO zhaoxi_category.tb_param_key (id, name, param_group_id, category_Id, CreatedAt, LastModifiedAt) VALUES (16, '前置摄像头', 6, 76, '2024-11-02 13:46:45.000000', '2024-11-02 13:46:48.000000');

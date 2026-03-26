@@ -3,7 +3,6 @@ using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
-using Zhaoxi.MSACommerce.CategoryService.Core.Entities;
 using Zhaoxi.MSACommerce.Infrastructure.Common;
 using Zhaoxi.MSACommerce.Infrastructure.Common.Interceptors;
 using Zhaoxi.MSACommerce.ProductService.Infrastructure.Data;

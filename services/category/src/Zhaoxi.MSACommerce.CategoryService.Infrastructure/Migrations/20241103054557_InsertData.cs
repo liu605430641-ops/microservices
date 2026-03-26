@@ -11,9 +11,9 @@ namespace Zhaoxi.MSACommerce.CategoryService.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            var assemblyDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var sqlFilePath       = Path.Combine(assemblyDirectory, "Migrations", "Scripts", "tb_category.sql");
-            var sql               = File.ReadAllText(sqlFilePath);
+            var assemblyDirectory= Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var sqlFilePath = Path.Combine(assemblyDirectory, "Migrations", "Scripts", "tb_category.sql");
+            var sql = File.ReadAllText(sqlFilePath);
             migrationBuilder.Sql(sql);
         }
 

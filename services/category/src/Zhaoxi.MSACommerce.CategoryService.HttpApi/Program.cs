@@ -18,7 +18,7 @@ builder.Services.AddHttpApi();
 
 builder.Services.AddControllers();
 
-// builder.Services.AddJwtBearer(builder.Configuration);
+builder.Services.AddJwtBearer(builder.Configuration);
 
 var app = builder.Build();
 

@@ -13,8 +13,9 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddInfrastructureCommon(configuration);
+
         services.AddInfrastructureEfCore();
-        
+
         ConfigureEfCore(services, configuration);
 
         return services;
@@ -22,17 +23,12 @@ public static class DependencyInjection
 
     private static void ConfigureEfCore(IServiceCollection services, IConfiguration configuration)
     {
-        // 优先从配置读，读不到就用你刚才命令行里的那个地址
-        var dbConnection = configuration.GetConnectionString("UserDbConnection") 
-                           ?? "server=127.0.0.1;port=3306;userid=root;password=123123;database=zhaoxi_user";
+        var dbConnection = configuration.GetConnectionString("UserDbConnection");
 
         services.AddDbContext<UserDbContext>((sp, options) =>
-                                             {
-                                                 options.AddInterceptors(sp.GetRequiredService<AuditEntityInterceptor>());
-        
-                                                 // 建议手动指定版本，避免 AutoDetect 在读不到配置时直接崩溃
-                                                 var serverVersion = new MySqlServerVersion(new Version(8, 0, 21)); 
-                                                 options.UseMySql(dbConnection, serverVersion);
-                                             });
+        {
+            options.AddInterceptors(sp.GetRequiredService<AuditEntityInterceptor>());
+            options.UseMySql(dbConnection, ServerVersion.AutoDetect(dbConnection));
+        });
     }
 }

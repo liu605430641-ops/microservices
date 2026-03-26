@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
-using Zhaoxi.MSACommerce.UserService.Core.Entites;
+using Zhaoxi.MSACommerce.UserService.Core.Entities;
 
 namespace Zhaoxi.MSACommerce.UserService.Infrastructure.Data;
 

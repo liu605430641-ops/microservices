@@ -1,7 +1,7 @@
 ﻿using Refit;
 
 namespace Zhaoxi.MSACommerce.PaymentService.UseCases.Apis;
-
+    
 public interface IOrderServiceApi
 {
     [Get("/api/order")]

@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.SharedKernel\Zhaoxi.MSACommerce.SharedKernel.csproj"/>
+      <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.SharedKernel\Zhaoxi.MSACommerce.SharedKernel.csproj" />
     </ItemGroup>
-
+    
 </Project>

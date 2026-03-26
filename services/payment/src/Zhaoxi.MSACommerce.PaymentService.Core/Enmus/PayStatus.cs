@@ -3,5 +3,6 @@
 public enum PayStatus
 {
     UnPay = 0,
-    Payed = 1
+    Payed = 1,
+    Cancel = 2
 }

@@ -16,7 +16,6 @@ builder.Services.AddHttpApi();
 builder.Services.AddControllers();
 
 builder.Services.AddJwtBearer(builder.Configuration);
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 var app = builder.Build();
 

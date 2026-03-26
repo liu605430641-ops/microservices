@@ -6,13 +6,12 @@ namespace Zhaoxi.MSACommerce.OrderService.HttpApi;
 
 public class PreventDuplicateRequestFilter : ActionFilterAttribute
 {
-    private static readonly Dictionary<string,DateTime> RequestTimestamps = new();
-
+    private static readonly Dictionary<string, DateTime> RequestTimestamps = new();
+    
     public override void OnActionExecuting(ActionExecutingContext context)
     {
-        var userId     = context.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = context.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         var requestKey = $"{userId}:{context.HttpContext.Request.Headers["X-Request-ID"]}";
-
         if (RequestTimestamps.ContainsKey(requestKey))
         {
             context.Result = new BadRequestObjectResult("请勿重复提交");
@@ -24,7 +23,7 @@ public class PreventDuplicateRequestFilter : ActionFilterAttribute
 
     public override void OnActionExecuted(ActionExecutedContext context)
     {
-        var userId     = context.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var userId = context.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
         var requestKey = $"{userId}:{context.HttpContext.Request.Headers["X-Request-ID"]}";
         RequestTimestamps.Remove(requestKey);
     }

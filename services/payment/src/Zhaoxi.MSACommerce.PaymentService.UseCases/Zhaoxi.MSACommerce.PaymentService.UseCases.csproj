@@ -7,12 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\..\..\pakages\Zhaoxi.MSACommerce.CommonServiceClient\Zhaoxi.MSACommerce.CommonServiceClient.csproj"/>
-        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.SharedEvent\Zhaoxi.MSACommerce.SharedEvent.csproj"/>
-        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.SharedKernel\Zhaoxi.MSACommerce.SharedKernel.csproj"/>
-        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.UseCases.Common\Zhaoxi.MSACommerce.UseCases.Common.csproj"/>
-        <ProjectReference Include="..\Zhaoxi.MSACommerce.PaymentService.Core\Zhaoxi.MSACommerce.PaymentService.Core.csproj"/>
-        <ProjectReference Include="..\Zhaoxi.MSACommerce.PaymentService.Infrastructure\Zhaoxi.MSACommerce.PaymentService.Infrastructure.csproj"/>
+        <ProjectReference Include="..\..\..\..\pakages\Zhaoxi.MSACommerce.CommonServiceClient\Zhaoxi.MSACommerce.CommonServiceClient.csproj" />
+        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.SharedEvent\Zhaoxi.MSACommerce.SharedEvent.csproj" />
+        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.SharedKernel\Zhaoxi.MSACommerce.SharedKernel.csproj" />
+        <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.UseCases.Common\Zhaoxi.MSACommerce.UseCases.Common.csproj" />
+        <ProjectReference Include="..\Zhaoxi.MSACommerce.PaymentService.Core\Zhaoxi.MSACommerce.PaymentService.Core.csproj" />
+        <ProjectReference Include="..\Zhaoxi.MSACommerce.PaymentService.Infrastructure\Zhaoxi.MSACommerce.PaymentService.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

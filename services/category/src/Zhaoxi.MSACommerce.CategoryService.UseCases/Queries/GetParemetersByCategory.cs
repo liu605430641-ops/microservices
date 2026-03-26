@@ -39,7 +39,7 @@ public class GetParemetersByCategoryQueryHandler(CategoryDbContext dbContext, IF
                 {
                     Id = sg.Id,
                     Name = sg.Name,
-                    ParameterKeysDto = sg.ParameterKeys.Select(s => new ParameterKeyDto(s.Id, s.Name)).ToList()
+                    ParameterKeys = sg.ParameterKeys.Select(s => new ParameterKeyDto(s.Id, s.Name)).ToList()
                 }).ToList();
             },
                 

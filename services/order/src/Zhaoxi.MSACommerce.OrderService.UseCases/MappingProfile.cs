@@ -6,6 +6,6 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Order,OrderDto>();
+        CreateMap<Order, OrderDto>();
     }
 }

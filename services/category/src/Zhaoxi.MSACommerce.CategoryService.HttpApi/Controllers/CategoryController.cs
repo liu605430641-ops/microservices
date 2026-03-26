@@ -35,4 +35,11 @@ public class CategoryController() : ApiControllerBase
         var result = await Sender.Send(new GetParemetersByCategoryQuery(id));
         return ReturnResult(result);
     }
+    
+    [HttpGet("list")]
+    public async Task<IActionResult> GetList(long[] ids)
+    {
+        var result = await Sender.Send(new GetCategoriesByIdsQuery(ids));
+        return ReturnResult(result);
+    }
 }

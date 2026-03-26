@@ -1,5 +1,5 @@
 ﻿using Zhaoxi.MSACommerce.UserService.Core;
-using Zhaoxi.MSACommerce.UserService.Core.Entites;
+using Zhaoxi.MSACommerce.UserService.Core.Entities;
 using Zhaoxi.MSACommerce.UserService.Infrastructure.Tools;
 
 namespace Zhaoxi.MSACommerce.UserService.UseCases.Commands;

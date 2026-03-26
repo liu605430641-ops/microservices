@@ -11,21 +11,21 @@ public class CategoryBrandConfiguration : IEntityTypeConfiguration<CategoryBrand
         builder.ToTable("tb_category_brand");
 
         builder.Property(e => e.Id)
-               .HasColumnName("id")
-               .HasColumnType("bigint(20)");
+            .HasColumnName("id")
+            .HasColumnType("bigint(20)");
         
         builder.Property(e => e.CategoryId)
-               .HasColumnName("category_id")
-               .HasColumnType("bigint(20)")
-               .HasComment("品类id");
+            .HasColumnName("category_id")
+            .HasColumnType("bigint(20)")
+            .HasComment("品类id");
 
         builder.Property(e => e.BrandId)
-               .HasColumnName("brand_id")
-               .HasColumnType("bigint(20)")
-               .HasComment("品牌id");
+            .HasColumnName("brand_id")
+            .HasColumnType("bigint(20)")
+            .HasComment("品牌id");
         
         // 联合唯一约束
         builder.HasIndex(e => new { e.CategoryId, e.BrandId })
-               .IsUnique();
+            .IsUnique();
     }
 }

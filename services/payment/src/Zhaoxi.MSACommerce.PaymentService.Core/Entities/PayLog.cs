@@ -5,21 +5,22 @@ namespace Zhaoxi.MSACommerce.CategoryService.Core.Entities;
 
 public class PayLog : BaseAuditEntity
 {
+    public long OrderId { get; set; }
+    public long TotalFee { get; set; }
+    public long UserId { get; set; }
+    public PayStatus Status { get; set; }
+    public DateTime? PayTime { get; set; }
+
     protected PayLog()
     {
+        
     }
-
-    public PayLog(long orderId,long totalFee,long userId)
+    
+    public PayLog(long orderId, long totalFee, long userId)
     {
-        OrderId  = orderId;
+        OrderId = orderId;
         TotalFee = totalFee;
-        UserId   = userId;
-        Status   = PayStatus.UnPay;
+        UserId = userId;
+        Status = PayStatus.UnPay;
     }
-
-    public long      OrderId  { get; set; }
-    public long      TotalFee { get; set; }
-    public long      UserId   { get; set; }
-    public PayStatus Status   { get; set; }
-    public DateTime? PayTime  { get; set; }
 }
