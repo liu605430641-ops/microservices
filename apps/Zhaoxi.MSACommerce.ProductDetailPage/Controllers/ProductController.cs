@@ -6,7 +6,7 @@ namespace Zhaoxi.MSACommerce.ProductDetailPage.Controllers;
 
 public class ProductController(IDetailPageService pageDetailService) : Controller
 {
-    [Route("/item/{id}.html")]
+    [Route("/item/{id:long}.html")]
     public async Task<IActionResult> Index(long id)
     {
         var result = await pageDetailService.GetSpuModel(id);

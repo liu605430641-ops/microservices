@@ -9,7 +9,7 @@ public class StaticPageMiddleware(
 {
     public async Task InvokeAsync(HttpContext context)
     {
-        if (context.Request.Path.StartsWithSegments("/item"))
+        if (context.Request.Path.StartsWithSegments("/item") && context.Request.Method == "GET")
         {
             var originalBody = context.Response.Body;
             using var memoryStream = new MemoryStream();

@@ -49,17 +49,12 @@
             },
             created() {
                 yt.verifyUser().then(resp => {
-                    if (resp.data.result) {
-                        this.totalPay = parseFloat(yt.store.get("totalPay")).toFixed(2);
-                        //1.删除本地数据
-                        yt.store.del("selectedCarts");
-                        yt.store.del("orderId");
-                    }
-                    else {
-                        location.href = "/login.html?returnUrl=" + location.href;
-                    }
+                    this.totalPay = parseFloat(yt.store.get("totalPay")).toFixed(2);
+                    //1.删除本地数据
+                    yt.store.del("selectedCarts");
+                    yt.store.del("orderId");
                 }).catch(() => {
-                    alert("数据异常");
+                    location.href = "/login.html?returnUrl=" + location.href;
                 });
             },
             components: {

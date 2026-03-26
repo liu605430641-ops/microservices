@@ -70,27 +70,15 @@
             methods: {
                 loadData() {
                     //1.判断用户是否登录
-                    yt.verifyUser().then(resVerify => {
-                        if (!resVerify.data.result) {
-                            //4.未登录，跳转至登录页
-                            console.log("登陆失效，请登陆后尝试");
-                            location.href = "/login.html?returnUrl=" + location.href;
-                            return;
-                        }
-
+                    yt.verifyUser().then(res => {
                         //2.获取订单编号和总金额
                         this.orderId = yt.store.get("orderId");
                         this.totalPay = parseFloat(yt.store.get("totalPay")).toFixed(2);
-                        //3.获取请求链接
-                        yt.http.get("/pay/url/" + this.orderId).then(respUrl => {
-                            if (!respUrl.data.result) {
-                                //获取失败
-                                alert(respUrl.data.message);
-                                return;
-                            }
+                        //3.创建支付信息（支付ID+支付链接）
+                        yt.http.post("/api/pay/" + this.orderId).then(res => {
                             //3.1 生成付款二维码
                             new QRCode(document.getElementById("qrImage"), {
-                                text: respUrl.data.value,
+                                text: res.data.payUrl,
                                 width: 250,
                                 height: 250,
                                 colorDark: "#000000",
@@ -99,16 +87,11 @@
                             });
                             //3.2开启定时任务，查询付款状态
                             const taskId = setInterval(() => {
-                                yt.http.get("/pay/state/" + this.orderId).then(respState => {
-                                    if (!respState.data.result) {
-                                        alert(respState.data.message);  //出异常了
-                                        return;
-                                    }
-                                    let i = respState.data.value;
+                                yt.http.get("/api/pay/status/" + this.orderId).then(res => {
+                                    let i = res.data.status;
                                     if (i === 1) {
                                         //3.3 付款成功
                                         clearInterval(taskId);
-                                        console.log(respState.data.message);
                                         //3.4 跳转到付款成功页
                                         location.href = "/paysuccess.html";
                                     } else if (i === 2) {
@@ -117,8 +100,13 @@
                                         //3.6跳转到付款失败页
                                         location.href = "/payfail.html"
                                     }
-                                })
+                                }).catch(res => {
+                                    alert(res.error);
+                                });
                             }, 3000);
+                        }).catch(res => {
+                            //获取失败
+                            console.error(res.error);
                         });
                     }).catch(() => {
                         //4.未登录，跳转至登录页

@@ -1,4 +1,5 @@
 using Consul.AspNetCore;
+using Zhaoxi.MSACommerce.Authentication.JwtBearer;
 using Zhaoxi.MSACommerce.AuthServer;
 using Zhaoxi.MSACommerce.Consul.ServiceDiscovery;
 using Zhaoxi.MSACommerce.Consul.ServiceRegistration;
@@ -8,24 +9,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.ConfigureServices(builder.Configuration);
 
-//添加consul
+builder.Services.AddJwtBearer(builder.Configuration);
+
 var serviceCheck = builder.Configuration.GetSection("ServiceCheck").Get<ServiceCheckConfiguration>();
 serviceCheck ??= new ServiceCheckConfiguration();
-builder.Services.AddConsul();builder.Services.AddConsulService(serviceConfiguration =>
-                                                               {
-                                                                   serviceConfiguration.ServiceAddress = new Uri(builder.Configuration["urls"] ?? builder.Configuration["applicationUrl"]);
-                                                               }, serviceCheck);
-//添加consul服务发现
+
+builder.Services.AddConsul();
+builder.Services.AddConsulService(serviceConfiguration =>
+{
+    serviceConfiguration.ServiceAddress = new Uri(builder.Configuration["urls"] ?? builder.Configuration["applicationUrl"]);
+}, serviceCheck);
+
 builder.Services.AddConsulDiscovery();
-//添加健康检查
+
 builder.Services.AddHealthChecks();
 
-
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -36,11 +35,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//中间件 AllowAny策略名称
-app.UseCors("AllowAny"); //对应 configureCors方法里面的.AddPolicy("AllowAny", policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-// 添加consul服务注册中间件
+app.UseCors("AllowAny");
+
 app.UseHealthChecks(serviceCheck.Path);
 
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -316,22 +316,21 @@
                         Object.assign(this.order, obj, { carts: orderDetails });
                         console.log(this.order);
                         //4.提交订单
-                        yt.http.post("/api/order", this.order).then((resp) => {
-                            //4.1在线支付，需要到付款页
-                            window.location = "pay.html";
-                            //4.2 添加总金额和订单号到本地数据
+                        yt.http.post("/api/order", this.order).then(res => {
+                            //4.1 添加总金额和订单号到本地数据
                             yt.store.set("totalPay", this.actualPay);
-                            yt.store.set("orderId", resp.data.value.orderId);
+                            yt.store.set("orderId", res.data.orderId);
+                            //4.2 在线支付，需要到付款页
+                            window.location = "pay.html";
                         }).catch(({ data }) => {
                             event.target.disabled = false;
                             isCommitted = false;//改成未提交，异常后允许重复提交
-                            console.log(data);
                         });
                     }).catch(e => {
                         console.log(e);
                         alert("登陆验证失败");
                         //未登录，重定向到登录页面
-                        window.location = "/login.html?returnUrl=" + window.location.href;
+                        // window.location = "/login.html?returnUrl=" + window.location.href;
                         isCommitted = false;//改成未提交，
                     })
                 }

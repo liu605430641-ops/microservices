@@ -40,7 +40,7 @@ public class DetailPageService(
             { "brand", brandResponse.Content },
             { "categories", categoryResponse.Content },
             { "specs", specResponse.Content },
-            { "parameters", parameterResponse.Content }
+            { "parametersGroup", parameterResponse.Content }
         };
 
         return Result.Success(model);

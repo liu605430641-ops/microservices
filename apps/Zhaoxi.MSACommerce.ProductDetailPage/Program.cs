@@ -1,7 +1,9 @@
 using Consul.AspNetCore;
 using Zhaoxi.MSACommerce.Consul.ServiceDiscovery;
 using Zhaoxi.MSACommerce.Consul.ServiceRegistration;
+using Zhaoxi.MSACommerce.LoadBalancer;
 using Zhaoxi.MSACommerce.ProductDetailPage;
+using Zhaoxi.MSACommerce.ProductDetailPage.Apis;
 using Zhaoxi.MSACommerce.ProductDetailPage.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,9 +20,9 @@ serviceCheck ??= new ServiceCheckConfiguration();
 
 builder.Services.AddConsul();
 builder.Services.AddConsulService(serviceConfiguration =>
-                                  {
-                                      serviceConfiguration.ServiceAddress = new Uri(builder.Configuration["urls"] ?? builder.Configuration["applicationUrl"]);
-                                  }, serviceCheck);
+{
+    serviceConfiguration.ServiceAddress = new Uri(builder.Configuration["urls"] ?? builder.Configuration["applicationUrl"]);
+}, serviceCheck);
 
 builder.Services.AddConsulDiscovery();
 
@@ -41,8 +43,8 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-                       name: "default",
-                       pattern: "{controller=Home}/{action=Index}/{id?}");
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllers();
 

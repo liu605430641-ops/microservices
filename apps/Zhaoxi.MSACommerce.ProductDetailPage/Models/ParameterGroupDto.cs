@@ -4,5 +4,5 @@ public record ParameterGroupDto
 {
     public long Id { get; init; }
     public string Name { get; init; } = null!;
-    public IEnumerable<ParameterKeyDto> ParameterKeysDto { get; init; }
+    public IEnumerable<ParameterKeyDto> ParameterKeys { get; init; }
 }

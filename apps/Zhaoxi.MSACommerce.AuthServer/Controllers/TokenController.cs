@@ -67,7 +67,7 @@ public class TokenController(ITokenService tokenService, IServiceClient<IUserSer
         var newAccessToken = tokenService.GenerateAccessToken(principal.Claims);
         var newRefreshToken = tokenService.GenerateRefreshToken();
 
-        // 保存新的刷新令牌（保持原有TTL）   set会清空过期时间 所以要用 keepTtl: true
+        // 保存新的刷新令牌（保持原有TTL）
         await _redisDb.StringSetAsync(key, newRefreshToken, keepTtl: true);
         
         return Ok(new

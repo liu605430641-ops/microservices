@@ -34,7 +34,7 @@ public class SmsService(IConnectionMultiplexer redis) : ISmsService
         // 第一次请求，设置过期时间
         if (currentCount == 1) await db.KeyExpireAsync(limitWindowKey, TimeSpan.FromSeconds(window));
         // 如果请求次数超过限制，则返回错误
-        if (currentCount > limit) return Result.Failure("请求过于频繁，请稍后再试");
+        if (currentCount > limit) {return Result.Failure("请求过于频繁，请稍后再试");}
         
         
         
