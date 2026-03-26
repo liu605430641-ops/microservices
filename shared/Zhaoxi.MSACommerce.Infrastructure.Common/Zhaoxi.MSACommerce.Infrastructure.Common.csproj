@@ -5,8 +5,9 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+
     <ItemGroup>
-        <ProjectReference Include="..\..\pakages\Zhaoxi.MSACommerce.Consul\Zhaoxi.MSACommerce.Consul.csproj" />
+      <ProjectReference Include="..\..\pakages\Zhaoxi.MSACommerce.Consul\Zhaoxi.MSACommerce.Consul.csproj" />
     </ItemGroup>
-    
+
 </Project>
