@@ -25,12 +25,9 @@ namespace Zhaoxi.MSACommerce.OrderService.Infrastructure.Migrations
             modelBuilder.Entity("Zhaoxi.MSACommerce.OrderService.Core.Entities.Order", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint(20)")
                         .HasColumnName("id")
                         .HasComment("订单id");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("ActualPay")
                         .HasColumnType("bigint(20)")

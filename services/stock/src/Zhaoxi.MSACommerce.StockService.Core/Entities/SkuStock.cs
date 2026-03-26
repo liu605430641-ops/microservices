@@ -6,28 +6,32 @@ public class SkuStock : BaseEntity<long>
 {
     // 总库存数量
     public long TotalQty { get; set; }
-    
+
     // 可用库存数量
     public long AvailQty { get; set; }
-    
+
     // 预留库存数量
-    public long ResvQty  { get; set; }
-    
+    public long ResvQty { get; set; }
+
     // 预留库存记录
     public ICollection<StockResv> StockResve { get; set; } = new List<StockResv>();
-    
-    public void AddResvQty(long orderId, long qty, int exprMinutes)
+
+    public void AddResvQty(long orderId,long qty,int exprMinutes)
     {
         AvailQty -= qty;
-        ResvQty += qty;
-        StockResve.Add(new StockResv(orderId, qty, DateTime.Now.AddMinutes(exprMinutes)));
+        ResvQty  += qty;
+        StockResve.Add(new StockResv(orderId,qty,DateTime.Now.AddMinutes(exprMinutes)));
     }
-    
-    // public void ReleseResvQty(long qty)
-    // {
-    //     AvailQty -= qty;
-    //     ResvQty += qty;
-    //     exprTime = DateTime.Now.AddMinutes(30);
-    //     StockResve.Add(new StockResv(orderId, qty, exprTime));
-    // }
+
+    public void ApplyResvQty(long qty)
+    {
+        TotalQty -= qty;
+        ResvQty  -= qty;
+    }
+
+    public void ReleseResvQty(long qty)
+    {
+        AvailQty += qty;
+        ResvQty  -= qty;
+    }
 }

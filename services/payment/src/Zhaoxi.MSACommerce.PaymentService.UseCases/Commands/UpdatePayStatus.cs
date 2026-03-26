@@ -25,6 +25,7 @@ public class UpdatePayStatusCommandHandler(PaymentDbContext dbContext,ICapPublis
 
             var orderPayedEvent = new OrderCreatedEvent() { OrderId = payLog.OrderId };
 
+            //发布订单支付成功事件 (这个事件会被订单服务和库存服务订阅到,订单服务会修改订单状态,库存服务会扣减库存)
             await capPublisher.PublishAsync(nameof(OrderCreatedEvent),orderPayedEvent,cancellationToken: cancellationToken);
 
             await trans.CommitAsync(cancellationToken);
