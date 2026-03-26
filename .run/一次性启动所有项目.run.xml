@@ -1,0 +1,21 @@
+﻿<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="一次性启动所有项目" type="CompoundRunConfigurationType">
+    <toRun name="Zhaoxi.MSACommerce.AuthServer: http" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.BrandService.HttpApi: http" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.CartService.HttpApi: http" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.CategoryService.HttpApi: http" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.ElasticSyncWorker" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.OrderService.HttpApi: http" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.PaymentService.HttpApi: http" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.Portal: http" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.ProductDetailPage: http" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.ProductService.HttpApi: http" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.SearchService.HttpApi" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.StaticPageWorker" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.StockService.HttpApi: http" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.UserService.HttpApi: http" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.VerificationServer: http" type="LaunchSettings" />
+    <toRun name="Zhaoxi.MSACommerce.WebGateway: http (1)" type="LaunchSettings" />
+    <method v="2" />
+  </configuration>
+</component>
