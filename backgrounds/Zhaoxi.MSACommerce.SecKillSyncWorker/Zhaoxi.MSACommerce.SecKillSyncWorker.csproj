@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>dotnet-Zhaoxi.MSACommerce.SecKillSyncWorker-be0fd629-8c82-4fd6-a378-714210c1a202</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="StackExchange.Redis" Version="2.8.16" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.1"/>
+        <PackageReference Include="Quartz.Extensions.Hosting" Version="3.13.1" />
+        <PackageReference Include="Quartz.Serialization.Json" Version="3.13.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\services\seckill\src\Zhaoxi.MSACommerce.SeckillService.Core\Zhaoxi.MSACommerce.SeckillService.Core.csproj" />
+      <ProjectReference Include="..\..\services\seckill\src\Zhaoxi.MSACommerce.SeckillService.Infrastructure\Zhaoxi.MSACommerce.SeckillService.Infrastructure.csproj" />
+      <ProjectReference Include="..\..\shared\Zhaoxi.MSACommerce.SharedKernel\Zhaoxi.MSACommerce.SharedKernel.csproj" />
+    </ItemGroup>
+</Project>
