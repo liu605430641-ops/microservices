@@ -168,6 +168,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.PaymentS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.WebGateway", "getways\Zhaoxi.MSACommerce.WebGateway\Zhaoxi.MSACommerce.WebGateway.csproj", "{BF6A4C90-0BAD-4A27-8EE3-5E3A42265BC5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "seckill", "seckill", "{D59A9A2E-9E90-41EB-8D47-A01B194B2842}"
+	ProjectSection(SolutionItems) = preProject
+		services\seckill\秒杀系统理解.png = services\seckill\秒杀系统理解.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{09104A29-C2A8-40B0-A678-29F827A9A4A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.SeckillService.Core", "services\seckill\src\Zhaoxi.MSACommerce.SeckillService.Core\Zhaoxi.MSACommerce.SeckillService.Core.csproj", "{DD0204BF-BA8C-4AC9-ACB0-CAEBAF4DCDD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.SeckillService.HttpApi", "services\seckill\src\Zhaoxi.MSACommerce.SeckillService.HttpApi\Zhaoxi.MSACommerce.SeckillService.HttpApi.csproj", "{7EBFE008-A404-4C9C-AB57-E379CCBDF910}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.SeckillService.Infrastructure", "services\seckill\src\Zhaoxi.MSACommerce.SeckillService.Infrastructure\Zhaoxi.MSACommerce.SeckillService.Infrastructure.csproj", "{746B7D77-B425-4C1C-B58C-4B4731EBFA53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.SeckillService.UseCases", "services\seckill\src\Zhaoxi.MSACommerce.SeckillService.UseCases\Zhaoxi.MSACommerce.SeckillService.UseCases.csproj", "{9A2A8792-19EF-40D4-A5F5-E8F338A21F0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -394,6 +409,22 @@ Global
 		{BF6A4C90-0BAD-4A27-8EE3-5E3A42265BC5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF6A4C90-0BAD-4A27-8EE3-5E3A42265BC5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF6A4C90-0BAD-4A27-8EE3-5E3A42265BC5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD0204BF-BA8C-4AC9-ACB0-CAEBAF4DCDD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD0204BF-BA8C-4AC9-ACB0-CAEBAF4DCDD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD0204BF-BA8C-4AC9-ACB0-CAEBAF4DCDD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD0204BF-BA8C-4AC9-ACB0-CAEBAF4DCDD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EBFE008-A404-4C9C-AB57-E379CCBDF910}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EBFE008-A404-4C9C-AB57-E379CCBDF910}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EBFE008-A404-4C9C-AB57-E379CCBDF910}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EBFE008-A404-4C9C-AB57-E379CCBDF910}.Release|Any CPU.Build.0 = Release|Any CPU
+		{746B7D77-B425-4C1C-B58C-4B4731EBFA53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{746B7D77-B425-4C1C-B58C-4B4731EBFA53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{746B7D77-B425-4C1C-B58C-4B4731EBFA53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{746B7D77-B425-4C1C-B58C-4B4731EBFA53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A2A8792-19EF-40D4-A5F5-E8F338A21F0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A2A8792-19EF-40D4-A5F5-E8F338A21F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A2A8792-19EF-40D4-A5F5-E8F338A21F0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A2A8792-19EF-40D4-A5F5-E8F338A21F0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{96EA0A21-C710-4F2A-B338-62D9549F9226} = {7E1D7C19-E3AB-4FA1-B8DF-203652ABE194}
@@ -470,5 +501,11 @@ Global
 		{6D9A11F9-3A18-4300-9452-99983C08F1F0} = {5E4C87E0-2C1A-40DD-A55E-2CC20B89C1E1}
 		{37689E3B-85E6-441B-B57F-8AAD157923A3} = {5E4C87E0-2C1A-40DD-A55E-2CC20B89C1E1}
 		{BF6A4C90-0BAD-4A27-8EE3-5E3A42265BC5} = {C39C5C4F-38F6-4094-A8E0-5A14FF17F6BB}
+		{D59A9A2E-9E90-41EB-8D47-A01B194B2842} = {7E1D7C19-E3AB-4FA1-B8DF-203652ABE194}
+		{09104A29-C2A8-40B0-A678-29F827A9A4A1} = {D59A9A2E-9E90-41EB-8D47-A01B194B2842}
+		{DD0204BF-BA8C-4AC9-ACB0-CAEBAF4DCDD4} = {09104A29-C2A8-40B0-A678-29F827A9A4A1}
+		{7EBFE008-A404-4C9C-AB57-E379CCBDF910} = {09104A29-C2A8-40B0-A678-29F827A9A4A1}
+		{746B7D77-B425-4C1C-B58C-4B4731EBFA53} = {09104A29-C2A8-40B0-A678-29F827A9A4A1}
+		{9A2A8792-19EF-40D4-A5F5-E8F338A21F0D} = {09104A29-C2A8-40B0-A678-29F827A9A4A1}
 	EndGlobalSection
 EndGlobal

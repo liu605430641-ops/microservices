@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.Infrastructure.Common\Zhaoxi.MSACommerce.Infrastructure.Common.csproj" />
+      <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.Infrastructure.EntityFrameworkCore\Zhaoxi.MSACommerce.Infrastructure.EntityFrameworkCore.csproj" />
+      <ProjectReference Include="..\..\..\..\shared\Zhaoxi.MSACommerce.Infrastructure.Redis\Zhaoxi.MSACommerce.Infrastructure.Redis.csproj" />
+      <ProjectReference Include="..\Zhaoxi.MSACommerce.SeckillService.Core\Zhaoxi.MSACommerce.SeckillService.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Migrations\Scripts\tb_seckill.sql">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Migrations\Scripts\tb_product.sql">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="Migrations\Scripts\tb_seckill.sql">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>
