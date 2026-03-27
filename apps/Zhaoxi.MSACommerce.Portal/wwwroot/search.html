@@ -455,18 +455,18 @@
                         this.total = resp.data.page.totalCount;
                         this.totalPage = resp.data.page.totalPages;
                         //初始化商品分类过滤参数
-                        // if (resp.data.categories.length === 1) {
-                        //     yt.http.get("/api/category/all/level/" + resp.data.categories[0].id).then(
-                        //         resp => {
-                        //             if (resp.data.result) {
-                        //                 this.breads = resp.data.value;
-                        //             }
-                        //             else {
-                        //                 alert(resp.data.message);
-                        //             }
-                        //         }
-                        //     );
-                        // }
+                        if (resp.data.categories.length === 1) {
+                            yt.http.get("/api/category/all/level/" + resp.data.categories[0].id).then(
+                                resp => {
+                                    if (resp.data.result) {
+                                        this.breads = resp.data.value;
+                                    }
+                                    else {
+                                        alert(resp.data.message);
+                                    }
+                                }
+                            );
+                        }
                         //初始化分类过滤
                         this.filters.push({
                             k: "cid3",

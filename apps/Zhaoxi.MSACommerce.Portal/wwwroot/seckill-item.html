@@ -16,39 +16,39 @@
 </head>
 
 <body>
-    <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $("#service").hover(function () {
-                $(".service").show();
-            }, function () {
-                $(".service").hide();
-            });
-            $("#shopcar").hover(function () {
-                $("#shopcarlist").show();
-            }, function () {
-                $("#shopcarlist").hide();
-            });
+<script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#service").hover(function () {
+            $(".service").show();
+        }, function () {
+            $(".service").hide();
+        });
+        $("#shopcar").hover(function () {
+            $("#shopcarlist").show();
+        }, function () {
+            $("#shopcarlist").hide();
+        });
 
+    })
+</script>
+<script type="text/javascript" src="js/czFunction.js"></script>
+<script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
+<script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" src="js/layer/layer.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("ul.btn-choose li a.btn-xlarge").click(function () {
+            alert("钻中");
+        });
+        $("#star").click(function () {
+            alert("关注成功");
         })
-    </script>
-    <script type="text/javascript" src="js/czFunction.js"></script>
-    <script type="text/javascript" src="js/plugins/jquery.easing/jquery.easing.min.js"></script>
-    <script type="text/javascript" src="js/plugins/sui/sui.min.js"></script>
-    <script type="text/javascript" src="js/layer/layer.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $("ul.btn-choose li a.btn-xlarge").click(function () {
-                alert("钻中");
-            });
-            $("#star").click(function () {
-                alert("关注成功");
-            })
-        })
-    </script>
-    <script src="./js/vue/vue.js"></script>
-    <script src="./js/axios.min.js"></script>
-    <script src="./js/common.js"></script>
+    })
+</script>
+<script src="./js/vue/vue.js"></script>
+<script src="./js/axios.min.js"></script>
+<script src="./js/common.js"></script>
 </body>
 <div id="seckillDetailApp">
     <div id="nav-bottom">
@@ -68,14 +68,14 @@
                     <div class="zoom">
                         <!--默认第一个预览-->
                         <div id="preview" class="spec-preview">
-                            <span class="jqzoom"><img jqimg="goods.image" :src="goods.image" width="400px" height="400px" /></span>
+                            <span class="jqzoom"><img jqimg="product.smallPic" :src="product.smallPic" width="400px" height="400px" /></span>
                         </div>
                     </div>
 
                 </div>
                 <div class="fr itemInfo-wrap">
                     <div class="sku-name">
-                        <h4>{{goods.title}}</h4>
+                        <h4>{{product.name}}</h4>
                     </div>
                     <div class="news">
                         <span><img src="img/_/clock.png" />易淘秒杀</span>
@@ -89,11 +89,11 @@
                             </div>
                             <div class="fl price">
                                 <i>¥</i>
-                                <em id="sekillPrice">{{yt.formatPrice(goods.seckillPrice)}}</em>
-                                <span style="text-decoration:line-through">原价：{{yt.formatPrice(goods.price)}}</span>
+                                <em id="sekillPrice">{{product.costPrice}}</em>
+                                <span style="text-decoration:line-through">原价：{{product.price}}</span>
                             </div>
                             <div class="fr remark">
-                                剩余库存:{{goods.stock}}
+                                剩余库存:{{product.stockCount}}
                             </div>
                         </div>
                         <div class="summary-wrap">
@@ -132,9 +132,9 @@
                             <div class="fl">
                                 <ul class="btn-choose unstyled">
                                     <li>
-                                        <img id="verifyCodeImg" :src="verifyImage" width="80" height="32" v-show="flag" @click="refreshVerifyCode(goods.skuId)" />
+                                        <img id="verifyCodeImg" :src="verifyImage" width="80" height="32" v-show="flag" @click="refreshVerifyCode()" />
                                         <input id="verifyCode" v-model="verifyCode" class="form-control" v-show="flag" style="width: 40px;height:26px;" />
-                                        <a href="javascript:;" target="_self" class="sui-btn  btn-danger addshopcar" @click="getSecKillPath(goods.skuId)">立即抢购</a>
+                                        <a href="javascript:;" target="_self" class="sui-btn  btn-danger addshopcar" @click="getSecKillPath(product.id)">立即抢购</a>
                                     </li>
                                     <span v-text="msg" style="color: red"></span>
                                 </ul>
@@ -174,7 +174,7 @@
                                 <li>移动电源</li>
                                 <li>平板电脑</li>
                             </ul>
-                            <ul class="goods-list unstyled">
+                            <ul class="product-list unstyled">
                                 <li>
                                     <div class="list-wrap">
                                         <div class="p-img">
@@ -306,7 +306,7 @@
                         <div class="clearfix"></div>
                         <div class="tab-content tab-wraped">
                             <div id="one" class="tab-pane active">
-                                <ul class="goods-intro unstyled">
+                                <ul class="product-intro unstyled">
                                 </ul>
                             </div>
                             <div id="two" class="tab-pane">
@@ -329,10 +329,10 @@
     </div>
 </div>
 <script type="text/javascript">
-    var userId = jwtGetUserId();
-    var verifyCodeUrl = axios.defaults.baseURL + "/seckill/verifyCode/" + yt.getUrlParam("goodsId") + "/" + userId;
+    const userId = jwtGetUserId();
+    let verifyCodeUrl;
 
-    var seckillDetailVm = new Vue({
+    const seckillDetailVm = new Vue({
         el: "#seckillDetailApp",
         data: {
             yt,
@@ -341,17 +341,20 @@
             msg: '',
             flag: true, // 显示验证码
             countTime: {},
-            goods: {},
+            product: {},
             tip: '', // 提示结果
         },
         created: function () {
-            yt.http.get("/seckill/" + yt.getUrlParam("goodsId"))
+            yt.http.get("/api/seckill/" + yt.getUrlParam("time") + "/" + yt.getUrlParam("id"))
                 .then((resp) => {
-                    this.goods = resp.data;
+                    this.product = resp.data.product;
+                    // 获取验证图片
+                    this.refreshVerifyCode();
+
                     // 服务端当前时间：
-                    let startSeconds = new Date(this.goods.currentTime).getTime();
+                    let startSeconds = new Date(resp.data.currentTime).getTime();
                     // 结束时间:
-                    let endSeconds = new Date(this.goods.endTime).getTime();
+                    let endSeconds = new Date(this.product.endTime).getTime();
                     let seconds = Math.floor((endSeconds - startSeconds) / 1000);
 
                     const time = setInterval(() => {
@@ -363,9 +366,7 @@
                         }
                     }, 1000);
                 });
-            // 获取验证图片
-            var userId = jwtGetUserId();
-            this.verifyImage = verifyCodeUrl;// axios.defaults.baseURL + "/seckill/verifyCode/" + yt.getUrlParam("goodsId") + "/" + userId;
+
         },
         methods: {
             //转换秒为天小时分钟秒格式  XXX天 10:22:33
@@ -385,81 +386,75 @@
                 }
                 return timeString + hours + ":" + minutes + ":" + seconds;
             },
-            // 获取秒杀地址
-            getSecKillPath(goodsId) {
-                yt.http.post("/seckill/getPath", {
-                    goodsId: goodsId,
-                    verifyCode: this.verifyCode
-                }).then((resp) => {
-                    if (resp.data.result) {
-                        this.tip = resp.data.value.path;
-                        this.doSecKill(this.tip, goodsId);   // 真正执行秒杀
-                    } else {
-                        layer.msg(resp.data.message);
-                        this.refreshVerifyCode(goodsId);
-                    }
-                });
-            },
-            // 执行秒杀--全Redis操作--真的完全靠谱？不一定！
-            doSecKill(path, goodsId) {
-                yt.http.post("/seckill/" + path + "/seck/" + goodsId)
+            // 获取秒杀链接
+            getSecKillPath(productId) {
+                yt.http.get(`/api/seckill/link/${productId}?verifyCode=${this.verifyCode}`)
                     .then((resp) => {
-                        if (resp.data.result) {
-                            // 获取秒杀结果
-                            this.getSecKillResult(goodsId);
-                        } else {
-                            layer.msg(resp.data.message);
-                            this.refreshVerifyCode(goodsId);
-                        }
+                        // 执行秒杀
+                        let link = `/api/seckill/order/${resp.data}/${yt.getUrlParam("time")}/${productId}`
+                        this.doSecKill(link);
+                    })
+                    .catch(error => {
+                        layer.msg(error.response.data.errors[0]);
+                        this.refreshVerifyCode();
+                    });
+            },
+            // 执行秒杀
+            doSecKill(link) {
+                yt.http.post(link)
+                    .then(() => {
+                        // 获取秒杀结果
+                        this.getSecKillResult();
+                    })
+                    .catch((error) => {
+                        layer.msg(error.response.data.errors[0]);
+                        this.refreshVerifyCode();
                     });
             },
             // 获取秒杀结果
-            getSecKillResult(goodsId) {
+            getSecKillResult() {
                 let loading = layer.load(1, {
                     shade: [0.1, '#fff'] //0.1透明度的白色背景
                 });
-                //3.2开启定时任务，查询秒杀订单状态
+                //3.2开启定时任务，查询秒杀排队状态
                 const taskId = setInterval(() => {
-                    yt.http.get("/seckill/result/" + goodsId, {
-                        transformResponse: [
-                            function (data) {
-                                return data;
+                    yt.http.get("/api/seckill/queue/status")
+                        .then(resp => {
+                            if (resp.data.status === "Queuing"){
+                                // 秒杀排队中
+                                console.log("秒杀排队中");
                             }
-                        ]
-                    }).then(resp => {
-                        var data = JSON.parse(resp.data);
-                        if (!data.result) {
-                            return;
-                        }
-                        let orderId = data.value.orderId;
-                        console.log(resp);
-                        console.log(orderId);
-
-                        if (orderId != "undefined" || orderId != -1) {
-                            //3.5秒杀成功
-                            clearInterval(taskId);
+                            if (resp.data.status === "UnPayment"){
+                                // 秒杀成功
+                                let orderId = resp.data.orderId;
+                                console.log(orderId);
+                                clearInterval(taskId);
+                                layer.close(loading);
+                                layer.confirm("恭喜你，秒杀成功！请尽快完成支付！", {btn: ["确定", "取消"]},
+                                    function () {
+                                        yt.store.set("totalPay", $("#sekillPrice").text());
+                                        yt.store.set("orderId", orderId);
+                                        window.location.href = "/seckill-pay.html";
+                                    },
+                                    function () {
+                                        layer.closeAll();
+                                    });
+                            }
+                        })
+                        .catch(() => {
                             layer.close(loading);
-                            layer.confirm("恭喜你，秒杀成功！查看订单？", { btn: ["确定", "取消"] },
-                                function () {
-                                    yt.store.set("totalPay", $("#sekillPrice").text());
-                                    yt.store.set("orderId", orderId);
-                                    window.location.href = "/pay.html";
-                                },
-                                function () {
-                                    layer.closeAll();
-                                });
-                        } else {
-                            layer.close(loading);
-                            //3.5秒杀失败
                             clearInterval(taskId);
-                            layer.msg("对不起，秒杀失败");
-                        }
-                    }).catch(() => { layer.msg("对不起，秒杀失败") });
+                            layer.msg("对不起，秒杀失败")
+                        });
                 }, 3000);
             },
-            refreshVerifyCode(goodsId) {
-                this.verifyImage = verifyCodeUrl + "?timestamp=" + new Date().getTime();
-                //"http://192.168.3.199:5000/verifyCode/" + goodsId + "?timestamp=" + new Date().getTime();
+            refreshVerifyCode() {
+                yt.http.get(`/api/seckill/verifyCode?timestamp=${new Date().getTime()}`, {
+                    responseType: 'blob'
+                }).then((resp) => {
+                    verifyCodeUrl = URL.createObjectURL(resp.data);
+                    this.verifyImage = verifyCodeUrl;
+                })
             }
         },
         components: {
@@ -484,7 +479,7 @@
             <em class="promo-tag promo-mz">满赠<i class="arrow"></i></em>
             <div class="promo-text">已购满600元，您可领赠品</div>
         </div>
-        <div class="jtc-item-goods">
+        <div class="jtc-item-product">
             <span class="p-img"><a href="#" target="_blank"><img src="{2}" alt="{1}" height="50" width="50" /></a></span>
             <div class="p-name">
                 <a href="#">{1}</a>
