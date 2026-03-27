@@ -9,14 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Configuration.AddOcelot(
-                                folder: "./ocelot",
-                                env: builder.Environment,
-                                mergeTo: MergeOcelotJson.ToMemory,
-                                optional: false, reloadOnChange: true);
+    folder: "./ocelot",
+    env: builder.Environment,
+    mergeTo: MergeOcelotJson.ToMemory,
+    optional: false, reloadOnChange: true);
 
 builder.Services
-       .AddOcelot()
-       .AddConsul<IPConsulServiceBuilder>();
+    .AddOcelot()
+    .AddConsul<IPConsulServiceBuilder>();
 
 builder.Services.AddJwtBearer(builder.Configuration);
 
@@ -32,16 +32,19 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI(options =>
-                     {
-                         options.SwaggerEndpoint("/swagger/v1/swagger.json",  "网关 V1");
-                         options.SwaggerEndpoint("/auth/swagger.json",        "授权中心 V1");
-                         options.SwaggerEndpoint("/verification/swagger.json","验证码服务器 V1");
-                         options.SwaggerEndpoint("/user/swagger.json",        "用户服务 V1");
-                         options.SwaggerEndpoint("/category/swagger.json",    "品类服务 V1");
-                         options.SwaggerEndpoint("/brand/swagger.json",       "品牌服务 V1");
-                         options.SwaggerEndpoint("/search/swagger.json",      "搜索服务 V1");
-                         options.SwaggerEndpoint("/search/Cart.json",         "购物车服务 V1");
-                     });
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "网关 V1");
+        options.SwaggerEndpoint("/auth/swagger.json", "授权中心 V1");
+        options.SwaggerEndpoint("/verification/swagger.json", "验证码服务器 V1");
+        options.SwaggerEndpoint("/user/swagger.json", "用户服务 V1");
+        options.SwaggerEndpoint("/category/swagger.json", "品类服务 V1");
+        options.SwaggerEndpoint("/brand/swagger.json", "品牌服务 V1");
+        options.SwaggerEndpoint("/search/swagger.json", "搜索服务 V1");
+        options.SwaggerEndpoint("/cart/swagger.json", "购物车服务 V1");
+        options.SwaggerEndpoint("/order/swagger.json", "订单服务 V1");
+        options.SwaggerEndpoint("/payment/swagger.json", "支付服务 V1");
+        options.SwaggerEndpoint("/seckill/swagger.json", "秒杀服务 V1");
+    });
 }
 
 app.UseOcelot().Wait();

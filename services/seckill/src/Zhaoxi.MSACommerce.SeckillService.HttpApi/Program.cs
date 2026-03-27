@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Zhaoxi.MSACommerce.Authentication.JwtBearer;
 using Zhaoxi.MSACommerce.SeckillService.HttpApi;
 using Zhaoxi.MSACommerce.HttpApi.Common;
@@ -13,7 +14,12 @@ builder.Services.AddUseCase();
 
 builder.Services.AddHttpApi();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        options.JsonSerializerOptions.NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString;
+    });
 
 builder.Services.AddJwtBearer(builder.Configuration);
 

@@ -5,16 +5,13 @@ using Zhaoxi.MSACommerce.SeckillService.Core.Entities;
 
 namespace Zhaoxi.MSACommerce.SeckillService.UseCases.Queries;
 
-public record GetSecKillProductByIdQuery(string Date,string Id) : IQuery<Result<SecKillProduct>>;
+public record GetSecKillProductByIdQuery(string Time,long Id) : IQuery<Result<SecKillProduct>>;
 
 public class GetSecKillProductByIdQueryValidator : AbstractValidator<GetSecKillProductByIdQuery>
 {
     public GetSecKillProductByIdQueryValidator()
     {
-        RuleFor(query => query.Date)
-            .NotEmpty();
-        
-        RuleFor(query => query.Id)
+        RuleFor(query => query.Time)
             .NotEmpty();
     }
 }
@@ -25,7 +22,7 @@ public class GetSecKillProductByIdQueryQueryHandler(IConnectionMultiplexer redis
         CancellationToken cancellationToken)
     {
         var db = redis.GetDatabase();
-        var secKillValue = await db.HashGetAsync($"{RedisKeyConstants.SeckillDatePrefix}{request.Date}", request.Id);
+        var secKillValue = await db.HashGetAsync($"{RedisKeyConstants.SeckillDatePrefix}{request.Time}", request.Id);
         if(secKillValue.HasValue == false || secKillValue.IsNull) return Result.NotFound();
         var secKill = JsonConvert.DeserializeObject<SecKillProduct>(secKillValue!);
 

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using Zhaoxi.MSACommerce.SeckillService.UseCases.CapSubscribes;
 using Zhaoxi.MSACommerce.UseCases.Common;
 
 namespace Zhaoxi.MSACommerce.SeckillService.UseCases;
@@ -9,6 +10,10 @@ public static class DependencyInjection
     public static IServiceCollection AddUseCase(this IServiceCollection services)
     {
         services.AddUseCaseCommon(Assembly.GetExecutingAssembly());
+        
+        services.AddTransient<MultiThreadingCreateOrder>();
+        
+        services.AddTransient<ISecKillSubscriber, SecKillSubscriber>();
 
         return services;
     }

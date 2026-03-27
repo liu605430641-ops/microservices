@@ -7,6 +7,7 @@ namespace Zhaoxi.MSACommerce.SeckillService.Infrastructure.Data;
 public class SecKillDbContext(DbContextOptions<SecKillDbContext> options) :  DbContext(options)
 {
     public DbSet<SecKillProduct> SecKillProducts => Set<SecKillProduct>();
+    public DbSet<SeckillOrder> SeckillOrders => Set<SeckillOrder>();
     
     protected override void OnModelCreating(ModelBuilder builder)
     {

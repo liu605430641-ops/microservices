@@ -1,10 +1,12 @@
-﻿using Quartz;
+﻿using System.Text.Json;
+using System.Text.Json.Serialization;
+using Quartz;
 using StackExchange.Redis;
 using Zhaoxi.MSACommerce.SeckillService.Core;
 using Zhaoxi.MSACommerce.SeckillService.Core.Entities;
 using Zhaoxi.MSACommerce.SeckillService.Infrastructure;
 using Zhaoxi.MSACommerce.SeckillService.Infrastructure.Data;
-using JsonSerializer = System.Text.Json.JsonSerializer;
+using JsonSerializerOptions = System.Text.Json.JsonSerializerOptions;
 
 namespace Zhaoxi.MSACommerce.SecKillSyncWorker.Jobs;
 
@@ -52,8 +54,12 @@ public class SecKillSyncJob(SecKillDbContext dbContext, IConnectionMultiplexer r
                 // 1.将秒杀商品数据存入到Redis缓存
                 // 2.将秒杀商品数据压入到队列中
                 // 3.将秒杀商品数据压入到计数器中
-                
-                var json = JsonSerializer.Serialize(secKill);
+           
+                var json = JsonSerializer.Serialize(secKill, new JsonSerializerOptions
+                {
+                   Converters = { new JsonStringEnumConverter() },
+                   NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString
+                });
                 _redisDb.HashSetAsync(seckillDate, secKill.Id.ToString(), json);
                 _redisDb.KeyExpire(seckillDate, startTime.ToUniversalTime().AddHours(2));
 
@@ -61,7 +67,7 @@ public class SecKillSyncJob(SecKillDbContext dbContext, IConnectionMultiplexer r
                 //商品数据压入队列中
                 CreateSekKillNumList(secKill);
                 //添加一个计数器 (key:商品的ID  value : 库存数)
-                _redisDb.StringIncrement($"{RedisKeyConstants.SecKillNumPrefix}{secKill.Id}", secKill.Num);
+                _redisDb.StringIncrement($"{RedisKeyConstants.SecKillStockPrefix}{secKill.Id}", secKill.StockCount);
             }
         }
         
@@ -71,10 +77,10 @@ public class SecKillSyncJob(SecKillDbContext dbContext, IConnectionMultiplexer r
     private void CreateSekKillNumList(SecKillProduct secKill)
     {
         //创建redis的队列(每一种商品就是一个队列,队列的元素的个数和商品的库存一致) 压入队列
-        for (var i = 0; i < secKill.Num; i++)
+        for (var i = 0; i < secKill.StockCount; i++)
         {   // 5
             // List SeckillGoodsCountList__1001 {1001,1001,1001,1001,1001} // 内存队列
-            _redisDb.ListLeftPush($"{RedisKeyConstants.SecKillNumListPrefix}{secKill.Id}", secKill.Id);
+            _redisDb.ListLeftPush($"{RedisKeyConstants.SecKillStockListPrefix}{secKill.Id}", secKill.Id);
         }
     }
 }

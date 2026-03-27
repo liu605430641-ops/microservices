@@ -9,7 +9,6 @@
       },
       "UpstreamPathTemplate": "/api/user/{path}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "DELETE", "OPTIONS" ]
-      
     },
 
     {
@@ -54,6 +53,39 @@
       },
       "UpstreamPathTemplate": "/api/cart/{path}",
       "UpstreamHttpMethod": [ "Get", "Post", "Put", "DELETE", "OPTIONS" ]
+    },
+    
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.OrderService.HttpApi",
+      "DownstreamPathTemplate": "/api/order/{path}",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/api/order/{path}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "DELETE", "OPTIONS" ]
+    },
+
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.PaymentService.HttpApi",
+      "DownstreamPathTemplate": "/api/pay/{path}",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/api/pay/{path}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
+    },
+
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.SeckillService.HttpApi",
+      "DownstreamPathTemplate": "/api/seckill/{path}",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/api/seckill/{path}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ]
     }
   ]
 }

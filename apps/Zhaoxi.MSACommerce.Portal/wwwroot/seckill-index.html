@@ -4,9 +4,53 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 	<title>易淘商城--秒杀页面</title>
-    <link rel="stylesheet" type="text/css" href="./css/webbase.css" />
-    <link rel="stylesheet" type="text/css" href="./css/widget-jquery.autocomplete.css" />
-    <link rel="stylesheet" type="text/css" href="./css/pages-seckill-index.css" />
+	<link rel="stylesheet" type="text/css" href="./css/webbase.css" />
+	<link rel="stylesheet" type="text/css" href="./css/widget-jquery.autocomplete.css" />
+	<link rel="stylesheet" type="text/css" href="./css/pages-seckill-index.css" />
+	<style>
+		.flex-container {
+			display: flex;
+			align-items: center;
+			align-content: center;
+			justify-content: space-between;
+		}
+
+		.flex-container div {
+			width: 236px;
+			height: 69px;
+			font-size: 15px;
+			color: white;
+			cursor: pointer;
+		}
+
+		.flex-container table {
+			padding: 9px;
+		}
+
+		.left {
+			width: 20px;
+		}
+		.right {
+			width: 130px;
+			margin-left:10px;
+		}
+		.flex-container ul {
+			margin-left:5px;
+		}
+		.flex-container ul li {
+			list-style: none;
+		}
+
+		.border {
+			border: 1px solid #9a9a9a;
+			text-align: center;
+			height: 30px;
+			padding: 4px;
+			line-height: 30px;
+			border-radius: 8px;
+			color: #9a9a9a;
+		}
+	</style>
 </head>
 <body>
 <!-- 头部栏位 -->
@@ -17,20 +61,20 @@
 <script type="text/javascript" src="./js/widget/nav.js"></script>
 <script type="text/javascript" src="./js/pages/seckill-index.js"></script>
 <script>
-    $(function(){
-        $("#code").hover(function(){
-            $(".erweima").show();
-        },function(){
-            $(".erweima").hide();
-        });
-    })
+	$(function () {
+		$("#code").hover(function () {
+			$(".erweima").show();
+		}, function () {
+			$(".erweima").hide();
+		});
+	})
 </script>
 <script src="./js/vue/vue.js"></script>
 <script src="./js/axios.min.js"></script>
 <script src="./js/common.js"></script>
 <div id="seckillApp">
 	<div id="nav-bottom">
-		<yt-top/>
+		<yt-top />
 	</div>
 
 	<div class="py-container index">
@@ -38,24 +82,44 @@
 		<div class="banner">
 			<img src="img/_/banner.png" class="img-responsive" alt="">
 		</div>
+		<div class="flex-container">
+			<div v-for="(item,i) in beginTimes">
+				<div style="background-color: #77b72c" v-if="i==0">
+					<table>
+						<tr>
+							<td class="left"><span style="margin-left:20px;font-weight:bold;" >{{item.display}}</span></td>
+							<td class="right"><ul><li>抢购中</li><li>距离结束 01:01:01</li></ul></td>
+						</tr>
+					</table>
+				</div>
+				<div style="background-color: #4e4e4e" v-if="i>0">
+					<table>
+						<tr>
+							<td style="font-weight: bold;">{{item.display}}</td>
+							<td><ul><li class="border">即将开始</li></ul></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
 
 		<!--商品列表-->
 		<div class="goods-list">
 			<ul class="seckill" id="seckill">
 				<li class="seckill-item" v-for="(item,i) in seckillList">
-					<div class="pic" @click="gotoSeckillItem(item.skuId)">
-						<img :src="item.image" alt=''  >
+					<div class="pic" @click="gotoSeckillItem(item.id)">
+						<img :src="item.smallPic" alt=''>
 					</div>
-					<div class="intro"><span>{{item.title}}</span></div>
-					<div class='price'><b class='sec-price'>￥{{yt.formatPrice(item.seckillPrice)}}</b><b class='ever-price'>￥{{yt.formatPrice(item.price)}}</b></div>
+					<div class="intro"><span>{{item.name}}</span></div>
+					<div class='price'><b class='sec-price'>￥{{item.costPrice}}</b><b class='ever-price'>￥{{item.price}}</b></div>
 					<div class='num'>
-						<div>已售{{((item.seckillTotal - item.stock)/item.seckillTotal*100).toFixed(0)}}%</div>
+						<div>已售{{(item.num/(item.stockCount+item.num)*100).toFixed(0)}}%</div>
 						<div class='progress'>
-							<div class='sui-progress progress-danger'><span :style="{width: (((item.seckillTotal - item.stock)/item.seckillTotal*100).toFixed(0))+'%'}" class='bar'></span></div>
+							<div class='sui-progress progress-danger'><span :style="{width: ((item.num/(item.stockCount+item.num)*100).toFixed(0))+'%'}" class='bar'></span></div>
 						</div>
-						<div>剩余<b class='owned'>{{item.stock}}</b>件</div>
+						<div>剩余<b class='owned'>{{item.stockCount}}</b>件</div>
 					</div>
-					<a class='sui-btn btn-block btn-buy' href='javascript:;' @click="gotoSeckillItem(item.skuId)" target='_blank'>立即抢购</a>
+					<a class='sui-btn btn-block btn-buy' href='javascript:;' @click="gotoSeckillItem(item.id)" target='_blank'>立即抢购</a>
 				</li>
 			</ul>
 		</div>
@@ -65,7 +129,7 @@
 				<b>TOP</b>
 			</div>
 			<div class="code" id="code">
-				<span><img src="img/_/code.png"/></span>
+				<span><img src="img/_/code.png" /></span>
 			</div>
 			<div class="erweima">
 				<img src="img/_/erweima.jpg" alt="">
@@ -75,27 +139,34 @@
 	</div>
 </div>
 <script type="text/javascript">
+	var seckillTime;
 	var seckillVm = new Vue({
-		el:"#seckillApp",
-		data:{
-            yt,
-			seckillList:[],
+		el: "#seckillApp",
+		data: {
+			yt,
+			seckillList: [],
+			beginTimes: [],
 		},
-		created:function () {
+		created: function () {
 			this.loadData();
-        },
-		methods:{
-		  loadData() {
-			  yt.http.get("/seckill/list").then((resp)=>{
-			      this.seckillList = resp.data;
-			  });
-		  },
-		  gotoSeckillItem(id) {
-		      location.href = "/seckill-item.html?goodsId="+id;
-		  }
 		},
-        components:{
-            ytTop: () => import("./js/pages/top.js")
+		methods: {
+			loadData() {
+				yt.http.get("/api/seckill/times").then((resp) => {
+					this.beginTimes = resp.data;
+					seckillTime = this.beginTimes[0].time;
+
+					yt.http.get(`/api/seckill/list/${seckillTime}`).then((resp) => {
+						this.seckillList = resp.data;
+					});
+				});
+			},
+			gotoSeckillItem(id) {
+				location.href = `/seckill-item.html?id=${id}&time=${seckillTime}`;
+			}
+		},
+		components: {
+			ytTop: () => import("./js/pages/top.js")
 		}
 	});
 </script>

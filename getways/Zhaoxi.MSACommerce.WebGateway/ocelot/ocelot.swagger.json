@@ -1,4 +1,4 @@
-{
+﻿{
   "Routes": [
     {
       "ServiceName": "Zhaoxi.MSACommerce.AuthServer",
@@ -71,6 +71,39 @@
         "Type": "RoundRobin"
       },
       "UpstreamPathTemplate": "/cart/swagger.json",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.OrderService.HttpApi",
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/order/swagger.json",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.PaymentService.HttpApi",
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/payment/swagger.json",
+      "UpstreamHttpMethod": [ "Get" ]
+    },
+    
+    {
+      "ServiceName": "Zhaoxi.MSACommerce.SeckillService.HttpApi",
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "http",
+      "LoadBalancerOptions": {
+        "Type": "RoundRobin"
+      },
+      "UpstreamPathTemplate": "/seckill/swagger.json",
       "UpstreamHttpMethod": [ "Get" ]
     }
   ]

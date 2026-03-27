@@ -45,7 +45,7 @@ public static class SecKillDate
         var now = DateTime.Now;
         foreach (var timePeriod in timePeriods)
         {
-            // 20:00  <= 21:55 < 20:00+2=22:00
+            // 20:00 <= 20:35 < 20:00+2=22:00
             //开始时间<=当前时间<开始时间+2小时
             if (timePeriod.Ticks <= now.Ticks && now.Ticks < timePeriod.AddHours(2).Ticks)
             {

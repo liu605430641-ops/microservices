@@ -13,6 +13,6 @@ public class SecKillProduct : BaseAuditEntity
     public DateTime? StartTime { get; set; }
     public DateTime? EndTime { get; set; }
     public int Num { get; set; }
-    public int StockCount { get; set; }
+    public long StockCount { get; set; }
     public string? Introduction { get; set; }
 }
