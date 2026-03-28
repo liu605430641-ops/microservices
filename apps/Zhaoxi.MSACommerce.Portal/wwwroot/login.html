@@ -115,6 +115,10 @@
                     .then(resp => {
                         let token = resp.data.accessToken;// 获取token
                         localStorage.setItem("token", token); // token存入本地缓存
+                        // Also set a non-HttpOnly cookie so pages loaded from the same host (different ports)
+                        // can read the token when necessary during local development.
+                        // NOTE: For production consider using HttpOnly, Secure cookies set by the server instead.
+                        try { document.cookie = 'token=' + token + ';path=/'; } catch (e) { console.warn('Failed to set cookie token', e); }
                         const url = yitao.getUrlParam("returnUrl");
                         window.location = url || 'http://' + window.location.host;
                     })

@@ -1,4 +1,3 @@
-
 // 字符串格式化
 String.prototype.format = function () {
     const args = arguments;
@@ -520,9 +519,56 @@ axios.defaults.baseURL = "http://localhost:5080";
 axios.defaults.timeout = 5000000;
 axios.defaults.withCredentials = false;
 
+// Read cookie by name
+function getCookie(name) {
+    const matches = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)'));
+    return matches ? decodeURIComponent(matches[1]) : null;
+}
+
 axios.interceptors.request.use((config) => {
-    if (localStorage["token"] != null) {
-        config.headers.common['Authorization'] = "Bearer " + localStorage["token"];
+    // Prefer localStorage token but fall back to cookie token (useful when pages are served from different ports)
+    let token = localStorage.getItem('token');
+    // read cookie token when needed
+    const cookieToken = getCookie('token');
+
+    // Helper: parse JWT payload (safe)
+    function parseJwtPayload(t) {
+        if (!t) return null;
+        try {
+            const parts = t.split('.');
+            if (!parts || parts.length < 2) return null;
+            // base64 decode (handle url-safe)
+            const payload = b64_to_utf8(parts[1]);
+            return JSON.parse(payload);
+        } catch (e) {
+            return null;
+        }
+    }
+
+    // If localStorage doesn't have a token, use cookie token if present
+    if (!token && cookieToken) {
+        try { localStorage.setItem('token', cookieToken); token = cookieToken; } catch (e) {}
+    } else if (token && cookieToken) {
+        // Both exist: avoid blindly overwriting localStorage with cookie. Compare iat (issued at) if available.
+        try {
+            const cookiePayload = parseJwtPayload(cookieToken);
+            const localPayload = parseJwtPayload(token);
+            const cookieIat = cookiePayload && (cookiePayload.iat || cookiePayload.iat === 0) ? cookiePayload.iat : null;
+            const localIat = localPayload && (localPayload.iat || localPayload.iat === 0) ? localPayload.iat : null;
+            // If cookie token is newer (higher iat) and valid, update localStorage. Otherwise prefer localStorage.
+            if (cookieIat !== null && localIat !== null) {
+                if (cookieIat > localIat) {
+                    try { localStorage.setItem('token', cookieToken); token = cookieToken; } catch (e) {}
+                }
+            }
+            // If one of the payloads can't be parsed, do not overwrite localStorage to avoid losing a valid token.
+        } catch (e) {
+            // ignore and keep existing localStorage token
+        }
+    }
+
+    if (token != null) {
+        config.headers.common['Authorization'] = "Bearer " + token;
     }
     if (localStorage["requestId"] != null) {
         config.headers.common['X-Request-Id'] = localStorage["requestId"];
@@ -537,6 +583,35 @@ axios.interceptors.response.use(response => {
     return response;
 });
 
+// Remove invalid or expired JWT from localStorage on startup to avoid using a phantom token
+(function validateAndCleanToken() {
+    try {
+        const t = localStorage.getItem('token');
+        if (!t) return;
+        const parts = t.split('.');
+        if (!parts || parts.length !== 3) {
+            localStorage.removeItem('token');
+            console.warn('Removed malformed token from localStorage');
+            return;
+        }
+        // Decode payload safely
+        const payloadJson = decodeURIComponent(escape(window.atob(parts[1])));
+        const payload = JSON.parse(payloadJson);
+        // exp is typically in seconds
+        if (payload && payload.exp) {
+            const expMs = payload.exp * 1000;
+            if (expMs < Date.now()) {
+                localStorage.removeItem('token');
+                console.warn('Removed expired token from localStorage');
+            }
+        }
+    } catch (err) {
+        // If any error occurs (malformed base64, JSON, etc.) remove token
+        try { localStorage.removeItem('token'); } catch (e) {}
+        console.warn('Error validating token, removed from localStorage', err);
+    }
+})();
+
 
 
 function utf8_to_b64(str) {
@@ -548,13 +623,25 @@ function b64_to_utf8(str) {
 }
 
 function jwtGetName() {
-    var token = localStorage["token"];
-    let userString = decodeURIComponent(escape(window.atob(token.split('.')[1])))
-    console.log(userString);
+    var token = localStorage["token"] || getCookie('token');
+    if (!token) return null;
+    try {
+        let userString = decodeURIComponent(escape(window.atob(token.split('.')[1])));
+        console.log(userString);
+        return JSON.parse(userString).username || null;
+    } catch (e) {
+        return null;
+    }
 }
 
 function jwtGetUserId() {
-    return JSON.parse(decodeURIComponent(escape(window.atob(localStorage["token"].split('.')[1])))).id;
+    var token = localStorage["token"] || getCookie('token');
+    if (!token) return null;
+    try {
+        return JSON.parse(decodeURIComponent(escape(window.atob(token.split('.')[1])))).id;
+    } catch (e) {
+        return null;
+    }
 }
 
 // 配置对象
