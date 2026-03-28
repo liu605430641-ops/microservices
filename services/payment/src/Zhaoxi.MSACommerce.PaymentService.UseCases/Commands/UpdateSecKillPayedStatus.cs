@@ -3,14 +3,15 @@ using Microsoft.EntityFrameworkCore;
 using Zhaoxi.MSACommerce.CategoryService.Core.Enmus;
 using Zhaoxi.MSACommerce.PaymentService.Infrastructure.Data;
 using Zhaoxi.MSACommerce.SharedEvent.Orders;
+using Zhaoxi.MSACommerce.SharedEvent.SecKills;
 
 namespace Zhaoxi.MSACommerce.PaymentService.UseCases.Commands;
 
-public record UpdatePayedStatusCommand(long Id) : ICommand<Result>;
+public record UpdateSecKillPayedStatusCommand(long Id) : ICommand<Result>;
 
-public class UpdatePayedStatusCommandHandler(PaymentDbContext dbContext, ICapPublisher capPublisher) : ICommandHandler<UpdatePayedStatusCommand, Result>
+public class UpdateSecKillPayedStatusCommandHandler(PaymentDbContext dbContext, ICapPublisher capPublisher) : ICommandHandler<UpdateSecKillPayedStatusCommand, Result>
 {
-    public async Task<Result> Handle(UpdatePayedStatusCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(UpdateSecKillPayedStatusCommand request, CancellationToken cancellationToken)
     {
         var payLog = await dbContext.PayLogs.FirstOrDefaultAsync(p => p.Id == request.Id,
             cancellationToken: cancellationToken);
@@ -24,12 +25,12 @@ public class UpdatePayedStatusCommandHandler(PaymentDbContext dbContext, ICapPub
             
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        var orderPayedEvent = new OrderPayedEvent()
+        var secKillPayedEvent = new SecKillPayedEvent()
         {
-            OrderId = payLog.OrderId
+            UserId = payLog.UserId
         };
             
-        await capPublisher.PublishAsync(nameof(OrderPayedEvent), orderPayedEvent, cancellationToken: cancellationToken);
+        await capPublisher.PublishAsync(nameof(SecKillPayedEvent), secKillPayedEvent, cancellationToken: cancellationToken);
 
         await trans.CommitAsync(cancellationToken);
         

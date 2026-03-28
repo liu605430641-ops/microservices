@@ -8,13 +8,13 @@ using Zhaoxi.MSACommerce.UseCases.Common.Interfaces;
 
 namespace Zhaoxi.MSACommerce.PaymentService.UseCases.Commands;
 
-public record CreatePayLogCommand(long OrderId) : ICommand<Result<long>>;
+public record CreateSecKillPayLogCommand(long OrderId) : ICommand<Result<long>>;
 
-public class CreatePayLogCommandHandler(PaymentDbContext dbContext, 
-    IServiceClient<IOrderServiceApi> orderService, 
-    IUser user) : ICommandHandler<CreatePayLogCommand, Result<long>>
+public class CreateSecKillPayLogCommandHandler(PaymentDbContext dbContext, 
+    IServiceClient<ISeckillServiceApi> seckillService, 
+    IUser user) : ICommandHandler<CreateSecKillPayLogCommand, Result<long>>
 {
-    public async Task<Result<long>> Handle(CreatePayLogCommand request, CancellationToken cancellationToken)
+    public async Task<Result<long>> Handle(CreateSecKillPayLogCommand request, CancellationToken cancellationToken)
     {
         var payLog = await dbContext.PayLogs.FirstOrDefaultAsync(x => x.OrderId == request.OrderId,
             cancellationToken: cancellationToken);
@@ -35,13 +35,13 @@ public class CreatePayLogCommandHandler(PaymentDbContext dbContext,
             }
         }
         
-        var response = await orderService.ServiceApi.GetOrderAsync(request.OrderId);
+        var response = await seckillService.ServiceApi.GetOrderAsync(user.Id);
         
         if (!response.IsSuccessStatusCode) return Result.Failure("订单不存在");
         
         var order = response.Content!;
         
-        payLog = new PayLog(request.OrderId, order.ActualPay, user.Id);
+        payLog = new PayLog(request.OrderId, Convert.ToInt64(order.ActualPay), Convert.ToInt64(user.Id));
         
         dbContext.PayLogs.Add(payLog);
         

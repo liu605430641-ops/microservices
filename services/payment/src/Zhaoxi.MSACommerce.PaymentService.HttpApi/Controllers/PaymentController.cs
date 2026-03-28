@@ -38,4 +38,23 @@ public class PaymentController : ApiControllerBase
         var result = await Sender.Send(new UpdatePayedStatusCommand(id));
         return ReturnResult(result);
     }
+    
+    [HttpPost("seckill/{orderId:long}")]
+    [Authorize]
+    public async Task<IActionResult> CreateSecKillPay(long orderId)
+    {
+        var result = await Sender.Send(new CreateSecKillPayLogCommand(orderId));
+        if (!result.IsSuccess) return ReturnResult(result);
+
+        var payUrl = $"{Request.Headers["Origin"]}{Url.Action("UpdateSecKillPayed", new { id = result.Value })}";
+        
+        return Ok(new { payUrl });
+    }
+    
+    [HttpGet("seckill/{id:long}", Name = "UpdateSecKillPayed")]
+    public async Task<IActionResult> UpdateSecKillPayed(long id)
+    {
+        var result = await Sender.Send(new UpdateSecKillPayedStatusCommand(id));
+        return ReturnResult(result);
+    }
 }

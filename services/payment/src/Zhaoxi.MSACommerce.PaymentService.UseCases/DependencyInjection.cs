@@ -31,5 +31,14 @@ public static class DependencyInjection
             client.Timeout = TimeSpan.FromSeconds(2);
         });
         
+        services.AddServiceClient<ISeckillServiceApi>(option =>
+        {
+            option.ServiceName = "Zhaoxi.MSACommerce.SeckillService.HttpApi";
+            option.LoadBalancingStrategy = LoadBalancingStrategy.RoundRobin;
+        }, client =>
+        {
+            client.Timeout = TimeSpan.FromSeconds(2);
+        });
+        
     }
 }
