@@ -12,6 +12,14 @@ using Zhaoxi.MSACommerce.SharedEvent.SecKills;
 
 namespace Zhaoxi.MSACommerce.SeckillService.UseCases;
 
+/// <summary>
+/// 多线程抢到,单线程处理订单,通过Redis的List数据结构来实现抢单的排队机制,通过Redis的Hash数据结构来存储订单数据和抢单状态数据,通过Redis的String数据结构来存储库存数据,通过Redis的原子操作来实现减库存操作,通过CAP发布消息来处理超时订单逻辑
+/// 
+/// </summary>
+/// <param name="redis"></param>
+/// <param name="dbContext"></param>
+/// <param name="idGen"></param>
+/// <param name="capPublisher"></param>
 public class MultiThreadingCreateOrder(
     IConnectionMultiplexer redis,
     SecKillDbContext dbContext,
@@ -81,7 +89,7 @@ public class MultiThreadingCreateOrder(
                 _redisDb.HashSet(RedisKeyConstants.SecKillOrder, userId,
                     JsonSerializer.Serialize(seckillOrder, jsonOptions));
 
-                //5.减库存
+                //5.redis的原子操作:减库存
                 var stock = _redisDb.StringIncrement($"{RedisKeyConstants.SecKillStockPrefix}{id}", -1);
                 product.StockCount = stock;
                 product.Num = product.Num++;
@@ -98,6 +106,26 @@ public class MultiThreadingCreateOrder(
                     _redisDb.HashSet($"{RedisKeyConstants.SeckillDatePrefix}{time}", id,
                         JsonSerializer.Serialize(product, jsonOptions));
                 }
+                
+                //模拟下单操作
+                try
+                {
+                    Console.WriteLine($"开始模拟下单操作...{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}");
+                    Thread.Sleep(1000); // 模拟下单操作耗时
+                    Console.WriteLine($"下单操作完成{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")}");
+
+                }
+                catch (Exception e)
+                {
+                   Console.WriteLine("下单失败，异常信息：" + e.Message);
+                   seckillStatus.Status=SecKillStatus.Failed;
+                     _redisDb.HashSet(RedisKeyConstants.SecKillQueueStatus, userId, JsonSerializer.Serialize(seckillStatus,
+                          jsonOptions
+                     ));
+                     return;
+                }
+                
+                
 
                 // 修改抢购状态
                 // 抢单成功，更新抢单状态,排队->等待支付

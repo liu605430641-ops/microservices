@@ -24,7 +24,8 @@ public static class SecKillDate
         List<DateTime> timePeriods = [];
         
         // 从凌晨开始循环
-        var date = DateTime.Now.ToDayStartHour(); 
+        // var date = DateTime.Now.ToDayStartHour(); 
+        var date = DateTime.Now; 
         for (var i = 0; i < hours; i++)
         {
             //每次递增2小时,将每次递增的时间存入到List<Date>集合中

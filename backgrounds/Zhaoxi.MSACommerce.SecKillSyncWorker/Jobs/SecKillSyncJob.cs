@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 using Quartz;
 using StackExchange.Redis;
 using Zhaoxi.MSACommerce.SeckillService.Core;
@@ -37,6 +38,10 @@ public class SecKillSyncJob(SecKillDbContext dbContext, IConnectionMultiplexer r
                 x.Num > 0 &&
                 x.StartTime >= startTime && x.EndTime < startTime.AddHours(2)
             );
+            //把query的sql语句打印出来
+            var sql = query.ToQueryString();
+            Console.WriteLine("SecKillSyncJob SQL: " + sql);
+            
             
             // 获取redis中指定HashId的keys
             var keys = _redisDb.HashKeys(seckillDate).Select(x=>Convert.ToInt64(x)).ToArray();
