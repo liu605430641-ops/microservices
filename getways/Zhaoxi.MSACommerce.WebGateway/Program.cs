@@ -47,6 +47,8 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseAuthentication();
+
 app.UseOcelot().Wait();
 
 app.Run();

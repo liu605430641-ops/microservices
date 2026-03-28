@@ -329,7 +329,6 @@
     </div>
 </div>
 <script type="text/javascript">
-    const userId = jwtGetUserId();
     let verifyCodeUrl;
 
     const seckillDetailVm = new Vue({
@@ -345,28 +344,34 @@
             tip: '', // 提示结果
         },
         created: function () {
-            yt.http.get("/api/seckill/" + yt.getUrlParam("time") + "/" + yt.getUrlParam("id"))
-                .then((resp) => {
-                    this.product = resp.data.product;
-                    // 获取验证图片
-                    this.refreshVerifyCode();
+            // 1. 先验证用户是否已登录
+            yt.verifyUser().then(() => {
+                // 2. 已登录，加载秒杀商品详情
+                yt.http.get("/api/seckill/" + yt.getUrlParam("time") + "/" + yt.getUrlParam("id"))
+                    .then((resp) => {
+                        this.product = resp.data.product;
+                        // 获取验证图片
+                        this.refreshVerifyCode();
 
-                    // 服务端当前时间：
-                    let startSeconds = new Date(resp.data.currentTime).getTime();
-                    // 结束时间:
-                    let endSeconds = new Date(this.product.endTime).getTime();
-                    let seconds = Math.floor((endSeconds - startSeconds) / 1000);
+                        // 服务端当前时间：
+                        let startSeconds = new Date(resp.data.currentTime).getTime();
+                        // 结束时间:
+                        let endSeconds = new Date(this.product.endTime).getTime();
+                        let seconds = Math.floor((endSeconds - startSeconds) / 1000);
 
-                    const time = setInterval(() => {
-                        seconds = seconds - 1;
-                        this.countTime = this.convertTimeString(seconds);
+                        const time = setInterval(() => {
+                            seconds = seconds - 1;
+                            this.countTime = this.convertTimeString(seconds);
 
-                        if (seconds <= 0) {
-                            clearInterval(time);
-                        }
-                    }, 1000);
-                });
-
+                            if (seconds <= 0) {
+                                clearInterval(time);
+                            }
+                        }, 1000);
+                    });
+            }).catch(() => {
+                // 3. 未登录或 token 已过期，跳转到登录页
+                window.location.href = "/login.html?returnUrl=" + window.location.href;
+            });
         },
         methods: {
             //转换秒为天小时分钟秒格式  XXX天 10:22:33
@@ -388,16 +393,23 @@
             },
             // 获取秒杀链接
             getSecKillPath(productId) {
-                yt.http.get(`/api/seckill/link/${productId}?verifyCode=${this.verifyCode}`)
-                    .then((resp) => {
-                        // 执行秒杀
-                        let link = `/api/seckill/order/${resp.data}/${yt.getUrlParam("time")}/${productId}`
-                        this.doSecKill(link);
-                    })
-                    .catch(error => {
-                        layer.msg(error.response.data.errors[0]);
-                        this.refreshVerifyCode();
-                    });
+                yt.verifyUser().then(() => {
+                    yt.http.get(`/api/seckill/link/${productId}?verifyCode=${this.verifyCode}`)
+                        .then((resp) => {
+                            // 执行秒杀
+                            let link = `/api/seckill/order/${resp.data}/${yt.getUrlParam("time")}/${productId}`
+                            this.doSecKill(link);
+                        })
+                        .catch(error => {
+                            const msg = error.response && error.response.data && error.response.data.errors
+                                ? error.response.data.errors[0]
+                                : "获取秒杀链接失败";
+                            layer.msg(msg);
+                            this.refreshVerifyCode();
+                        });
+                }).catch(() => {
+                    window.location.href = "/login.html?returnUrl=" + window.location.href;
+                });
             },
             // 执行秒杀
             doSecKill(link) {
@@ -407,7 +419,10 @@
                         this.getSecKillResult();
                     })
                     .catch((error) => {
-                        layer.msg(error.response.data.errors[0]);
+                        const msg = error.response && error.response.data && error.response.data.errors
+                            ? error.response.data.errors[0]
+                            : "秒杀请求失败";
+                        layer.msg(msg);
                         this.refreshVerifyCode();
                     });
             },
@@ -454,7 +469,9 @@
                 }).then((resp) => {
                     verifyCodeUrl = URL.createObjectURL(resp.data);
                     this.verifyImage = verifyCodeUrl;
-                })
+                }).catch(() => {
+                    window.location.href = "/login.html?returnUrl=" + window.location.href;
+                });
             }
         },
         components: {
