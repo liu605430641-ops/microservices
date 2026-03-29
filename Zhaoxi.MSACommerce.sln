@@ -185,6 +185,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.SeckillS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.SecKillSyncWorker", "backgrounds\Zhaoxi.MSACommerce.SecKillSyncWorker\Zhaoxi.MSACommerce.SecKillSyncWorker.csproj", "{38144B8E-CE4C-49B0-A2EE-E7FC9AE73C39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zhaoxi.MSACommerce.Configuration", "pakages\Zhaoxi.MSACommerce.Configuration\Zhaoxi.MSACommerce.Configuration.csproj", "{318E4AE2-D547-4E17-A6D3-B55EDA6D07BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -431,6 +433,10 @@ Global
 		{38144B8E-CE4C-49B0-A2EE-E7FC9AE73C39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38144B8E-CE4C-49B0-A2EE-E7FC9AE73C39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38144B8E-CE4C-49B0-A2EE-E7FC9AE73C39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{318E4AE2-D547-4E17-A6D3-B55EDA6D07BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{318E4AE2-D547-4E17-A6D3-B55EDA6D07BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{318E4AE2-D547-4E17-A6D3-B55EDA6D07BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{318E4AE2-D547-4E17-A6D3-B55EDA6D07BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{96EA0A21-C710-4F2A-B338-62D9549F9226} = {7E1D7C19-E3AB-4FA1-B8DF-203652ABE194}
@@ -514,5 +520,6 @@ Global
 		{746B7D77-B425-4C1C-B58C-4B4731EBFA53} = {09104A29-C2A8-40B0-A678-29F827A9A4A1}
 		{9A2A8792-19EF-40D4-A5F5-E8F338A21F0D} = {09104A29-C2A8-40B0-A678-29F827A9A4A1}
 		{38144B8E-CE4C-49B0-A2EE-E7FC9AE73C39} = {135ED8B8-4079-4D3D-A2F9-C0B1B8FAF79C}
+		{318E4AE2-D547-4E17-A6D3-B55EDA6D07BD} = {D999BEFB-3DE0-444F-8001-0E34571E656D}
 	EndGlobalSection
 EndGlobal
