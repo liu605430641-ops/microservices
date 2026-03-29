@@ -1,5 +1,7 @@
 using Com.Ctrip.Framework.Apollo;
 using Com.Ctrip.Framework.Apollo.Enums;
+using Consul.AspNetCore;
+using Winton.Extensions.Configuration.Consul;
 using Zhaoxi.MSACommerce.Authentication.JwtBearer;
 using Zhaoxi.MSACommerce.HttpApi.Common;
 using Zhaoxi.MSACommerce.UserService.HttpApi;
@@ -8,7 +10,11 @@ using Zhaoxi.MSACommerce.UserService.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//注册 
+
+//注册consul地址
+builder.Configuration.AddConsul("zhaoxi-msa-commerce/appsettings.json");
+
+//注册apollo地址 
 builder.Configuration
        .AddApollo(builder.Configuration.GetSection(nameof(ApolloOptions)))
        .AddDefault(ConfigFileFormat.Json)
