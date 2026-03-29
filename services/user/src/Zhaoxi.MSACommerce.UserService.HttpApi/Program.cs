@@ -8,6 +8,7 @@ using Zhaoxi.MSACommerce.UserService.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//注册 
 builder.Configuration
        .AddApollo(builder.Configuration.GetSection(nameof(ApolloOptions)))
        .AddDefault(ConfigFileFormat.Json)

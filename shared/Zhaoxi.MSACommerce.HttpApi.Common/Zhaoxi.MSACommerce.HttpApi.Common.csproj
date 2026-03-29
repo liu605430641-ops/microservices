@@ -20,4 +20,8 @@
       <PackageReference Include="Com.Ctrip.Framework.Apollo.Configuration" Version="2.11.0" />
       <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
     </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Apollo相关配置流程\" />
+    </ItemGroup>
 </Project>

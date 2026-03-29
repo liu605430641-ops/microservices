@@ -1,0 +1,9 @@
+1. 安装2个sql数据库 然后执行2个sql初始化语句
+2..在当前文件夹执行 docker-compose up -d
+3.注意coker的yml文件 需要有  
+ apollo-configservice:
+apollo-adminservice:
+  apollo-portal:
+4.代码里面集成看 提交记录 “集成Apollo配置管理，新增ApolloOptions设置，更新项目依赖 7 分钟之前 刘泽西”
+5.apolo里面配置appsettings
+

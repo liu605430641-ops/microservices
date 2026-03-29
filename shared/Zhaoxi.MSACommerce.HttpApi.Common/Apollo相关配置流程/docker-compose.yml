@@ -1,0 +1,42 @@
+services:
+  apollo-configservice:
+    image: apolloconfig/apollo-configservice:2.2.0
+    container_name: apollo-configservice
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/ApolloConfigDB?characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=123123
+      - SPRING_PROFILES_ACTIVE=github
+    ports:
+      - "8090:8080" # 宿主机 8090 访问 Eureka/Meta
+    restart: always
+
+  apollo-adminservice:
+    image: apolloconfig/apollo-adminservice:2.2.0
+    container_name: apollo-adminservice
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/ApolloConfigDB?characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=123123
+      - SPRING_PROFILES_ACTIVE=github
+    ports:
+      - "8091:8090" # 宿主机 8091 访问 AdminService
+    depends_on:
+      - apollo-configservice
+    restart: always
+
+  apollo-portal:
+    image: apolloconfig/apollo-portal:2.2.0
+    container_name: apollo-portal
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/ApolloPortalDB?characterEncoding=utf8&serverTimezone=Asia/Shanghai
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=123123
+      - APOLLO_CONFIGSERVICE=http://apollo-configservice:8080
+      - DEV_META=http://apollo-configservice:8080
+      - SPRING_PROFILES_ACTIVE=github
+    ports:
+      - "8070:8070" # 宿主机 8070 访问管理后台
+    depends_on:
+      - apollo-configservice
+    restart: always
