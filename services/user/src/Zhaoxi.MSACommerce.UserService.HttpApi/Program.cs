@@ -1,3 +1,5 @@
+using Com.Ctrip.Framework.Apollo;
+using Com.Ctrip.Framework.Apollo.Enums;
 using Zhaoxi.MSACommerce.Authentication.JwtBearer;
 using Zhaoxi.MSACommerce.HttpApi.Common;
 using Zhaoxi.MSACommerce.UserService.HttpApi;
@@ -5,6 +7,11 @@ using Zhaoxi.MSACommerce.UserService.Infrastructure;
 using Zhaoxi.MSACommerce.UserService.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Configuration
+       .AddApollo(builder.Configuration.GetSection(nameof(ApolloOptions)))
+       .AddDefault(ConfigFileFormat.Json)
+       .AddNamespace("user-service.json");
 
 // Add services to the container.
 builder.Services.AddInfrastructure(builder.Configuration);
