@@ -55,19 +55,28 @@ public static class DependencyInjection
                     });
             }
             
-            var esUri = configuration["EsUri"];
-            if (esUri is not null)
+            var esUri      = configuration["EsUri"];
+            var esUser     = configuration["EsUser"];
+            var esPassword = configuration["EsPassword"];
+
+            if (!string.IsNullOrEmpty(esUri))
             {
-                
                 lc.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(esUri))
-                {
-                    IndexFormat = "Serilog-index-{0:yyyy.MM.dd}",
-                    AutoRegisterTemplate = true,
-                    AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv8
-                });
+                                         {
+                                             IndexFormat                 = "serilog-index-{0:yyyy.MM.dd}",
+                                             AutoRegisterTemplate        = true,
+                                             AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv8,
+        
+                                             // ✨ 关键补全：添加身份验证
+                                             ModifyConnectionSettings = x => x.BasicAuthentication(esUser, esPassword),
+        
+                                             // 如果你的 ES 开启了 HTTPS 但没有正式证书，可能还需要忽略 SSL 验证（仅限开发环境）
+                                             // ModifyConnectionSettings = x => x.BasicAuthentication(esUser, esPassword)
+                                             //                                 .ServerCertificateValidationCallback((obj, cert, chain, errors) => true)
+                                         });
+
                 lc.Enrich.WithProperty("App", appName);
-                
-                lc.Enrich.WithProperty("Host", configuration["Urls"] ?? string.Empty);
+                lc.Enrich.WithProperty("Host",configuration["Urls"] ?? string.Empty);
             }
         });
     }
