@@ -10,6 +10,7 @@
         <PackageReference Include="Ocelot" Version="23.3.3" />
         <PackageReference Include="Ocelot.Provider.Consul" Version="23.3.3" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0"/>
+        <PackageReference Include="SkyAPM.Agent.AspNetCore" Version="2.2.0" />
     </ItemGroup>
 
     <ItemGroup>
