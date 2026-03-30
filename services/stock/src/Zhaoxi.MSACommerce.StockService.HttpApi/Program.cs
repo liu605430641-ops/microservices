@@ -1,4 +1,5 @@
 using Zhaoxi.MSACommerce.Authentication.JwtBearer;
+using Zhaoxi.MSACommerce.Configuration;
 using Zhaoxi.MSACommerce.HttpApi.Common;
 using Zhaoxi.MSACommerce.StockService.HttpApi;
 using Zhaoxi.MSACommerce.StockService.Infrastructure;
@@ -6,6 +7,7 @@ using Zhaoxi.MSACommerce.StockService.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddConfigCenter("stock-service") ;
 // Add services to the container.
 builder.Services.AddInfrastructure(builder.Configuration);
 
