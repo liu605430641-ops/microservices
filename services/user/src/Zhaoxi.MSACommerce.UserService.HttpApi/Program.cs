@@ -1,7 +1,3 @@
-using Com.Ctrip.Framework.Apollo;
-using Com.Ctrip.Framework.Apollo.Enums;
-using Consul.AspNetCore;
-using Winton.Extensions.Configuration.Consul;
 using Zhaoxi.MSACommerce.Authentication.JwtBearer;
 using Zhaoxi.MSACommerce.Configuration;
 using Zhaoxi.MSACommerce.HttpApi.Common;
@@ -11,20 +7,14 @@ using Zhaoxi.MSACommerce.UserService.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
 
+const string appName = "user-service";
 
-//换成微服务配置中心读取
-// //注册consul地址
-// builder.Configuration.AddConsul("zhaoxi-msa-commerce/appsettings.json");
-//
-// //注册apollo地址 
-// builder.Configuration
-//        .AddApollo(builder.Configuration.GetSection(nameof(ApolloOptions)))
-//        .AddDefault(ConfigFileFormat.Json)
-//        .AddNamespace("user-service.json");
+builder.Configuration.AddConfigCenter(appName);
 
-builder.Configuration.AddConfigCenter("user-service") ;
+builder.Services.AddSerilogLoki(builder.Configuration, appName);
 
 // Add services to the container.
+
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddUseCase();

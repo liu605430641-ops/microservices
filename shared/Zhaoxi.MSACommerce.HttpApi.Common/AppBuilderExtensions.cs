@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Prometheus;
+using Serilog;
 using Zhaoxi.MSACommerce.Consul.ServiceRegistration;
 
 namespace Zhaoxi.MSACommerce.HttpApi.Common;
@@ -10,7 +11,8 @@ public static class AppBuilderExtensions
 {
     public static IApplicationBuilder UseHttpCommon(this IApplicationBuilder app)
     {
-        //启动指标服务
+        app.UseSerilogRequestLogging();
+        
         app.UseMetricServer();
         app.UseHttpMetrics();
         

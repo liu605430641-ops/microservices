@@ -1,9 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
+using Serilog.Sinks.Grafana.Loki;
 using Zhaoxi.MSACommerce.HttpApi.Common.Infrastructure;
 using Zhaoxi.MSACommerce.HttpApi.Common.Services;
-using Zhaoxi.MSACommerce.Infrastructure.Common;
 using Zhaoxi.MSACommerce.UseCases.Common.Interfaces;
 
 namespace Zhaoxi.MSACommerce.HttpApi.Common;
@@ -27,6 +30,46 @@ public static class DependencyInjection
         ConfigureSwagger(services);
 
         return services;
+    }
+
+    public static void AddSerilogLoki(this IServiceCollection services, IConfiguration configuration, string appName)
+    {
+        // 注册 Serilog 服务
+        services.AddSerilog((sp, lc) =>
+        {
+            lc.Enrich.FromLogContext();
+#if DEBUG
+            lc.WriteTo.Console();
+#elif RELEASE
+            lc.WriteTo.Console(LogEventLevel.Error)
+#endif
+            var lokiUri = configuration["LokiUri"];
+            if (lokiUri is not null)
+            {
+                lc.WriteTo.GrafanaLoki(
+                    uri: lokiUri,
+                    labels: new List<LokiLabel>
+                    {
+                        new() { Key = "App", Value = appName },
+                        new() { Key = "Host", Value = configuration["Urls"] ?? string.Empty }
+                    });
+            }
+            
+            var esUri = configuration["EsUri"];
+            if (esUri is not null)
+            {
+                
+                lc.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(esUri))
+                {
+                    IndexFormat = "Serilog-index-{0:yyyy.MM.dd}",
+                    AutoRegisterTemplate = true,
+                    AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv8
+                });
+                lc.Enrich.WithProperty("App", appName);
+                
+                lc.Enrich.WithProperty("Host", configuration["Urls"] ?? string.Empty);
+            }
+        });
     }
 
     private static void ConfigureCors(IServiceCollection services)
