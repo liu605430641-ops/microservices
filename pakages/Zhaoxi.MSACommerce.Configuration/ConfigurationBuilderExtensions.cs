@@ -9,6 +9,7 @@ public static class ConfigurationBuilderExtensions
 {
     public static IApolloConfigurationBuilder AddConfigCenter(this ConfigurationManager configurationManager, string defaultNamespace)
     {
+        // 注释 
         configurationManager.AddConsul(
             "zhaoxi-commerce/appsettings.json",
             source =>
